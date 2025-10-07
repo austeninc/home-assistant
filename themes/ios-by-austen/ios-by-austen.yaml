@@ -371,12 +371,14 @@ ios-adaptive-sequoia-aurora:
       /* NAV BAR EDITS */
       .navbar-card.desktop {
         box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.20) !important;
-        background: rgba(22, 22, 23, 0.8) !important; /* THIS BREAKS LIGHT MODE */
+        background: var(--secondary-background-color) !important;
+        /* background: rgba(22, 22, 23, 0.8) !important; */ /* This is the original DARK MODE color */
         /* LIGHT MODE VERSION background: rgba(255, 255, 255, 0.7) !important; */
         backdrop-filter: saturate(180%) blur(20px) !important;
       }
       .navbar-card.mobile {
-        background: rgba(22, 22, 23, 0.8) !important; /* THIS BREAKS LIGHT MODE */
+        background: var(--secondary-background-color) !important;
+        /* background: rgba(22, 22, 23, 0.8) !important; */ /* This is the original DARK MODE color */
         /* LIGHT MODE VERSION background: rgba(255, 255, 255, 0.7) !important; */
         /* backdrop-filter: saturate(180%) blur(20px) !important;  */
         border-top: double 1px rgba(142, 142, 147, 0.5);
@@ -384,8 +386,7 @@ ios-adaptive-sequoia-aurora:
       }
       .button {
         background: none !important;
-        --icon-primary-color: rgba(142, 142, 147, 1.0); /* THIS BREAKS LIGHT MODE */
-        /* LIGHT MODE VERSION --icon-primary-color: #1c1c1ea2; */
+        --icon-primary-color: var(--gray-color); /* Normally would be gray at 0.98 opacity for dark mode, or 0.64 opacity for light mode... */
       }
       .button.active {
         background: none !important;
@@ -408,7 +409,7 @@ ios-adaptive-sequoia-aurora:
           color: var(--primary-color) !important;
         }
       }
-      
+
 #######################################################
 #
 # MODIFIED iOS Dark Mode Theme - Aurora
@@ -920,7 +921,7 @@ ios-light-mode-sequoia:
       }
       .button {
         background: none !important;
-        --icon-primary-color: #1c1c1ea2;
+        --icon-primary-color: #1c1c1ea2; /* gray color but 0.64 opacity */
         /*--icon-primary-color: rgba(142, 142, 147, 0.98);*/
       }
       .button.active {
