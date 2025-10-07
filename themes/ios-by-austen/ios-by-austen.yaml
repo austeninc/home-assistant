@@ -88,6 +88,8 @@ ios-adaptive-sequoia-aurora:
       light-grey-color: rgba(209, 209, 214, 1.0)  # System Gray4 Light Mode
       gray5-color: rgba(229, 229, 234, 1.0)       # System Gray5 Light Mode
       gray6-color: rgba(242, 242, 247, 1.0)       # System Gray6 Light Mode
+      ### Extra RGB Variables
+      navbar-card-bg-rgb: 255, 255, 255
       ####################################
       ###### MODE COLOR DEFINITIONS ######
       ####################################
@@ -175,6 +177,8 @@ ios-adaptive-sequoia-aurora:
       light-grey-color: rgba(72, 72, 74, 1.0)     # System Gray3 Dark Mode
       gray5-color: rgba(44, 44, 46, 1.0)          # System Gray5 Dark Mode
       gray6-color: rgba(28, 28, 30, 1.0)          # System Gray6 Dark Mode
+      ### Extra RGB Variables
+      navbar-card-bg-rgb: 255, 255, 255
       ####################################
       ###### MODE COLOR DEFINITIONS ######
       ####################################
@@ -339,7 +343,7 @@ ios-adaptive-sequoia-aurora:
           -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
           backdrop-filter: saturate(180%) blur(20px) !important;
           border-style: var(--ha-card-border-style);
-          background: rgba(255, 255, 255, 0.7); /* NEED TO CHECK IF THIS BREAKS DARK MODE */
+          /* background: rgba(255, 255, 255, 0.7); THIS BREAKS DARK MODE!! */
       }
       :host(.heading-ios) ha-card {
         backdrop-filter: none !important;
