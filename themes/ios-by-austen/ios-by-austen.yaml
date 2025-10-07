@@ -385,7 +385,7 @@ ios-adaptive-sequoia-aurora:
         /* background: rgba(22, 22, 23, 0.8) !important; */ /* This is the original DARK MODE color */
         /* LIGHT MODE VERSION background: rgba(255, 255, 255, 0.7) !important; */
         /* backdrop-filter: saturate(180%) blur(20px) !important;  */
-        border-top: double 1px rgba(142, 142, 147, 0.5);
+        border-top: double 1px var(--ha-card-border-color) !important;
         box-shadow: none !important;
       }
       .button {
