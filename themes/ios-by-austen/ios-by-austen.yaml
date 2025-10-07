@@ -86,10 +86,8 @@ ios-adaptive-sequoia-aurora:
       grey-color: rgba(142, 142, 147, 1.0)        # System Gray Light Mode
       blue-grey-color: rgba(174, 174, 178, 1.0)   # System Gray2 Light Mode
       light-grey-color: rgba(209, 209, 214, 1.0)  # System Gray4 Light Mode
-      gray5-color: rgba(229, 229, 234, 1.0)       # System Gray5 Light Mode
-      gray6-color: rgba(242, 242, 247, 1.0)       # System Gray6 Light Mode
-      ### Extra RGB Variables
-      navbar-card-bg-rgb: 255, 255, 255
+      grey5-color: rgba(229, 229, 234, 1.0)       # System Gray5 Light Mode
+      grey6-color: rgba(242, 242, 247, 1.0)       # System Gray6 Light Mode
       ####################################
       ###### MODE COLOR DEFINITIONS ######
       ####################################
@@ -175,10 +173,8 @@ ios-adaptive-sequoia-aurora:
       grey-color: rgba(142, 142, 147, 1.0)        # System Gray Dark Mode
       blue-grey-color: rgba(99, 99, 102, 1.0)     # System Gray2 Dark Mode
       light-grey-color: rgba(72, 72, 74, 1.0)     # System Gray3 Dark Mode
-      gray5-color: rgba(44, 44, 46, 1.0)          # System Gray5 Dark Mode
-      gray6-color: rgba(28, 28, 30, 1.0)          # System Gray6 Dark Mode
-      ### Extra RGB Variables
-      navbar-card-bg-rgb: 255, 255, 255
+      grey5-color: rgba(44, 44, 46, 1.0)          # System Gray5 Dark Mode
+      grey6-color: rgba(28, 28, 30, 1.0)          # System Gray6 Dark Mode
       ####################################
       ###### MODE COLOR DEFINITIONS ######
       ####################################
@@ -215,7 +211,7 @@ ios-adaptive-sequoia-aurora:
       paper-slider-font-color: "#000" # ! ? Why black??
       ### Labels
       label-badge-background-color: rgba(72, 72, 74, 0.98) # systemGray3 dark mode
-      label-badge-text-color: var(--gray5-color)  # systemGray5 dark mode
+      label-badge-text-color: var(--grey5-color)  # systemGray5 dark mode
       label-badge-red: rgba(255, 159, 9, 0.7)  # from Apple systemOrange dark mode
       ### Cards
       ha-card-background: rgba(28, 28, 30, 0.7); # Apple website color
@@ -277,7 +273,7 @@ ios-adaptive-sequoia-aurora:
   ### App
   clear-background-color: var(--ha-card-background)  # see https://github.com/basnijholt/lovelace-ios-themes/issues/64
   markdown-code-background-color: var(--gray-3-color)
-  code-editor-background-color: var(--gray6-color)
+  code-editor-background-color: var(--grey6-color)
   input-ink-color: var(--primary-text-color)
   input-fill-color: transparent
   input-disabled-fill-color: transparent
@@ -343,7 +339,6 @@ ios-adaptive-sequoia-aurora:
           -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
           backdrop-filter: saturate(180%) blur(20px) !important;
           border-style: var(--ha-card-border-style);
-          /* background: rgba(255, 255, 255, 0.7); THIS BREAKS DARK MODE!! */
       }
       :host(.heading-ios) ha-card {
         backdrop-filter: none !important;
@@ -394,7 +389,7 @@ ios-adaptive-sequoia-aurora:
       }
       .button {
         background: none !important;
-        --icon-primary-color: var(--gray-color); /* Normally would be gray at 0.98 opacity for dark mode, or 0.64 opacity for light mode... */
+        --icon-primary-color: var(--grey-color); /* Normally would be gray at 0.98 opacity for dark mode, or 0.64 opacity for light mode... */
       }
       .button.active {
         background: none !important;
