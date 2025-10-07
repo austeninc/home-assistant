@@ -95,7 +95,7 @@ ios-adaptive-sequoia-aurora:
       primary-color: rgba(175, 82, 222, 1.0)  # systemPurple light mode (iOS)
       light-primary-color: rgba(28, 28, 30, 0.98)     # systemBlack light mode (iOS)
       primary-background-color: rgba(255, 255, 255, 1.0) # White light mode
-      secondary-background-color: rgba(242, 242, 247, 0.9) # systemGray6 light mode
+      secondary-background-color: rgba(242, 242, 247, 0.9) # systemGray6 light mode -- influences sidebar-background-color & card-background-color
       divider-color: rgba(142, 142, 147, 0.5)  # systemGray light mode
       ### Text
       primary-text-color: rgba(28, 28, 30, 0.98)     # systemBlack light mode (iOS)
@@ -107,7 +107,6 @@ ios-adaptive-sequoia-aurora:
       mush-primary-text-color: rgba(255, 255, 255, 0.95) # White light mode # DIFF
       mush-secondary-text-color: rgba(229, 229, 234, 0.95)  # systemGray5 light mode (iOS) # DIFF
       ### Sidebar
-      sidebar-background-color: rgba(209, 209, 214, 1.0) #systemGray4 Light Mode
       sidebar-selected-background-color: rgba(255, 149, 0, 0.00) # systemOrange light mode
       sidebar-text-color: rgba(0, 0, 0, 0.98)
       ### States & Badges
@@ -182,7 +181,7 @@ ios-adaptive-sequoia-aurora:
       primary-color: rgba(255, 159, 10, 0.98)  # systemOrange dark mode (iOS)
       light-primary-color: rgba(255, 255, 255, 0.98) # System White
       primary-background-color: rgba(0, 0, 0, 1)  # Black dark mode
-      secondary-background-color: rgba(28, 28, 30, 0.95) # systemGray6 dark mode
+      secondary-background-color: rgba(28, 28, 30, 0.95) # systemGray6 dark mode -- influences sidebar-background-color & card-background-color
       divider-color: rgba(142, 142, 147, 0.5)  # systemGray dark mode
       ### Text
       primary-text-color: rgba(255, 255, 255, 0.98) # System White
@@ -195,6 +194,7 @@ ios-adaptive-sequoia-aurora:
       sidebar-text-color: rgba(255, 255, 255, 0.98) # System White
       sidebar-selected-background-color: rgba(255, 159, 10, 0.00) # TRANSPARENT systemOrange dark mode
       sidebar-selected-icon-color: rgba(255, 159, 10, 0.98)  # systemOrange dark mode
+      sidebar-selected-text-color: var(--primary-text-color)
       ### States & Badges
       error-color: rgba(255, 69, 58, 0.98) # systemRed dark mode
       warning-color: rgba(255, 214, 10, 0.98)  # systemYellow dark mode
@@ -237,8 +237,10 @@ ios-adaptive-sequoia-aurora:
   tile-icon-opacity: 0.1 !important
   accent-color: var(--primary-color)
   ### Sidebar
+  sidebar-icon-color: var(--primary-color)
   sidebar-selected-icon-color: var(--primary-color) 
   sidebar-selected-text-color: var(--primary-text-color)
+  sidebar-background-color: var(--secondary-background-color) #systemGray4 Light Mode
   ### States & Badges
   error-state-color: var(--error-color)
   warning-state-color: var(--warning-color)
