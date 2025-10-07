@@ -298,7 +298,117 @@ ios-adaptive-sequoia-aurora:
   ha-font-family-body: ui-sans-serif, "SF Pro", Helvetica, Arial, sans-serif
   ha-font-family-longform: var(--ha-font-family-body)
   ####################################
-  
+  card-mod-theme: ios-adaptive-sequoia-aurora
+  card-mod-root-yaml: |
+    .: |
+      ha-tabs {
+        pointer-events: none;
+        opacity: 0;
+      }
+      .header {
+          -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
+          backdrop-filter: saturate(180%) blur(20px) !important;
+      }
+      /* NAV BAR EDITS */
+      @media (max-width: 767px) {
+        hui-sections-view {
+          padding-left: 8px !important;
+          padding-right: 8px !important;
+        }
+        /* Add bottom padding for mobile screens to prevent cards from overlapping with the navbar */
+        hui-sections-view:after {
+          content: "";
+          display: block;
+          /* height: 0px; */
+          width: 100%;
+          background-color: transparent; 
+        }
+        /* Remove the header on mobile */
+        .header {
+          /* height: 0px !important; */
+          display: none;
+        }
+      }
+  card-mod-card-yaml: |
+    .: |
+      ha-card {
+          -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
+          backdrop-filter: saturate(180%) blur(20px) !important;
+          border-style: var(--ha-card-border-style);
+          background: rgba(255, 255, 255, 0.7); /* NEED TO CHECK IF THIS BREAKS DARK MODE */
+      }
+      :host(.heading-ios) ha-card {
+        backdrop-filter: none !important;
+        background: none !important;
+        --primary-text-color: var(--mush-primary-text-color) !important;
+        --secondary-text-color: var(--mush-primary-text-color) !important;
+        .container .content.title {
+          font-size: 17px !important;
+          font-weight: 500 !important;
+          letter-spacing: -0.43px !important;
+        }
+      }
+      :host(.sub-heading-ios) ha-card {
+        backdrop-filter: none !important;
+        background: none !important;
+        --primary-text-color: var(--mush-primary-text-color) !important;
+        --secondary-text-color: var(--mush-primary-text-color) !important;
+        .container .content.subtitle {
+          font-size: 15px !important;
+          font-weight: 400 !important;
+          letter-spacing: -0.23px !important;
+        }
+      }
+      .card-header {
+        color: var(--mush-primary-text-color) !important;
+      }
+
+      /* GAUGE EDITS */
+      :host(.gauge-ios) ha-card {
+        border-radius: 50% !important;
+      }
+
+      /* NAV BAR EDITS */
+      .navbar-card.desktop {
+        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.20) !important;
+        background: rgba(22, 22, 23, 0.8) !important; /* THIS BREAKS LIGHT MODE */
+        /* LIGHT MODE VERSION background: rgba(255, 255, 255, 0.7) !important; */
+        backdrop-filter: saturate(180%) blur(20px) !important;
+      }
+      .navbar-card.mobile {
+        background: rgba(22, 22, 23, 0.8) !important; /* THIS BREAKS LIGHT MODE */
+        /* LIGHT MODE VERSION background: rgba(255, 255, 255, 0.7) !important; */
+        /* backdrop-filter: saturate(180%) blur(20px) !important;  */
+        border-top: double 1px rgba(142, 142, 147, 0.5);
+        box-shadow: none !important;
+      }
+      .button {
+        background: none !important;
+        --icon-primary-color: rgba(142, 142, 147, 1.0); /* THIS BREAKS LIGHT MODE */
+        /* LIGHT MODE VERSION --icon-primary-color: #1c1c1ea2; */
+      }
+      .button.active {
+        background: none !important;
+        --icon-primary-color: var(--primary-color) !important;
+      }
+      @media (max-width: 767px) {
+        /* All the styling for visual on iOS */
+        /* Dashboard padding */
+        .container.dense {
+          padding-left: 18px !important;
+          padding-right: 18px !important;
+        }
+
+        /* Fonts and Colors */
+        .label {
+          font-family: ui-sans-serif;
+          color: rgba(142, 142, 147, 1.0);
+        }
+        .label.active {
+          color: var(--primary-color) !important;
+        }
+      }
+      
 #######################################################
 #
 # MODIFIED iOS Dark Mode Theme - Aurora
@@ -755,11 +865,6 @@ ios-light-mode-sequoia:
         color: rgba(255, 255, 255, 0.95) !important;
       } */
   card-mod-card-yaml: |
-    mushroom-state-info$: |
-      .container {
-        /* --card-primary-color: var(--mush-primary-text-color); */
-        /* --card-secondary-color: var(--mush-secondary-text-color); */
-      }
     .: |
       ha-card {
         -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
