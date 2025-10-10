@@ -64,8 +64,8 @@ navbar-templates:
           filter: drop-shadow(0px 40px 50px #0000005f);
           /* App cannot handle the displacement filter - sad 
           backdrop-filter: saturate(180%) blur(2px) url(/local/svg_filters/glassFilter.svg#displacementFilter) !important;
-          */
-          backdrop-filter: brightness(1.2) saturate(180%) blur(4px) !important;
+          
+          backdrop-filter: brightness(1.2) saturate(180%) blur(4px) !important; */
         }
       }
       .route:hover {
@@ -818,6 +818,12 @@ views:
               ha-card {
                 overflow: hidden;
                 padding: 0;
+                --row-gap: 0px !important;
+                background: none !important;
+                backdrop-filter: none !important;
+              }
+              ha-card::before {
+                backdrop-filter: none !important;
               }
             card:
               type: vertical-stack
@@ -832,9 +838,19 @@ views:
                       - background: none !important
                       - backdrop-filter: none !important
                       - box-shadow: none !important
-                      - border-radius: 20px 20px 0px 0px !important
+                      - border-radius: 34px 34px 0px 0px !important
                       - border: none
-                      - border-bottom: 1px solid rgba(142, 142, 147, 0.2)
+                      - border-bottom: 1px solid var(--ha-card-border-color)
+                      - margin-bottom: '-4px !important'
+                      - padding-top: 18px
+                      - padding-bottom: 18px
+                  extra_styles: |
+                    ha-card {
+                      backdrop-filter: none !important;
+                    }
+                    ha-card::before {
+                      backdrop-filter: none !important;
+                    }
                   tap_action:
                     action: navigate
                     navigation_path: /544-noe/bedroom
@@ -847,8 +863,20 @@ views:
                       - background: none !important
                       - backdrop-filter: none !important
                       - box-shadow: none !important
-                      - border-radius: 20px !important
-                      - border: none !important
+                      - border-radius: 0px !important
+                      - border: none
+                      - border-bottom: 1px solid var(--ha-card-border-color)
+                      - margin-bottom: '-4px !important'
+                      - margin-top: '-4px !important'
+                      - padding-top: 18px
+                      - padding-bottom: 18px
+                  extra_styles: |
+                    ha-card {
+                      backdrop-filter: none !important;
+                    }
+                    ha-card::before {
+                      backdrop-filter: none !important;
+                    }
                   tap_action:
                     action: navigate
                     navigation_path: /544-noe/entertainment-room
@@ -861,8 +889,20 @@ views:
                       - background: none !important
                       - backdrop-filter: none !important
                       - box-shadow: none !important
-                      - border-radius: 20px !important
-                      - border: none !important
+                      - border-radius: 0px !important
+                      - border: none
+                      - border-bottom: 1px solid var(--ha-card-border-color)
+                      - margin-bottom: '-4px !important'
+                      - margin-top: '-4px !important'
+                      - padding-top: 18px
+                      - padding-bottom: 18px
+                  extra_styles: |
+                    ha-card {
+                      backdrop-filter: none !important;
+                    }
+                    ha-card::before {
+                      backdrop-filter: none !important;
+                    }
                   tap_action:
                     action: navigate
                     navigation_path: /544-noe/kitchen
@@ -875,8 +915,20 @@ views:
                       - background: none !important
                       - backdrop-filter: none !important
                       - box-shadow: none !important
-                      - border-radius: 20px !important
-                      - border: none !important
+                      - border-radius: 0px !important
+                      - border: none
+                      - border-bottom: 1px solid var(--ha-card-border-color)
+                      - margin-bottom: '-4px !important'
+                      - margin-top: '-4px !important'
+                      - padding-top: 18px
+                      - padding-bottom: 18px
+                  extra_styles: |
+                    ha-card {
+                      backdrop-filter: none !important;
+                    }
+                    ha-card::before {
+                      backdrop-filter: none !important;
+                    }
                   tap_action:
                     action: navigate
                     navigation_path: /544-noe/living-room
@@ -889,8 +941,18 @@ views:
                       - background: none !important
                       - backdrop-filter: none !important
                       - box-shadow: none !important
-                      - border-radius: 20px !important
+                      - border-radius: 0px 0px 34px 34px !important
                       - border: none !important
+                      - margin-top: '-4px !important'
+                      - padding-top: 18px
+                      - padding-bottom: 18px
+                  extra_styles: |
+                    ha-card {
+                      backdrop-filter: none !important;
+                    }
+                    ha-card::before {
+                      backdrop-filter: none !important;
+                    }
                   tap_action:
                     action: navigate
                     navigation_path: /544-noe/studio
