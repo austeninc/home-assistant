@@ -832,7 +832,7 @@ views:
                       - background: none !important
                       - backdrop-filter: none !important
                       - box-shadow: none !important
-                      - border-radius: 20px 20px 0px 0px !important
+                      - border-radius: 34px 34px 0px 0px !important
                       - border: none
                       - border-bottom: 1px solid rgba(142, 142, 147, 0.2)
                   tap_action:
@@ -847,7 +847,7 @@ views:
                       - background: none !important
                       - backdrop-filter: none !important
                       - box-shadow: none !important
-                      - border-radius: 20px !important
+                      - border-radius: 34px !important
                       - border: none !important
                   tap_action:
                     action: navigate
@@ -861,7 +861,7 @@ views:
                       - background: none !important
                       - backdrop-filter: none !important
                       - box-shadow: none !important
-                      - border-radius: 20px !important
+                      - border-radius: 34px !important
                       - border: none !important
                   tap_action:
                     action: navigate
@@ -875,7 +875,7 @@ views:
                       - background: none !important
                       - backdrop-filter: none !important
                       - box-shadow: none !important
-                      - border-radius: 20px !important
+                      - border-radius: 34px !important
                       - border: none !important
                   tap_action:
                     action: navigate
@@ -889,7 +889,7 @@ views:
                       - background: none !important
                       - backdrop-filter: none !important
                       - box-shadow: none !important
-                      - border-radius: 20px !important
+                      - border-radius: 34px !important
                       - border: none !important
                   tap_action:
                     action: navigate
