@@ -2450,42 +2450,138 @@ views:
             icon: hue:bridge-v2
             card_mod:
               class: heading-ios
-          - type: custom:hue-like-light-card
-            area: bedroom
-            icon: local:bed-double
-            scenes: []
-            offShadow: false
-            onShadow: false
-          - type: custom:hue-like-light-card
-            area: entertainment_room
-            icon: local:tv-music-note
-            offShadow: false
-            onShadow: false
-            scenes:
-              - scene.entertainment_room_cozy
-              - scene.entertainment_room_painted_sky
-              - scene.entertainment_room_sexy
-          - type: custom:hue-like-light-card
-            area: hall
-            icon: local:figure-walk
-            scenes: []
-          - type: custom:hue-like-light-card
-            area: kitchen
-            icon: local:cup-and-saucer
-            scenes: []
-          - type: custom:hue-like-light-card
-            area: living_room
-            icon: mdi:sofa
-            scenes:
-              - scene.living_room_bahrain
-              - scene.living_room_candle
-              - scene.living_room_fairfax
-              - scene.living_room_natural_light
-              - scene.living_room_nature_s_colors
-          - type: custom:hue-like-light-card
-            area: outside
-            icon: local:leaf
-            scenes: []
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Bedroom*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: bedroom
+              icon: local:bed-double
+              offShadow: false
+              onShadow: false
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Entertainment*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: entertainment_room
+              icon: local:tv-music-note
+              offShadow: false
+              onShadow: false
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Hall*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: hall
+              icon: local:figure-walk
+              offShadow: false
+              onShadow: false
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Kitchen*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: kitchen
+              icon: local:cup-and-saucer
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Living*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: living_room
+              icon: mdi:sofa
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Studio*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: studio
+              icon: local:paintpalette
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Outside*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: outside
+              icon: local:leaf
       - type: grid
         cards:
           - type: custom:navbar-card
