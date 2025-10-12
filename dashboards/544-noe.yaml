@@ -62,10 +62,6 @@ navbar-templates:
           width: 90% !important;
           box-shadow: none !important;
           filter: drop-shadow(0px 40px 50px #0000005f);
-          /* App cannot handle the displacement filter - sad 
-          backdrop-filter: saturate(180%) blur(2px) url(/local/svg_filters/glassFilter.svg#displacementFilter) !important;
-          
-          backdrop-filter: brightness(1.2) saturate(180%) blur(4px) !important; */
         }
       }
       .route:hover {
