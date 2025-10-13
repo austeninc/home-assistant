@@ -5,13 +5,13 @@ sequence:
     data:
       is_volume_muted: true
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
   - action: media_player.volume_set
     metadata: {}
     data:
       volume_level: 0.01
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
     enabled: true
   - alias: Start the SFX
     action: music_assistant.play_media
@@ -30,7 +30,7 @@ sequence:
       media_type: track
       enqueue: add
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
   - alias: Add 1h to Queue
     action: music_assistant.play_media
     metadata: {}
@@ -39,7 +39,7 @@ sequence:
       media_type: track
       enqueue: add
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
   - alias: Add 1h to Queue
     action: music_assistant.play_media
     metadata: {}
@@ -48,7 +48,7 @@ sequence:
       media_type: track
       enqueue: add
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
   - alias: Add 1h to Queue
     action: music_assistant.play_media
     metadata: {}
@@ -57,7 +57,7 @@ sequence:
       media_type: track
       enqueue: add
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
   - alias: Add 1h to Queue
     action: music_assistant.play_media
     metadata: {}
@@ -66,7 +66,7 @@ sequence:
       media_type: track
       enqueue: add
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
   - alias: Add 1h to Queue
     action: music_assistant.play_media
     metadata: {}
@@ -75,7 +75,7 @@ sequence:
       media_type: track
       enqueue: add
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
   - alias: Add 1h to Queue
     action: music_assistant.play_media
     metadata: {}
@@ -84,7 +84,7 @@ sequence:
       media_type: track
       enqueue: add
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
   - alias: Add 1h to Queue
     action: music_assistant.play_media
     metadata: {}
@@ -93,26 +93,26 @@ sequence:
       media_type: track
       enqueue: add
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
   - action: media_player.repeat_set
     metadata: {}
     data:
-      repeat: one
+      repeat: all
     enabled: true
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
   - action: media_player.volume_mute
     metadata: {}
     data:
       is_volume_muted: false
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
   - action: media_player.volume_set
     metadata: {}
     data:
       volume_level: 0.52
     target:
-      device_id: 70cb88d74aa39d17d31fec56f0081651
+      entity_id: media_player.office_speaker
     enabled: true
   - action: script.fade_volume
     metadata: {}
