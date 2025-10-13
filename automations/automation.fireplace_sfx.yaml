@@ -1,0 +1,230 @@
+alias: Fireplace SFX
+description: ""
+triggers:
+  - trigger: state
+    entity_id:
+      - binary_sensor.fireplace_low
+      - binary_sensor.fireplace_med
+      - binary_sensor.fireplace_high
+    enabled: false
+  - trigger: state
+    entity_id:
+      - binary_sensor.fireplace_power_on
+      - binary_sensor.fireplace_any_heater_on
+      - binary_sensor.fireplace_both_heaters_on
+conditions:
+  - condition: template
+    value_template: >-
+      {{ now() - state_attr('automation.fireplace_sfx_start', 'last_triggered')
+      > timedelta(seconds=45) }}
+    enabled: false
+actions:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.fireplace_power_on
+            state: "off"
+            alias: If Fireplace is Off
+        sequence:
+          - action: script.fade_volume
+            metadata: {}
+            data:
+              target_volume: 0
+              curve: logarithmic
+              target_player: media_player.fireplace_speaker
+              duration: 2
+          - action: media_player.volume_mute
+            metadata: {}
+            data:
+              is_volume_muted: true
+            target:
+              device_id: 33fc555acff32cff887b40d1563e584b
+          - action: media_player.media_stop
+            metadata: {}
+            data: {}
+            target:
+              device_id: 33fc555acff32cff887b40d1563e584b
+        alias: If Fireplace is Off, Fade Out Music
+      - conditions:
+          - alias: If Both Fireplace Heaters are On & Speaker is Playing
+            condition: and
+            conditions:
+              - condition: state
+                entity_id: binary_sensor.fireplace_both_heaters_on
+                state: "on"
+              - condition: device
+                device_id: 33fc555acff32cff887b40d1563e584b
+                domain: media_player
+                entity_id: a8acff5576f418a4461590447341ce9e
+                type: is_playing
+        sequence:
+          - action: script.fade_volume
+            metadata: {}
+            data:
+              target_volume: 0.55
+              curve: logarithmic
+              duration: 2
+              target_player: media_player.fireplace_speaker
+        alias: If Both Fireplace Heaters are On & SFX Playing, Fade to High Volume
+      - conditions:
+          - alias: If Single Fireplace Heater is On & Speaker is Playing
+            condition: and
+            conditions:
+              - condition: state
+                entity_id: binary_sensor.fireplace_any_heater_on
+                state: "on"
+              - condition: device
+                device_id: 33fc555acff32cff887b40d1563e584b
+                domain: media_player
+                entity_id: a8acff5576f418a4461590447341ce9e
+                type: is_playing
+        sequence:
+          - action: script.fade_volume
+            metadata: {}
+            data:
+              target_volume: 0.5
+              curve: logarithmic
+              duration: 2
+              target_player: media_player.fireplace_speaker
+        alias: If Single Fireplace Heater is On & SFX Playing, Fade to Medium Volume
+      - conditions:
+          - alias: If Fireplace is On Low & Speaker is Playing
+            condition: and
+            conditions:
+              - condition: state
+                state: "on"
+                entity_id: binary_sensor.fireplace_power_on
+              - condition: device
+                device_id: 33fc555acff32cff887b40d1563e584b
+                domain: media_player
+                entity_id: a8acff5576f418a4461590447341ce9e
+                type: is_playing
+        sequence:
+          - action: script.fade_volume
+            metadata: {}
+            data:
+              target_volume: 0.44
+              curve: logarithmic
+              duration: 2
+              target_player: media_player.fireplace_speaker
+        alias: If Fireplace is On Low & SFX Playing, Fade to Low Volume
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.fireplace_both_heaters_on
+            state: "on"
+            enabled: true
+          - condition: not
+            conditions:
+              - condition: device
+                device_id: 70cb88d74aa39d17d31fec56f0081651
+                domain: media_player
+                entity_id: 11084c1f9913c25810ae0d1bb1f51737
+                type: is_playing
+        sequence:
+          - action: script.toggle
+            metadata: {}
+            data: {}
+            target:
+              entity_id: script.fireplace_crackle
+          - action: script.fade_volume
+            metadata: {}
+            data:
+              target_volume: 0.52
+              curve: logarithmic
+              duration: 2
+              target_player: media_player.fireplace_speaker
+            enabled: true
+        alias: Start SFX if Both Fireplace Heaters are On & SFX Not Playing
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.fireplace_any_heater_on
+            state: "on"
+            enabled: true
+          - condition: not
+            conditions:
+              - condition: device
+                device_id: 70cb88d74aa39d17d31fec56f0081651
+                domain: media_player
+                entity_id: 11084c1f9913c25810ae0d1bb1f51737
+                type: is_playing
+        sequence:
+          - action: script.toggle
+            metadata: {}
+            data: {}
+            target:
+              entity_id: script.fireplace_crackle
+          - action: script.fade_volume
+            metadata: {}
+            data:
+              target_volume: 0.5
+              curve: logarithmic
+              duration: 2
+              target_player: media_player.fireplace_speaker
+            enabled: true
+        alias: Start SFX if Single Fireplace Heater is On & SFX Not Playing
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.fireplace_power_on
+            state: "on"
+            enabled: true
+          - condition: not
+            conditions:
+              - condition: device
+                device_id: 70cb88d74aa39d17d31fec56f0081651
+                domain: media_player
+                entity_id: 11084c1f9913c25810ae0d1bb1f51737
+                type: is_playing
+        sequence:
+          - action: script.toggle
+            metadata: {}
+            data: {}
+            target:
+              entity_id: script.fireplace_crackle
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 1
+              milliseconds: 0
+          - action: script.fade_volume
+            metadata: {}
+            data:
+              target_volume: 0.44
+              curve: logarithmic
+              duration: 2
+              target_player: media_player.fireplace_speaker
+            enabled: true
+        alias: Start SFX if Fireplace Lights are On & SFX Not Playing
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: binary_sensor.fireplace_both_heaters_on
+                state: "off"
+              - condition: state
+                entity_id: binary_sensor.fireplace_any_heater_on
+                state: "off"
+              - condition: state
+                entity_id: binary_sensor.fireplace_both_heaters_on
+                state: "off"
+            alias: If Fireplace is Completely Off
+        sequence:
+          - action: script.fade_volume
+            metadata: {}
+            data:
+              target_volume: 0
+              curve: logarithmic
+              target_player: media_player.fireplace_speaker
+              duration: 2
+          - action: media_player.volume_mute
+            metadata: {}
+            data:
+              is_volume_muted: false
+            target:
+              device_id: 33fc555acff32cff887b40d1563e584b
+          - action: media_player.media_stop
+            metadata: {}
+            data: {}
+            target:
+              device_id: 33fc555acff32cff887b40d1563e584b
+        alias: Fade Out & Stop SFX if Fireplace is Completely Off
+mode: single
