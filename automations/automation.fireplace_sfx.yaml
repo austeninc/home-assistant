@@ -31,7 +31,7 @@ actions:
             data:
               target_volume: 0
               curve: logarithmic
-              target_player: media_player.fireplace_speaker
+              target_player: media_player.office_speaker
               duration: 2
           - action: media_player.volume_mute
             metadata: {}
@@ -64,7 +64,7 @@ actions:
               target_volume: 0.55
               curve: logarithmic
               duration: 2
-              target_player: media_player.fireplace_speaker
+              target_player: media_player.office_speaker
         alias: If Both Fireplace Heaters are On & SFX Playing, Fade to High Volume
       - conditions:
           - alias: If Single Fireplace Heater is On & Speaker is Playing
@@ -85,7 +85,7 @@ actions:
               target_volume: 0.5
               curve: logarithmic
               duration: 2
-              target_player: media_player.fireplace_speaker
+              target_player: media_player.office_speaker
         alias: If Single Fireplace Heater is On & SFX Playing, Fade to Medium Volume
       - conditions:
           - alias: If Fireplace is On Low & Speaker is Playing
@@ -106,7 +106,7 @@ actions:
               target_volume: 0.44
               curve: logarithmic
               duration: 2
-              target_player: media_player.fireplace_speaker
+              target_player: media_player.office_speaker
         alias: If Fireplace is On Low & SFX Playing, Fade to Low Volume
       - conditions:
           - condition: state
@@ -132,7 +132,7 @@ actions:
               target_volume: 0.52
               curve: logarithmic
               duration: 2
-              target_player: media_player.fireplace_speaker
+              target_player: media_player.office_speaker
             enabled: true
         alias: Start SFX if Both Fireplace Heaters are On & SFX Not Playing
       - conditions:
@@ -159,7 +159,7 @@ actions:
               target_volume: 0.5
               curve: logarithmic
               duration: 2
-              target_player: media_player.fireplace_speaker
+              target_player: media_player.office_speaker
             enabled: true
         alias: Start SFX if Single Fireplace Heater is On & SFX Not Playing
       - conditions:
@@ -191,7 +191,7 @@ actions:
               target_volume: 0.44
               curve: logarithmic
               duration: 2
-              target_player: media_player.fireplace_speaker
+              target_player: media_player.office_speaker
             enabled: true
         alias: Start SFX if Fireplace Lights are On & SFX Not Playing
       - conditions:
@@ -213,7 +213,7 @@ actions:
             data:
               target_volume: 0
               curve: logarithmic
-              target_player: media_player.fireplace_speaker
+              target_player: media_player.office_speaker
               duration: 2
           - action: media_player.volume_mute
             metadata: {}

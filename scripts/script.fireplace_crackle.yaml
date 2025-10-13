@@ -1,0 +1,126 @@
+alias: Fireplace Crackle
+sequence:
+  - action: media_player.volume_mute
+    metadata: {}
+    data:
+      is_volume_muted: true
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.01
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+    enabled: true
+  - alias: Start the SFX
+    action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: The Fireplace 60
+      media_type: track
+      enqueue: play
+    target:
+      entity_id: media_player.office_speaker
+  - alias: Add 1h to Queue
+    action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: The Fireplace 60
+      media_type: track
+      enqueue: add
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+  - alias: Add 1h to Queue
+    action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: The Fireplace 60
+      media_type: track
+      enqueue: add
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+  - alias: Add 1h to Queue
+    action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: The Fireplace 60
+      media_type: track
+      enqueue: add
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+  - alias: Add 1h to Queue
+    action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: The Fireplace 60
+      media_type: track
+      enqueue: add
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+  - alias: Add 1h to Queue
+    action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: The Fireplace 60
+      media_type: track
+      enqueue: add
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+  - alias: Add 1h to Queue
+    action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: The Fireplace 60
+      media_type: track
+      enqueue: add
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+  - alias: Add 1h to Queue
+    action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: The Fireplace 60
+      media_type: track
+      enqueue: add
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+  - alias: Add 1h to Queue
+    action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: The Fireplace 60
+      media_type: track
+      enqueue: add
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+  - action: media_player.repeat_set
+    metadata: {}
+    data:
+      repeat: one
+    enabled: true
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+  - action: media_player.volume_mute
+    metadata: {}
+    data:
+      is_volume_muted: false
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.52
+    target:
+      device_id: 70cb88d74aa39d17d31fec56f0081651
+    enabled: true
+  - action: script.fade_volume
+    metadata: {}
+    data:
+      target_volume: 0.52
+      curve: logarithmic
+      target_player: media_player.office_speaker
+      duration: 2
+    enabled: false
+description: ""
+icon: mdi:fireplace
