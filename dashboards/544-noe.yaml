@@ -374,17 +374,12 @@ views:
             visibility:
               - condition: and
                 conditions:
-                  - condition: or
-                    conditions:
-                      - condition: numeric_state
-                        entity: cover.bedroom_blinds_cover
-                        below: 30
-                      - condition: numeric_state
-                        entity: cover.blinds_cover
-                        below: 30
                   - condition: state
                     entity: sun.sun
                     state: above_horizon
+                  - condition: numeric_state
+                    entity: sensor.blinds_minimum_current_position
+                    below: 30
             badge_color: var(--cyan-color)
             color: |-
               {% if 'light' in states('input_select.current_theme') %}
@@ -3682,19 +3677,131 @@ views:
             card:
               type: custom:modern-circular-gauge-badge
               entity: sensor.blinds_battery
-              needle: true
+              needle: false
               show_state: true
-              show_icon: true
               show_name: true
-              min: 0
-              max: 100
-              smooth_segments: false
+              start_from_zero: true
+              show_seconds: false
               name: Blinds
-              segments:
-                - from: 0
-                  color: var(--green-color)
-                - from: |
-                    {{ states('sensor.blinds_battery') }}
+              segments: []
+              gauge_foreground_style:
+                color: var(--error-color)
+              gauge_background_style:
+                color: var(--divider-color)
+              visibility:
+                - condition: numeric_state
+                  entity: sensor.front_door_keypad_battery
+                  below: 10
+          - type: custom:auto-entities
+            filter:
+              include:
+                - options:
+                    type: custom:modern-circular-gauge
+                    secondary: {}
+                    tertiary: {}
+                    header_position: bottom
+                    smooth_segments: false
+                    show_header: false
+                    show_state: true
+                    show_unit: false
+                    show_icon: false
+                    adaptive_icon_color: false
+                    adaptive_state_color: false
+                    state_text: >
+                      {{ state_attr('this.entity_id', 'friendly_name') |
+                      replace(' Battery', '') }}
+                    state_font_size: 20
+                    grid_options:
+                      columns: 1
+                      rows: 1
+                    card_mod:
+                      class: gauge-ios
+                    gauge_foreground_style:
+                      width: 8
+                    gauge_background_style:
+                      width: 8
+                      color: '#8E8E93'
+                      opacity: 0.2
+                    segments:
+                      - from: 0
+                        color: var(--error-color)
+                      - from: 20
+                        color: var(--error-color)
+                      - from: 50
+                        color: var(--success-color)
+                  domain: sensor
+                  name: '*attery*'
+              exclude:
+                - options: {}
+                  name: /(iP)|(Mac)|(Granary)|(CLEO)/
+                - options: {}
+                  state: unavailable
+            card:
+              type: custom:modern-circular-gauge-badge
+              entity: sensor.blinds_battery
+              needle: false
+              show_state: true
+              show_name: true
+              start_from_zero: true
+              show_seconds: false
+              name: Blinds
+              segments: []
+              gauge_foreground_style:
+                color: var(--error-color)
+              gauge_background_style:
+                color: var(--divider-color)
+              visibility:
+                - condition: numeric_state
+                  entity: sensor.front_door_keypad_battery
+                  below: 10
+          - type: custom:auto-entities
+            card:
+              square: false
+              type: grid
+            card_param: cards
+            filter:
+              include:
+                - options:
+                    type: custom:modern-circular-gauge-badge
+                    secondary: {}
+                    tertiary: {}
+                    smooth_segments: false
+                    show_state: true
+                    show_unit: false
+                    show_icon: true
+                    adaptive_icon_color: false
+                    adaptive_state_color: false
+                    state_text: >
+                      {{ state_attr('this.entity_id', 'friendly_name') |
+                      replace(' Battery', '') }}
+                    state_font_size: 20
+                    grid_options:
+                      columns: 1
+                      rows: 1
+                    card_mod:
+                      class: gauge-ios
+                    gauge_background_style:
+                      color: var(--divider-color)
+                      opacity: 0.2
+                    segments:
+                      - from: 0
+                        color: var(--error-color)
+                      - from: 20
+                        color: var(--error-color)
+                      - from: 50
+                        color: var(--success-color)
+                  domain: sensor
+                  name: '*attery*'
+              exclude:
+                - options: {}
+                  name: /(iP)|(Mac)|(Granary)|(CLEO)/
+                - options: {}
+                  state: unavailable
+            sort:
+              numeric: true
+              reverse: false
+              ignore_case: false
+              method: state
       - type: grid
         cards:
           - type: heading

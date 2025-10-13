@@ -374,17 +374,12 @@ views:
             visibility:
               - condition: and
                 conditions:
-                  - condition: or
-                    conditions:
-                      - condition: numeric_state
-                        entity: cover.bedroom_blinds_cover
-                        below: 30
-                      - condition: numeric_state
-                        entity: cover.blinds_cover
-                        below: 30
                   - condition: state
                     entity: sun.sun
                     state: above_horizon
+                  - condition: numeric_state
+                    entity: sensor.blinds_minimum_current_position
+                    below: 30
             badge_color: var(--cyan-color)
             color: |-
               {% if 'light' in states('input_select.current_theme') %}
@@ -1844,60 +1839,6 @@ views:
         cards:
           - type: custom:navbar-card
             template: room_sub_nav
-      - type: grid
-        cards:
-          - type: heading
-            heading: Dockstream
-            heading_style: title
-            card_mod:
-              class: heading-ios
-          - type: tile
-            entity: sensor.dockstream_current_weight
-          - type: tile
-            entity: sensor.dockstream_remaining_cleaning_days
-          - type: tile
-            entity: sensor.dockstream_remaining_filter_day
-          - type: tile
-            entity: sensor.dockstream_remaining_water
-          - type: tile
-            entity: sensor.dockstream_water_interval
-          - type: tile
-            entity: sensor.dockstream_water_time_duration
-          - type: tile
-            entity: binary_sensor.dockstream_wi_fi
-          - type: tile
-            entity: sensor.dockstream_wi_fi_signal_strength
-      - type: grid
-        cards:
-          - type: heading
-            heading: Granary
-            heading_style: title
-            card_mod:
-              class: heading-ios
-          - type: tile
-            entity: sensor.granary_battery_level
-          - type: tile
-            entity: sensor.granary_buttons_lock
-          - type: tile
-            entity: sensor.granary_desiccant_remaining_days
-          - type: tile
-            entity: binary_sensor.granary_food_dispenser
-          - type: tile
-            entity: binary_sensor.granary_food_status
-          - type: tile
-            entity: sensor.granary_last_feed_time
-          - type: tile
-            entity: binary_sensor.granary_sleep_mode
-          - type: tile
-            entity: sensor.granary_today_s_feeding_plan
-          - type: tile
-            entity: sensor.granary_today_s_feeding_quantity
-          - type: tile
-            entity: sensor.granary_today_s_feeding_times
-          - type: tile
-            entity: binary_sensor.granary_wi_fi
-          - type: tile
-            entity: sensor.granary_wi_fi_signal_strength
     header:
       card:
         type: markdown
