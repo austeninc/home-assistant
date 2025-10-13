@@ -613,6 +613,8 @@ views:
             features_position: bottom
             icon_tap_action:
               action: toggle
+      - type: grid
+        cards:
           - type: heading
             icon: local:circle-hexagonpath-fill
             heading: Ongoing Activity
@@ -1009,10 +1011,6 @@ views:
             secondary_info_attribute: wind_speed
         column_span: 1
       - type: grid
-        cards: []
-      - type: grid
-        cards: []
-      - type: grid
         cards:
           - type: custom:navbar-card
             template: 544_nav
@@ -1105,7 +1103,7 @@ views:
             entity: input_boolean.guest_mode
             state: 'on'
     type: sections
-    max_columns: 2
+    max_columns: 3
     cards: []
     icon: local:sparkles-rectangle-stack
     header:
