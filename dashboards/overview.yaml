@@ -3456,37 +3456,19 @@ views:
               class: heading-ios
           - type: custom:auto-entities
             card:
-              type: entities
-            filter:
-              include:
-                - options:
-                    state_color: true
-                    icon: local:xmark-circle-fill
-                  domain: sensor
-                  name: '*attery*'
-                  state: unavailable
-              exclude:
-                - options: {}
-                  name: /(iP)|(Mac)/
-                - options: {}
-          - type: custom:auto-entities
-            card:
               square: false
               type: grid
-              columns: 3
             card_param: cards
             filter:
               include:
                 - options:
-                    type: custom:modern-circular-gauge
+                    type: custom:modern-circular-gauge-badge
                     secondary: {}
                     tertiary: {}
-                    header_position: bottom
                     smooth_segments: false
-                    show_header: false
                     show_state: true
                     show_unit: false
-                    show_icon: false
+                    show_icon: true
                     adaptive_icon_color: false
                     adaptive_state_color: false
                     state_text: >
@@ -3498,11 +3480,24 @@ views:
                       rows: 1
                     card_mod:
                       class: gauge-ios
-                    gauge_foreground_style:
-                      width: 8
+                      style:
+                        .: |
+                          ha-badge {
+                            align-items: flex-start !important;
+                          }
+                          div[slot="icon"] {
+                                min-width: calc(var(--ha-badge-size, 36px) - 2px) !important;
+                          }
+                        ha-badge$: |
+                          .badge {
+                            min-width: 100% !important;
+                            justify-content: flex-start !important;
+                            .info {
+                              text-align: left;
+                            }
+                          }
                     gauge_background_style:
-                      width: 8
-                      color: '#8E8E93'
+                      color: var(--divider-color)
                       opacity: 0.2
                     segments:
                       - from: 0
@@ -3523,125 +3518,6 @@ views:
               reverse: false
               ignore_case: false
               method: state
-          - type: custom:mod-card
-            style: |
-              ha-card {
-                overflow: hidden;
-                padding: 0;
-              }
-            card:
-              type: vertical-stack
-              cards:
-                - type: custom:auto-entities
-                  card:
-                    type: entities
-                  filter:
-                    include:
-                      - options:
-                          state_color: true
-                          icon: local:xmark-circle-fill
-                        domain: sensor
-                        name: '*attery*'
-                        state: unavailable
-                    exclude:
-                      - options: {}
-                        name: /(iP)|(Mac)/
-                      - options: {}
-                  styles:
-                    card:
-                      - background: none !important
-                      - backdrop-filter: none !important
-                      - box-shadow: none !important
-                      - border-radius: 20px !important
-                      - border: none !important
-                  tap_action:
-                    action: navigate
-                    navigation_path: /lovelace/bedroom
-                - type: custom:button-card
-                  template: ios_row
-                  name: Entertainment Room
-                  icon: local:tv-music-note
-                  styles:
-                    card:
-                      - background: none !important
-                      - backdrop-filter: none !important
-                      - box-shadow: none !important
-                      - border-radius: 20px !important
-                      - border: none !important
-                  tap_action:
-                    action: navigate
-                    navigation_path: /lovelace/entertainment-room
-                - type: custom:button-card
-                  template: ios_row
-                  name: Kitchen
-                  icon: local:cup-and-saucer
-                  styles:
-                    card:
-                      - background: none !important
-                      - backdrop-filter: none !important
-                      - box-shadow: none !important
-                      - border-radius: 20px !important
-                      - border: none !important
-                  tap_action:
-                    action: navigate
-                    navigation_path: /lovelace/kitchen
-                - type: custom:button-card
-                  template: ios_row
-                  name: Living Room
-                  icon: mdi:sofa-outline
-                  styles:
-                    card:
-                      - background: none !important
-                      - backdrop-filter: none !important
-                      - box-shadow: none !important
-                      - border-radius: 20px !important
-                      - border: none !important
-                  tap_action:
-                    action: navigate
-                    navigation_path: /lovelace/living-room
-                - type: custom:button-card
-                  template: ios_row
-                  name: Studio
-                  icon: local:paintpalette
-                  styles:
-                    card:
-                      - background: none !important
-                      - backdrop-filter: none !important
-                      - box-shadow: none !important
-                      - border-radius: 20px !important
-                      - border: none !important
-                  tap_action:
-                    action: navigate
-                    navigation_path: /lovelace/studio
-          - type: entity
-            entity: sensor.bathroom_thermometer_battery
-            state_color: false
-            grid_options:
-              columns: 12
-              rows: 2
-            icon: local:x-circle-fill
-          - type: entities
-            entities:
-              - entity: sensor.bathroom_thermometer_battery
-          - type: custom:config-template-card
-            entities:
-              - sensor.blinds_battery
-            card:
-              type: custom:modern-circular-gauge-badge
-              entity: sensor.blinds_battery
-              needle: true
-              show_state: true
-              show_icon: true
-              show_name: true
-              min: 0
-              max: 100
-              smooth_segments: false
-              name: Blinds
-              segments:
-                - from: 0
-                  color: var(--green-color)
-                - from: |
-                    {{ states('sensor.blinds_battery') }}
       - type: grid
         cards:
           - type: heading
@@ -3702,60 +3578,6 @@ views:
                   attribute: azimuth
                   icon: mdi:angle-acute
                   name: Sun azimuth
-      - type: grid
-        cards:
-          - type: heading
-            heading: Dockstream
-            heading_style: title
-            card_mod:
-              class: heading-ios
-          - type: tile
-            entity: sensor.dockstream_current_weight
-          - type: tile
-            entity: sensor.dockstream_remaining_cleaning_days
-          - type: tile
-            entity: sensor.dockstream_remaining_filter_day
-          - type: tile
-            entity: sensor.dockstream_remaining_water
-          - type: tile
-            entity: sensor.dockstream_water_interval
-          - type: tile
-            entity: sensor.dockstream_water_time_duration
-          - type: tile
-            entity: binary_sensor.dockstream_wi_fi
-          - type: tile
-            entity: sensor.dockstream_wi_fi_signal_strength
-      - type: grid
-        cards:
-          - type: heading
-            heading: Granary
-            heading_style: title
-            card_mod:
-              class: heading-ios
-          - type: tile
-            entity: sensor.granary_battery_level
-          - type: tile
-            entity: sensor.granary_buttons_lock
-          - type: tile
-            entity: sensor.granary_desiccant_remaining_days
-          - type: tile
-            entity: binary_sensor.granary_food_dispenser
-          - type: tile
-            entity: binary_sensor.granary_food_status
-          - type: tile
-            entity: sensor.granary_last_feed_time
-          - type: tile
-            entity: binary_sensor.granary_sleep_mode
-          - type: tile
-            entity: sensor.granary_today_s_feeding_plan
-          - type: tile
-            entity: sensor.granary_today_s_feeding_quantity
-          - type: tile
-            entity: sensor.granary_today_s_feeding_times
-          - type: tile
-            entity: binary_sensor.granary_wi_fi
-          - type: tile
-            entity: sensor.granary_wi_fi_signal_strength
       - type: grid
         cards:
           - type: custom:navbar-card
