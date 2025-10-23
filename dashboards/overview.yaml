@@ -317,15 +317,17 @@ views:
               action: navigate
               navigation_path: /lovelace/climate-control?anchor=fireplace
           - type: custom:mushroom-template-card
-            primary: Turn Off the Fireplace
             icon: local:fireplace
             entity: fan.fireplace
             badge_icon: local:sparkle
             multiline_secondary: false
             tap_action:
-              action: perform-action
-              perform_action: script.fireplace_lights_only
-              target: {}
+              action: navigate
+              confirmation:
+                text: >-
+                  This button is being replaced by the Fireplace badge at the
+                  top of this page.
+              navigation_path: /lovelace/climate-control?anchor=fireplace
             grid_options:
               columns: 12
               rows: 1
@@ -343,7 +345,7 @@ views:
                   - condition: state
                     entity: fan.fireplace
                     state: 'on'
-            badge_color: var(--orange-color)
+            badge_color: orange
             color: |-
               {% if 'light' in states('input_select.current_theme') %}
                 #8E8E93
@@ -354,6 +356,8 @@ views:
             icon_tap_action:
               action: navigate
               navigation_path: /lovelace/climate-control?anchor=fireplace
+            primary: Tap the "Fireplace is On" Badge Above for Controls
+            secondary: Turn Off the Fireplace (Deprecated)
           - type: custom:mushroom-template-card
             primary: Open Blinds
             secondary: Bedroom & Studio
@@ -1076,23 +1080,49 @@ views:
         show_icon: true
         entity: weather.forecast_home
       - type: custom:mushroom-template-badge
-        content: Guest Mode Active
-        color: >-
-          {% if states('input_select.current_theme') == 'ios-light' %}
-            #FF2D55
-          {% elif states('input_select.current_theme') == 'ios-dark' %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-light' %}
-            #FF2D55
-          {% elif states('input_select.current_theme') == 'macos-light-vibrant'
-          %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-dark' %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-dark-vibrant'
-          %}
-            #FF375F
+        content: Fireplace is On
+        icon: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            local:flame-fill
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            local:flame
           {% endif %}
+        color: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            orange
+          {% endif %}
+        entity: fan.fireplace
+        label: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            High Heat
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            Low Heat
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            Lights Only
+          {% endif %}
+        visibility:
+          - condition: and
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sun.sun
+                    state: above_horizon
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: sunny
+              - condition: state
+                entity: fan.fireplace
+                state: 'on'
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/living-room?anchor=fireplace
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
         entity: input_boolean.guest_mode
         icon: local:person-fill-badge-plus
         tap_action:
@@ -1102,6 +1132,8 @@ views:
           - condition: state
             entity: input_boolean.guest_mode
             state: 'on'
+        color: blue
+        label: Active
     type: sections
     max_columns: 3
     cards: []
@@ -2005,6 +2037,19 @@ views:
             icon: local:thermometer-variable
             card_mod:
               class: heading-ios
+          - type: custom:anchor-card
+            anchor_id: fireplace
+            negative_margin: 13
+            timeout: 50
+            offset: 0
+            transition: 0
+            card_mod:
+              style: |
+                ha-card {
+                  background-color: rgba(0, 0, 0, 0); !important;
+                  -webkit-backdrop-filter: blur(0px); !important;
+                  backdrop-filter: blur(0px) !important;
+                  }
           - type: vertical-stack
             cards:
               - features:
@@ -2057,6 +2102,49 @@ views:
         card_mod:
           class: heading-ios
     cards: []
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Fireplace is On
+        icon: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            local:flame-fill
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            local:flame
+          {% endif %}
+        color: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            orange
+          {% endif %}
+        entity: fan.fireplace
+        label: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            High Heat
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            Low Heat
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            Lights Only
+          {% endif %}
+        visibility:
+          - condition: and
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sun.sun
+                    state: above_horizon
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: sunny
+              - condition: state
+                entity: fan.fireplace
+                state: 'on'
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/living-room?anchor=fireplace
   - type: sections
     max_columns: 3
     title: Studio
@@ -3396,6 +3484,48 @@ views:
         entity: sensor.home_temperature
         name: Inside Avg
         icon: local:thermometer-medium
+      - type: custom:mushroom-template-badge
+        content: Fireplace is On
+        icon: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            local:flame-fill
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            local:flame
+          {% endif %}
+        color: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            orange
+          {% endif %}
+        entity: fan.fireplace
+        label: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            High Heat
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            Low Heat
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            Lights Only
+          {% endif %}
+        visibility:
+          - condition: and
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sun.sun
+                    state: above_horizon
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: sunny
+              - condition: state
+                entity: fan.fireplace
+                state: 'on'
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/climate-control?anchor=fireplace
     header:
       card:
         type: markdown
@@ -3591,6 +3721,48 @@ views:
       badges_position: bottom
       badges_wrap: wrap
     badges:
+      - type: custom:mushroom-template-badge
+        content: Fireplace is On
+        icon: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            local:flame-fill
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            local:flame
+          {% endif %}
+        color: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            orange
+          {% endif %}
+        entity: fan.fireplace
+        label: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            High Heat
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            Low Heat
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            Lights Only
+          {% endif %}
+        visibility:
+          - condition: and
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sun.sun
+                    state: above_horizon
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: sunny
+              - condition: state
+                entity: fan.fireplace
+                state: 'on'
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/living-room?anchor=fireplace
       - type: custom:mushroom-template-badge
         content: Guest Mode Active
         color: >-
