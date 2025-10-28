@@ -1064,21 +1064,6 @@ views:
             below: 10
         gauge_background_style:
           color: var(--divider-color)
-      - type: entity
-        show_name: true
-        show_state: true
-        show_icon: true
-        entity: sensor.home_temperature
-        name: Inside
-        tap_action:
-          action: navigate
-          navigation_path: /lovelace/climate-control
-        icon: local:thermometer-medium
-      - type: entity
-        show_name: false
-        show_state: true
-        show_icon: true
-        entity: weather.forecast_home
       - type: custom:mushroom-template-badge
         content: Fireplace is On
         icon: |-
@@ -1121,6 +1106,21 @@ views:
         tap_action:
           action: navigate
           navigation_path: /lovelace/living-room?anchor=fireplace
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.home_temperature
+        name: Inside
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/climate-control
+        icon: local:thermometer-medium
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: weather.forecast_home
       - type: custom:mushroom-template-badge
         content: Guest Mode
         entity: input_boolean.guest_mode
@@ -1400,6 +1400,19 @@ views:
         tap_action:
           action: navigate
           navigation_path: /lovelace/bedroom?anchor=climate
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
     header:
       card:
         type: markdown
@@ -1771,6 +1784,19 @@ views:
         tap_action:
           action: navigate
           navigation_path: /lovelace/entertainment-room?anchor=climate
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
     dense_section_placement: true
     header:
       card:
@@ -1807,14 +1833,24 @@ views:
             heading_style: title
             heading: Control
             visibility:
-              - condition: and
+              - condition: or
                 conditions:
-                  - condition: state
-                    entity: media_player.kitchen_homepod
-                    state_not: idle
-                  - condition: state
-                    entity: media_player.kitchen_homepod
-                    state_not: 'off'
+                  - condition: and
+                    conditions:
+                      - condition: state
+                        entity: media_player.kitchen_homepod_mini
+                        state_not: idle
+                      - condition: state
+                        entity: media_player.kitchen_homepod_mini
+                        state_not: 'off'
+                  - condition: and
+                    conditions:
+                      - condition: state
+                        entity: media_player.kitchen_homepod
+                        state_not: idle
+                      - condition: state
+                        entity: media_player.kitchen_homepod
+                        state_not: 'off'
             card_mod:
               class: heading-ios
           - type: custom:mini-media-player
@@ -1834,6 +1870,24 @@ views:
                     state_not: idle
                   - condition: state
                     entity: media_player.kitchen_homepod
+                    state_not: 'off'
+          - type: custom:mini-media-player
+            entity: media_player.kitchen_homepod_mini
+            volume_stateless: false
+            toggle_power: true
+            group: false
+            artwork: cover
+            source: full
+            sound_mode: full
+            info: scroll
+            visibility:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity: media_player.kitchen_homepod_mini
+                    state_not: idle
+                  - condition: state
+                    entity: media_player.kitchen_homepod_mini
                     state_not: 'off'
           - type: heading
             heading: Play Something
@@ -1877,6 +1931,20 @@ views:
         card_mod:
           class: heading-ios
     cards: []
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
   - type: sections
     max_columns: 3
     title: Living Room
@@ -2145,6 +2213,19 @@ views:
         tap_action:
           action: navigate
           navigation_path: /lovelace/living-room?anchor=fireplace
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
   - type: sections
     max_columns: 3
     title: Studio
@@ -2309,6 +2390,20 @@ views:
         card_mod:
           class: heading-ios
     cards: []
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
   - type: sections
     max_columns: 2
     icon: local:lightbulb-circle
@@ -2626,6 +2721,20 @@ views:
       layout: responsive
       badges_position: bottom
       badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
   - type: sections
     max_columns: 2
     title: Media
@@ -2911,6 +3020,20 @@ views:
       layout: responsive
       badges_position: bottom
       badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
   - type: sections
     max_columns: 3
     path: climate-control
@@ -3526,6 +3649,19 @@ views:
         tap_action:
           action: navigate
           navigation_path: /lovelace/climate-control?anchor=fireplace
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
     header:
       card:
         type: markdown
@@ -3656,6 +3792,25 @@ views:
               class: heading-ios
           - type: heading
             heading_style: subtitle
+            icon: local:person-wave-2
+            heading: Presence
+            card_mod:
+              class: sub-heading-ios
+          - type: entity
+            entity: binary_sensor.home_or_away
+            grid_options:
+              rows: 2
+              columns: full
+          - type: entities
+            entities:
+              - entity: person.austen_clement
+                secondary_info: last-changed
+              - entity: person.bryan_ignacio
+                secondary_info: last-updated
+              - entity: input_boolean.guest_mode
+              - entity: binary_sensor.guest_in_calendar
+          - type: heading
+            heading_style: subtitle
             icon: local:cat-circle
             heading: Litter
             card_mod:
@@ -3764,23 +3919,7 @@ views:
           action: navigate
           navigation_path: /lovelace/living-room?anchor=fireplace
       - type: custom:mushroom-template-badge
-        content: Guest Mode Active
-        color: >-
-          {% if states('input_select.current_theme') == 'ios-light' %}
-            #FF2D55
-          {% elif states('input_select.current_theme') == 'ios-dark' %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-light' %}
-            #FF2D55
-          {% elif states('input_select.current_theme') == 'macos-light-vibrant'
-          %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-dark' %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-dark-vibrant'
-          %}
-            #FF375F
-          {% endif %}
+        content: Guest Mode
         entity: input_boolean.guest_mode
         icon: local:person-fill-badge-plus
         tap_action:
@@ -3790,6 +3929,8 @@ views:
           - condition: state
             entity: input_boolean.guest_mode
             state: 'on'
+        color: blue
+        label: Active
       - type: entity
         show_name: true
         show_state: true
@@ -3803,8 +3944,3 @@ views:
         name: Aksel
         needle: true
         show_name: true
-      - type: entity
-        show_name: false
-        show_state: true
-        show_icon: true
-        entity: counter.litter_use_tracker
