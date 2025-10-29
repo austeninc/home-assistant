@@ -2,7 +2,6 @@ home-assistant-default-for-ios-by-austen:
   name: Home Assistant default styling for iOS by Austen
   version: v0.5
   creator: austeninc (based on v1.8 by Clooos https://github.com/Clooos/Bubble-Card/discussions/1230)
-  link: https://github.com/austeninc/home-assistant/themes/bubble-card-modules
   supported:
     - button
     - calendar
@@ -98,12 +97,20 @@ home-assistant-default-for-ios-by-austen:
     }
 
     .bubble-pop-up-background { 
-        filter: brightness(0.96); /* Improve pop-up background contrast */
+        filter: brightness(0.9); /* Improve pop-up background contrast */
         --bubble-pop-up-border-radius: calc(var(--ha-card-border-radius, 12px) * 1.4);
     }
 
     .bubble-header-container {
-        --bubble-secondary-background-color: var(--background-color-2); 
+        --bubble-secondary-background-color: none !important; 
+    }
+
+    .bubble-header {
+        color: white !important;
+    }
+
+    .bubble-header-container > .bubble-header > .bubble-container {
+        backdrop-filter: none !important;
     }
 
     ha-select {

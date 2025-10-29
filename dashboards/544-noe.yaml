@@ -614,6 +614,30 @@ views:
             icon_tap_action:
               action: toggle
           - type: heading
+            icon: local:pumpkin-05
+            heading_style: title
+            heading: Spooky Season
+            card_mod:
+              class: heading-ios
+          - type: custom:mushroom-template-card
+            secondary: Tap for Seasonal Experiences
+            icon: local:boogie_man
+            multiline_secondary: false
+            tap_action:
+              action: navigate
+              navigation_path: '#spooky-season'
+            grid_options:
+              columns: 12
+              rows: 1
+            entity: script.nature_s_colors
+            features_position: bottom
+            icon_tap_action:
+              action: none
+            primary: Haunted Delights
+            color: var(--indigo-color)
+      - type: grid
+        cards:
+          - type: heading
             icon: local:circle-hexagonpath-fill
             heading: Ongoing Activity
             heading_style: title
@@ -1009,9 +1033,65 @@ views:
             secondary_info_attribute: wind_speed
         column_span: 1
       - type: grid
-        cards: []
-      - type: grid
-        cards: []
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: custom:bubble-card
+                card_type: pop-up
+                name: Haunted Delights
+                icon: local:boogie_man
+                hash: '#spooky-season'
+                button_type: name
+                show_header: true
+                show_icon: true
+                scrolling_effect: false
+                show_name: true
+                bg_opacity: '0'
+                bg_color: var(--card-background-color)
+                modules:
+                  - home-assistant-default-for-ios-by-austen
+                hide_backdrop: true
+                button_action: {}
+              - type: heading
+                icon: local:haunted_house-02
+                heading_style: subtitle
+                heading: Ghoulish Lighting
+                card_mod:
+                  class: sub-heading-ios
+              - type: vertical-stack
+                cards:
+                  - type: custom:mushroom-template-card
+                    primary: Phantom
+                    secondary: An eerie glow filled the house...
+                    icon: local:ghost-02
+                    features_position: bottom
+                    entity: script.phantom_everywhere
+                    tap_action:
+                      action: toggle
+                    icon_tap_action:
+                      action: toggle
+                    color: rgba(0, 129, 152, 1.0)
+                  - type: custom:mushroom-template-card
+                    primary: Toil & Trouble
+                    secondary: Something wicked this way comes!
+                    icon: local:cauldron
+                    features_position: bottom
+                    entity: script.toil_trouble_everywhere
+                    tap_action:
+                      action: toggle
+                    icon_tap_action:
+                      action: toggle
+                    color: rgba(0, 137, 50, 1.0)
+              - type: heading
+                icon: local:ghost-04
+                heading_style: subtitle
+                heading: Ghostly Apparitions
+                card_mod:
+                  class: sub-heading-ios
+              - type: entities
+                entities:
+                  - entity: input_boolean.moaning_myrtle
+                state_color: false
       - type: grid
         cards:
           - type: custom:navbar-card
@@ -1105,7 +1185,7 @@ views:
             entity: input_boolean.guest_mode
             state: 'on'
     type: sections
-    max_columns: 2
+    max_columns: 3
     cards: []
     icon: local:sparkles-rectangle-stack
     header:
@@ -3593,6 +3673,44 @@ views:
                 secondary_info: last-triggered
                 icon: mdi:emoticon-poop-outline
             state_color: false
+          - type: heading
+            heading_style: subtitle
+            icon: local:person-wave-2
+            heading: Presence
+            card_mod:
+              class: sub-heading-ios
+          - type: entities
+            entities:
+              - entity: person.austen_clement
+                secondary_info: last-changed
+              - entity: person.bryan_ignacio
+                secondary_info: last-updated
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: person.austen_clement
+                icon_type: entity-picture
+                primary_info: state
+                secondary_info: last-changed
+              - type: custom:mushroom-entity-card
+                entity: person.bryan_ignacio
+                icon_type: entity-picture
+                primary_info: state
+                secondary_info: last-changed
+              - type: horizontal-stack
+                cards:
+                  - type: custom:mushroom-entity-card
+                    entity: person.austen_clement
+                    icon_type: entity-picture
+                    primary_info: state
+                    secondary_info: last-changed
+                    fill_container: true
+                  - type: custom:mushroom-entity-card
+                    entity: person.bryan_ignacio
+                    icon_type: entity-picture
+                    primary_info: state
+                    secondary_info: last-changed
+                    fill_container: true
         visibility:
           - condition: user
             users:
