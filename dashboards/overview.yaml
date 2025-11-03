@@ -179,6 +179,28 @@ views:
       - type: grid
         cards:
           - type: heading
+            icon: local:pumpkin-05
+            heading_style: title
+            heading: Spooky Season
+            card_mod:
+              class: heading-ios
+          - type: custom:mushroom-template-card
+            secondary: Tap for Seasonal Experiences
+            icon: local:boogie_man
+            multiline_secondary: false
+            tap_action:
+              action: navigate
+              navigation_path: '#spooky-season'
+            grid_options:
+              columns: 12
+              rows: 1
+            entity: script.nature_s_colors
+            features_position: bottom
+            icon_tap_action:
+              action: none
+            primary: Haunted Delights
+            color: var(--indigo-color)
+          - type: heading
             icon: local:bolt
             heading: Quick Actions
             heading_style: title
@@ -617,28 +639,6 @@ views:
             features_position: bottom
             icon_tap_action:
               action: toggle
-          - type: heading
-            icon: local:pumpkin-05
-            heading_style: title
-            heading: Spooky Season
-            card_mod:
-              class: heading-ios
-          - type: custom:mushroom-template-card
-            secondary: Tap for Seasonal Experiences
-            icon: local:boogie_man
-            multiline_secondary: false
-            tap_action:
-              action: navigate
-              navigation_path: '#spooky-season'
-            grid_options:
-              columns: 12
-              rows: 1
-            entity: script.nature_s_colors
-            features_position: bottom
-            icon_tap_action:
-              action: none
-            primary: Haunted Delights
-            color: var(--indigo-color)
       - type: grid
         cards:
           - type: heading
@@ -1764,13 +1764,31 @@ views:
               - condition: and
                 conditions:
                   - condition: state
-                    entity: media_player.entertainment_room_homepods
+                    entity: media_player.entertainment_room_homepods_2
                     state_not: idle
                   - condition: state
-                    entity: media_player.entertainment_room_homepods
+                    entity: media_player.entertainment_room_homepods_2
                     state_not: 'off'
             card_mod:
               class: heading-ios
+          - type: custom:mini-media-player
+            entity: media_player.entertainment_room_homepods_2
+            volume_stateless: false
+            toggle_power: true
+            group: false
+            artwork: cover
+            source: full
+            sound_mode: full
+            info: scroll
+            visibility:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity: media_player.entertainment_room_homepods_2
+                    state_not: idle
+                  - condition: state
+                    entity: media_player.entertainment_room_homepods_2
+                    state_not: 'off'
           - type: custom:mini-media-player
             entity: media_player.entertainment_room_homepods
             volume_stateless: false
@@ -1996,6 +2014,24 @@ views:
             icon: local:lightbulb-circle
             card_mod:
               class: heading-ios
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Kitchen*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: kitchen
+              icon: local:cup-and-saucer
       - type: grid
         cards:
           - type: heading
@@ -2417,6 +2453,24 @@ views:
             icon: local:lightbulb-circle
             card_mod:
               class: heading-ios
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Studio*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: studio
+              icon: local:paintpalette
       - type: grid
         cards:
           - type: heading
@@ -3218,121 +3272,6 @@ views:
             icon: local:thermometer-medium
             card_mod:
               class: heading-ios
-          - type: thermostat
-            entity: climate.hall
-            name: Thermostat
-            show_current_as_primary: false
-            features:
-              - type: climate-fan-modes
-                style: dropdown
-          - type: vertical-stack
-            cards:
-              - type: thermostat
-                entity: climate.bedroom_air_conditioner
-                name: Bedroom Air Conditioner
-                show_current_as_primary: false
-                features:
-                  - type: climate-hvac-modes
-                visibility:
-                  - condition: and
-                    conditions:
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state: 'off'
-                      - condition: and
-                        conditions:
-                          - condition: state
-                            entity: switch.bedroom_air_conditioner_power
-                            state_not: unavailable
-                          - condition: state
-                            entity: switch.bedroom_air_conditioner_power
-                            state_not: unavailable
-              - type: thermostat
-                entity: climate.bedroom_air_conditioner
-                name: Bedroom Air Conditioner
-                show_current_as_primary: false
-                features:
-                  - type: climate-hvac-modes
-                  - type: climate-fan-modes
-                    style: dropdown
-                  - type: climate-swing-modes
-                    style: dropdown
-                visibility:
-                  - condition: and
-                    conditions:
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state_not: 'off'
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state_not: unavailable
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state_not: unknown
-              - type: custom:mushroom-template-card
-                secondary: >-
-                  Bedroom AC status is {{
-                  states('switch.bedroom_air_conditioner_power') }}
-
-                  Check that it's connected to power.
-                icon: local:air-conditioner-vertical-fill
-                features_position: bottom
-                grid_options:
-                  columns: 12
-                  rows: 2
-                primary: Notice
-                multiline_secondary: true
-                badge_icon: local:wifi-slash
-                badge_color: >-
-                  {% if states('input_select.current_theme') == 'ios-light' %}
-                    #FF9500
-                  {% elif states('input_select.current_theme') == 'ios-dark' %}
-                    #FF9F0A
-                  {% elif states('input_select.current_theme') == 'macos-light'
-                  %}
-                    #FF9500
-                  {% elif states('input_select.current_theme') ==
-                  'macos-light-vibrant' %}
-                    #FF9F0A
-                  {% elif states('input_select.current_theme') == 'macos-dark'
-                  %}
-                    #FF9F0A
-                  {% elif states('input_select.current_theme') ==
-                  'macos-dark-vibrant' %}
-                    #FF9F0A
-                  {% endif %}
-                vertical: true
-                color: >-
-                  {% if states('input_select.current_theme') == 'ios-light' %}
-                    #8E8E93
-                  {% elif states('input_select.current_theme') == 'ios-dark' %}
-                    #8E8E93
-                  {% elif states('input_select.current_theme') == 'macos-light'
-                  %}
-                    #8E8E93
-                  {% elif states('input_select.current_theme') ==
-                  'macos-light-vibrant' %}
-                    #8E8E93
-                  {% elif states('input_select.current_theme') == 'macos-dark'
-                  %}
-                    #8E8E93
-                  {% elif states('input_select.current_theme') ==
-                  'macos-dark-vibrant' %}
-                    #8E8E93
-                  {% endif %}
-                tap_action:
-                  action: none
-                icon_tap_action:
-                  action: none
-                visibility:
-                  - condition: or
-                    conditions:
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state: unavailable
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state: unknown
           - type: vertical-stack
             cards:
               - features:
@@ -3427,6 +3366,139 @@ views:
                     entity: fan.fireplace
                     state: 'on'
                 color: orange
+          - type: custom:mushroom-template-card
+            secondary: >-
+              Google has discontinued the 1st-generation Nest Learning
+              Thermostat.
+
+              Remote control is permanently disabled.
+            icon: mdi:thermostat
+            features_position: bottom
+            grid_options:
+              columns: 12
+              rows: 2
+            primary: Notice
+            multiline_secondary: true
+            badge_color: var(--error-color)
+            tap_action:
+              action: none
+            icon_tap_action:
+              action: none
+            badge_icon: local:xmark-circle
+            vertical: true
+          - type: vertical-stack
+            cards:
+              - type: thermostat
+                entity: climate.bedroom_air_conditioner
+                name: Bedroom Air Conditioner
+                show_current_as_primary: false
+                features:
+                  - type: climate-hvac-modes
+                visibility:
+                  - condition: and
+                    conditions:
+                      - condition: state
+                        entity: switch.bedroom_air_conditioner_power
+                        state: 'off'
+                      - condition: and
+                        conditions:
+                          - condition: state
+                            entity: switch.bedroom_air_conditioner_power
+                            state_not: unavailable
+                          - condition: state
+                            entity: switch.bedroom_air_conditioner_power
+                            state_not: unavailable
+              - type: thermostat
+                entity: climate.bedroom_air_conditioner
+                name: Bedroom Air Conditioner
+                show_current_as_primary: false
+                features:
+                  - type: climate-hvac-modes
+                  - type: climate-fan-modes
+                    style: dropdown
+                  - type: climate-swing-modes
+                    style: dropdown
+                visibility:
+                  - condition: and
+                    conditions:
+                      - condition: state
+                        entity: switch.bedroom_air_conditioner_power
+                        state_not: 'off'
+                      - condition: state
+                        entity: switch.bedroom_air_conditioner_power
+                        state_not: unavailable
+                      - condition: state
+                        entity: switch.bedroom_air_conditioner_power
+                        state_not: unknown
+              - type: custom:mushroom-template-card
+                secondary: >-
+                  Bedroom AC status is {{
+                  states('switch.bedroom_air_conditioner_power') }}.
+
+                  Check that it's connected to power.
+                icon: local:air-conditioner-vertical-fill
+                features_position: bottom
+                grid_options:
+                  columns: 12
+                  rows: 2
+                primary: Notice
+                multiline_secondary: true
+                badge_icon: local:wifi-slash
+                badge_color: >-
+                  {% if states('input_select.current_theme') == 'ios-light' %}
+                    #FF9500
+                  {% elif states('input_select.current_theme') == 'ios-dark' %}
+                    #FF9F0A
+                  {% elif states('input_select.current_theme') == 'macos-light'
+                  %}
+                    #FF9500
+                  {% elif states('input_select.current_theme') ==
+                  'macos-light-vibrant' %}
+                    #FF9F0A
+                  {% elif states('input_select.current_theme') == 'macos-dark'
+                  %}
+                    #FF9F0A
+                  {% elif states('input_select.current_theme') ==
+                  'macos-dark-vibrant' %}
+                    #FF9F0A
+                  {% endif %}
+                vertical: true
+                color: >-
+                  {% if states('input_select.current_theme') == 'ios-light' %}
+                    #8E8E93
+                  {% elif states('input_select.current_theme') == 'ios-dark' %}
+                    #8E8E93
+                  {% elif states('input_select.current_theme') == 'macos-light'
+                  %}
+                    #8E8E93
+                  {% elif states('input_select.current_theme') ==
+                  'macos-light-vibrant' %}
+                    #8E8E93
+                  {% elif states('input_select.current_theme') == 'macos-dark'
+                  %}
+                    #8E8E93
+                  {% elif states('input_select.current_theme') ==
+                  'macos-dark-vibrant' %}
+                    #8E8E93
+                  {% endif %}
+                tap_action:
+                  action: none
+                icon_tap_action:
+                  action: none
+                visibility:
+                  - condition: and
+                    conditions:
+                      - condition: numeric_state
+                        entity: sensor.home_temperature
+                        above: 71
+                      - condition: or
+                        conditions:
+                          - condition: state
+                            entity: switch.bedroom_air_conditioner_power
+                            state: unavailable
+                          - condition: state
+                            entity: switch.bedroom_air_conditioner_power
+                            state: unknown
         column_span: 1
       - type: grid
         cards:
