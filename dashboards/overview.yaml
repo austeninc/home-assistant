@@ -301,86 +301,6 @@ views:
             icon_tap_action:
               action: toggle
           - type: custom:mushroom-template-card
-            primary: Turn On the Fireplace
-            icon: local:fireplace-fill
-            entity: fan.fireplace
-            badge_icon: local:sparkle
-            multiline_secondary: false
-            tap_action:
-              action: perform-action
-              perform_action: script.fireplace_lights_only
-              target: {}
-            grid_options:
-              columns: 12
-              rows: 1
-            visibility:
-              - condition: and
-                conditions:
-                  - condition: or
-                    conditions:
-                      - condition: state
-                        entity: sun.sun
-                        state: below_horizon
-                      - condition: state
-                        entity: weather.forecast_home
-                        state_not: sunny
-                  - condition: state
-                    entity: fan.fireplace
-                    state: 'off'
-            badge_color: var(--orange-color)
-            color: |-
-              {% if 'light' in states('input_select.current_theme') %}
-                #8E8E93
-              {% elif 'dark' in states('input_select.current_theme') %}
-
-              {% endif %}
-            features_position: inline
-            icon_tap_action:
-              action: navigate
-              navigation_path: /lovelace/climate-control?anchor=fireplace
-          - type: custom:mushroom-template-card
-            icon: local:fireplace
-            entity: fan.fireplace
-            badge_icon: local:sparkle
-            multiline_secondary: false
-            tap_action:
-              action: navigate
-              confirmation:
-                text: >-
-                  This button is being replaced by the Fireplace badge at the
-                  top of this page.
-              navigation_path: /lovelace/climate-control?anchor=fireplace
-            grid_options:
-              columns: 12
-              rows: 1
-            visibility:
-              - condition: and
-                conditions:
-                  - condition: or
-                    conditions:
-                      - condition: state
-                        entity: sun.sun
-                        state: above_horizon
-                      - condition: state
-                        entity: weather.forecast_home
-                        state: sunny
-                  - condition: state
-                    entity: fan.fireplace
-                    state: 'on'
-            badge_color: orange
-            color: |-
-              {% if 'light' in states('input_select.current_theme') %}
-                #8E8E93
-              {% elif 'dark' in states('input_select.current_theme') %}
-
-              {% endif %}
-            features_position: inline
-            icon_tap_action:
-              action: navigate
-              navigation_path: /lovelace/climate-control?anchor=fireplace
-            primary: Tap the "Fireplace is On" Badge Above for Controls
-            secondary: Turn Off the Fireplace (Deprecated)
-          - type: custom:mushroom-template-card
             primary: Open Blinds
             secondary: Bedroom & Studio
             icon: local:rectangle-portrait-tophalf-filled
@@ -479,6 +399,77 @@ views:
                   - condition: numeric_state
                     entity: counter.litter_use_tracker
                     above: 3
+          - type: custom:mushroom-template-card
+            primary: Turn On the Fireplace
+            icon: local:fireplace-fill
+            entity: fan.fireplace
+            badge_icon: local:sparkle
+            multiline_secondary: false
+            tap_action:
+              action: perform-action
+              perform_action: script.fireplace_lights_only
+              target: {}
+            grid_options:
+              columns: 12
+              rows: 1
+            visibility:
+              - condition: and
+                conditions:
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity: sun.sun
+                        state: below_horizon
+                      - condition: state
+                        entity: weather.forecast_home
+                        state_not: sunny
+                  - condition: state
+                    entity: fan.fireplace
+                    state: 'off'
+            badge_color: var(--orange-color)
+            color: |-
+              {% if 'light' in states('input_select.current_theme') %}
+                #8E8E93
+              {% elif 'dark' in states('input_select.current_theme') %}
+
+              {% endif %}
+            features_position: inline
+            icon_tap_action:
+              action: navigate
+              navigation_path: /lovelace/climate-control?anchor=fireplace
+          - type: custom:mushroom-template-card
+            secondary: >-
+
+              Tap the "Fireplace is On" badge at the top of this screen to jump
+              to the controls.
+            icon: local:fireplace
+            features_position: bottom
+            grid_options:
+              columns: 12
+              rows: 3
+            primary: 'Notice: Fireplace Control has moved!'
+            multiline_secondary: true
+            badge_color: var(--info-color)
+            tap_action:
+              action: none
+            icon_tap_action:
+              action: none
+            badge_icon: local:info-circle
+            vertical: true
+            visibility:
+              - condition: and
+                conditions:
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity: sun.sun
+                        state: above_horizon
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: sunny
+                  - condition: state
+                    entity: fan.fireplace
+                    state: 'on'
           - type: heading
             icon: local:wand-and-rays-inverse
             heading: Lighting
@@ -2471,6 +2462,26 @@ views:
               type: custom:hue-like-light-card
               area: studio
               icon: local:paintpalette
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Hall*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: hall
+              icon: local:figure-walk
+              offShadow: false
+              onShadow: false
       - type: grid
         cards:
           - type: heading
@@ -3376,7 +3387,7 @@ views:
             features_position: bottom
             grid_options:
               columns: 12
-              rows: 2
+              rows: 3
             primary: Notice
             multiline_secondary: true
             badge_color: var(--error-color)
