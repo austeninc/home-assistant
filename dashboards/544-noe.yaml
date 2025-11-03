@@ -179,6 +179,28 @@ views:
       - type: grid
         cards:
           - type: heading
+            icon: local:pumpkin-05
+            heading_style: title
+            heading: Spooky Season
+            card_mod:
+              class: heading-ios
+          - type: custom:mushroom-template-card
+            secondary: Tap for Seasonal Experiences
+            icon: local:boogie_man
+            multiline_secondary: false
+            tap_action:
+              action: navigate
+              navigation_path: '#spooky-season'
+            grid_options:
+              columns: 12
+              rows: 1
+            entity: script.nature_s_colors
+            features_position: bottom
+            icon_tap_action:
+              action: none
+            primary: Haunted Delights
+            color: var(--indigo-color)
+          - type: heading
             icon: local:bolt
             heading: Quick Actions
             heading_style: title
@@ -613,28 +635,6 @@ views:
             features_position: bottom
             icon_tap_action:
               action: toggle
-          - type: heading
-            icon: local:pumpkin-05
-            heading_style: title
-            heading: Spooky Season
-            card_mod:
-              class: heading-ios
-          - type: custom:mushroom-template-card
-            secondary: Tap for Seasonal Experiences
-            icon: local:boogie_man
-            multiline_secondary: false
-            tap_action:
-              action: navigate
-              navigation_path: '#spooky-season'
-            grid_options:
-              columns: 12
-              rows: 1
-            entity: script.nature_s_colors
-            features_position: bottom
-            icon_tap_action:
-              action: none
-            primary: Haunted Delights
-            color: var(--indigo-color)
       - type: grid
         cards:
           - type: heading
