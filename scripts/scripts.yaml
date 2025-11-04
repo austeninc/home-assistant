@@ -1,0 +1,2635 @@
+purple_lights:
+  alias: Purple Lights
+  sequence:
+  - service: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.computer_time
+  description: ''
+  icon: mdi:asterisk-circle-outline
+wake_up_stop_brown_noise:
+  alias: Wake Up Stop Brown Noise
+  sequence:
+  - service: media_player.turn_off
+    metadata: {}
+    data: {}
+    target:
+      device_id:
+      - d48530e5f414eef50cfbd0193e8b9f3d
+      - 33fc555acff32cff887b40d1563e584b
+  - service: script.fade_volume
+    metadata: {}
+    data:
+      target_volume: 0
+      duration: 5
+      curve: logarithmic
+      target_player: media_player.desk
+  - service: media_player.turn_off
+    metadata: {}
+    data: {}
+    target:
+      device_id: 097faba0aa39d6138476ebec8d9c5fb8
+  - service: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.42
+    target:
+      device_id:
+      - d48530e5f414eef50cfbd0193e8b9f3d
+      - 33fc555acff32cff887b40d1563e584b
+  - service: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.35
+    target:
+      device_id: 097faba0aa39d6138476ebec8d9c5fb8
+  description: ''
+  icon: mdi:bird
+fade_volume:
+  alias: Fade the volume of a media player
+  mode: parallel
+  fields:
+    target_player:
+      name: Target media player
+      description: Target media player of volume fade.
+      required: true
+      example: media_player.lounge_sonos
+      selector:
+        entity:
+          domain: media_player
+    target_volume:
+      name: Target volume
+      description: Volume the media play will be at the end of the fade duration.
+      required: true
+      default: 0.5
+      example: '0.5'
+      selector:
+        number:
+          max: 1
+          min: 0
+          step: 0.01
+          mode: slider
+    duration:
+      name: Fade duration
+      description: Length of time in seconds the fade should take.
+      required: true
+      default: 5
+      example: '5'
+      selector:
+        number:
+          mode: box
+          min: 0
+          max: 100000
+          unit_of_measurement: s
+    curve:
+      name: Fade curve algorithm
+      description: Shape of the fade curve to apply.
+      required: true
+      default: logarithmic
+      example: logarithmic
+      selector:
+        select:
+          options:
+          - logarithmic
+          - bezier
+          - linear
+  variables:
+    steps_per_second: 10
+    total_steps: '{{ (steps_per_second * duration) | int(0) }}'
+    start_volume: '{{ state_attr(target_player, ''volume_level'') | float(0) }}'
+    start_diff: '{{ (target_volume - start_volume) | float(0) }}'
+  sequence:
+  - repeat:
+      while:
+      - condition: template
+        value_template: '{{ repeat.index < total_steps }}'
+      - condition: template
+        value_template: '{{ ((state_attr(target_player, "volume_level") - target_volume)
+          | abs) > 0.001 }}'
+      sequence:
+      - data_template:
+          entity_id: '{{ target_player }}'
+          volume_level: "{% set t = repeat.index / total_steps %} {% if curve == 'logarithmic'
+            %}\n  {{ (start_volume + (t / (1 + (1 - t))) * start_diff) | float(0)
+            }}\n{% elif curve == 'bezier' %}\n  {{ (start_volume + (t * t * (3 - 2
+            * t)) * start_diff) | float(0) }}\n{% else %}\n  {{ (start_volume + t
+            * start_diff) | float(0) }}\n{% endif %}\n"
+        action: media_player.volume_set
+      - delay: '00:00:00.1'
+  - data_template:
+      entity_id: '{{ target_player }}'
+      volume_level: '{{ target_volume }}'
+    action: media_player.volume_set
+  icon: mdi:tune-vertical
+turn_on_lava_lamp:
+  alias: Turn On Lava Lamp
+  sequence:
+  - type: turn_on
+    device_id: f8d95b9f3f996c3ed51ad8bd4d92f8a1
+    entity_id: c7d7d039cb22455322b315741855665a
+    domain: switch
+  description: ''
+  icon: mdi:lava-lamp
+red_alert_front_door:
+  alias: Red Alert - Front Door
+  sequence:
+  - action: light.turn_on
+    metadata: {}
+    data:
+      kelvin: 4555
+      brightness_pct: 80
+      transition: 0
+    target:
+      area_id: hall
+  - action: light.turn_on
+    metadata: {}
+    data:
+      rgb_color:
+      - 201
+      - 0
+      - 0
+      brightness_pct: 100
+    target:
+      device_id: e1b41f42d4d59fba2b4eedcb48d3f995
+  - action: light.turn_on
+    metadata: {}
+    data:
+      brightness_pct: 80
+      kelvin: 4555
+      transition: 2
+    target:
+      device_id: e1b41f42d4d59fba2b4eedcb48d3f995
+  - action: light.turn_on
+    metadata: {}
+    data:
+      rgb_color:
+      - 201
+      - 0
+      - 0
+      brightness_pct: 100
+    target:
+      device_id:
+      - 712dd9691ea162ac8b0700e9ad15d7e5
+  - action: light.turn_on
+    metadata: {}
+    data:
+      brightness_pct: 80
+      kelvin: 4555
+      transition: 2
+    target:
+      device_id:
+      - 712dd9691ea162ac8b0700e9ad15d7e5
+  - action: light.turn_on
+    metadata: {}
+    data:
+      rgb_color:
+      - 201
+      - 0
+      - 0
+      brightness_pct: 100
+    target:
+      device_id:
+      - 42caa7e9e88b88ef42de6e57d113b375
+  - action: light.turn_on
+    metadata: {}
+    data:
+      brightness_pct: 80
+      kelvin: 4555
+      transition: 2
+    target:
+      device_id:
+      - 42caa7e9e88b88ef42de6e57d113b375
+  description: ''
+  icon: mdi:alarm-light
+underwater:
+  alias: Underwater
+  sequence:
+  - parallel:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.living_room
+      data:
+        media_content_id: media-source://media_source/local/Dreaming Nautilus 0-30
+          - Variation 1.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: Dreaming Nautilus 0-30 - Variation 1.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.living_room_2
+      data:
+        media_content_id: media-source://media_source/local/Dreaming Nautilus 0-30
+          - Variation 1.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: Dreaming Nautilus 0-30 - Variation 1.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    enabled: false
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.living_room_homepods
+    data:
+      media_content_id: media-source://media_source/local/Dreaming Nautilus 0-30 -
+        Variation 1.mp3
+      media_content_type: audio/mpeg
+    metadata: {}
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.ambient_sfx_are_playing
+  description: ''
+window_fan_set_preset_mode:
+  alias: Window Fan Set Preset Mode
+  sequence:
+  - if:
+    - condition: device
+      device_id: 34ef189e7f65315dc16ef489e4646954
+      domain: fan
+      entity_id: c2ecb182e1f473ea73da60e09887ba32
+      type: is_off
+    then:
+    - type: turn_on
+      device_id: 34ef189e7f65315dc16ef489e4646954
+      entity_id: c2ecb182e1f473ea73da60e09887ba32
+      domain: fan
+  - action: select.select_option
+    target:
+      device_id: 34ef189e7f65315dc16ef489e4646954
+    data:
+      option: '{{ preset_mode }}'
+  description: ''
+  icon: mdi:fan
+test_silk_dreams:
+  alias: Test Silk Dreams
+  sequence:
+  - action: media_player.volume_set
+    continue_on_error: true
+    metadata: {}
+    data:
+      volume_level: 0.5
+    target:
+      device_id:
+      - cddc10eb7b3c137330bab5d0f4a9e0df
+      - 52cca22055c81b6c553ce3d52f061e53
+      - 5c626b0096e595cfbb05cbebccdeb217
+      - 36f81d093787ee1b74cd99b06e719e35
+      - 913cc87f7ec5f33132009e17e0ff197e
+      - eb9c2d34b13074c93c8835a7d43c55e5
+      - 3ebac45ba29ce2c2f5c2b8ecd011141a
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - action: script.turn_on
+    target:
+      entity_id:
+      - script.silk_dreams_player
+    data: {}
+  - parallel:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.entertainment_room_3
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.entertainment_room_2_2
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.entertainment_room_homepods
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Armenian Whispers.mp3
+        media_content_type: app
+      metadata: {}
+      enabled: false
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.living_room
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.living_room_2
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Hidden Monastary.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Hidden Monastary.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bathroom
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.kitchen_2
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Armenian Whispers.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Armenian Whispers.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    enabled: false
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - action: media_player.media_stop
+    metadata: {}
+    data: {}
+    target:
+      device_id:
+      - 36f81d093787ee1b74cd99b06e719e35
+      - 913cc87f7ec5f33132009e17e0ff197e
+      - 52cca22055c81b6c553ce3d52f061e53
+      - 5c626b0096e595cfbb05cbebccdeb217
+      - cddc10eb7b3c137330bab5d0f4a9e0df
+      - eb9c2d34b13074c93c8835a7d43c55e5
+      - 3ebac45ba29ce2c2f5c2b8ecd011141a
+      entity_id: media_player.wiim_pro_aabc_2
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - action: script.turn_on
+    target:
+      entity_id:
+      - script.silk_dreams_player
+    data: {}
+  - parallel:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.entertainment_room_3
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.entertainment_room_2_2
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.entertainment_room_homepods
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Armenian Whispers.mp3
+        media_content_type: app
+      metadata: {}
+      enabled: false
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.living_room
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.living_room_2
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Hidden Monastary.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Hidden Monastary.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bathroom
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.kitchen_2
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Armenian Whispers.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Armenian Whispers.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    enabled: false
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - action: media_player.volume_set
+    continue_on_error: true
+    metadata: {}
+    data:
+      volume_level: 0.5
+    target:
+      device_id:
+      - cddc10eb7b3c137330bab5d0f4a9e0df
+      - 52cca22055c81b6c553ce3d52f061e53
+      - 5c626b0096e595cfbb05cbebccdeb217
+      - 36f81d093787ee1b74cd99b06e719e35
+      - 913cc87f7ec5f33132009e17e0ff197e
+      - eb9c2d34b13074c93c8835a7d43c55e5
+      - 3ebac45ba29ce2c2f5c2b8ecd011141a
+    enabled: false
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - action: script.fade_volume
+    metadata: {}
+    data:
+      target_volume: 0.66
+      duration: 5
+      curve: logarithmic
+      target_player: media_player.bathroom
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: script.fade_volume
+    metadata: {}
+    data:
+      target_volume: 0.66
+      duration: 5
+      curve: logarithmic
+      target_player: media_player.bedroom
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: script.fade_volume
+    metadata: {}
+    data:
+      target_volume: 0.72
+      duration: 5
+      curve: logarithmic
+      target_player: media_player.living_room
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: script.fade_volume
+    metadata: {}
+    data:
+      target_volume: 0.72
+      duration: 5
+      curve: logarithmic
+      target_player: media_player.living_room_2
+  - action: media_player.media_pause
+    metadata: {}
+    data: {}
+    target:
+      device_id:
+      - 36f81d093787ee1b74cd99b06e719e35
+      - 913cc87f7ec5f33132009e17e0ff197e
+      - 52cca22055c81b6c553ce3d52f061e53
+      - 5c626b0096e595cfbb05cbebccdeb217
+      - cddc10eb7b3c137330bab5d0f4a9e0df
+      - eb9c2d34b13074c93c8835a7d43c55e5
+      - 3ebac45ba29ce2c2f5c2b8ecd011141a
+    enabled: false
+  - action: media_player.media_play
+    metadata: {}
+    data: {}
+    target:
+      device_id:
+      - 36f81d093787ee1b74cd99b06e719e35
+      - 913cc87f7ec5f33132009e17e0ff197e
+      - 52cca22055c81b6c553ce3d52f061e53
+      - 5c626b0096e595cfbb05cbebccdeb217
+      - cddc10eb7b3c137330bab5d0f4a9e0df
+      - eb9c2d34b13074c93c8835a7d43c55e5
+      - 3ebac45ba29ce2c2f5c2b8ecd011141a
+    enabled: false
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.ambient_sfx_are_playing
+  description: ''
+  icon: mdi:hiking
+stop_ambient_sounds:
+  alias: Stop Ambient Sounds
+  sequence:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.ambient_sfx_are_playing
+      state: 'on'
+    then:
+    - alias: Media 'Stop' on Brown Noise/Crickets/Rain
+      action: media_player.media_stop
+      metadata: {}
+      continue_on_error: true
+      data: {}
+      target:
+        entity_id: "{% set keywords = ['Crickets and Thunder', 'Summer Thunder', 'Evening
+          Fire', 'Smoothed Brown Noise', 'Rain on a Tent', 'Rainy Riverbank'] %} {%
+          set players = states.media_player \n  | selectattr('state', 'eq', 'playing')
+          \n  | selectattr('attributes.media_title', 'defined') \n  | selectattr('attributes.media_title',
+          'search', keywords | join('|'), ignorecase=True) \n  | map(attribute='entity_id')
+          | list %}\n{{ players if players else none }}\n"
+    - alias: '''Turn off'' on players with Brown Noise/Crickets/Rain'
+      action: media_player.turn_off
+      metadata: {}
+      continue_on_error: true
+      data: {}
+      target:
+        entity_id: "{% set keywords = ['Crickets and Thunder', 'Summer Thunder', 'Evening
+          Fire', 'Smoothed Brown Noise', 'Rain on a Tent', 'Rainy Riverbank'] %} {%
+          set players = states.media_player \n  | selectattr('state', 'eq', 'playing')
+          \n  | selectattr('attributes.media_title', 'defined') \n  | selectattr('attributes.media_title',
+          'search', keywords | join('|'), ignorecase=True) \n  | map(attribute='entity_id')
+          | list %}\n{{ players if players else none }}\n"
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 1
+        milliseconds: 0
+  - if:
+    - condition: template
+      value_template: "{% set keywords = ['Crickets and Thunder', 'Summer Thunder',
+        'Evening Fire', 'Smoothed Brown Noise'] %}\n{{ states.media_player | selectattr('state',
+        'eq', 'playing') \n  | selectattr('attributes.media_title', 'defined') \n
+        \ | selectattr('attributes.media_title', 'search', keywords | join('|'), ignorecase=True)
+        \n  | list | count > 0 }}"
+      enabled: false
+    - condition: state
+      entity_id: binary_sensor.ambient_sfx_are_playing
+      state: 'on'
+    then:
+    - action: script.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id: script.stop_ambient_sounds
+    else:
+    - action: input_boolean.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: input_boolean.ambient_sfx_are_playing
+    - action: remote.turn_on
+      continue_on_error: true
+      metadata: {}
+      data: {}
+      target:
+        device_id:
+        - 36f81d093787ee1b74cd99b06e719e35
+        - 913cc87f7ec5f33132009e17e0ff197e
+        - 52cca22055c81b6c553ce3d52f061e53
+        - 5c626b0096e595cfbb05cbebccdeb217
+        - cddc10eb7b3c137330bab5d0f4a9e0df
+        - eb9c2d34b13074c93c8835a7d43c55e5
+        - 3ebac45ba29ce2c2f5c2b8ecd011141a
+    enabled: true
+  description: ''
+  icon: ios:stop-circle
+silk_dreams_player:
+  alias: Silk Dreams - Player
+  mode: restart
+  sequence:
+  - parallel:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.entertainment_room_3
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.entertainment_room_2_2
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.living_room
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.living_room_2
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bedroom
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Armenian Whispers.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Armenian Whispers.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.bathroom
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Hidden Monastary.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Hidden Monastary.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.kitchen_2
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.wiim_pro_aabc_2
+      data:
+        media_content_id: media-source://media_source/local/myNoise - Silk & Hopes
+          - Himalayan Meditation.mp3
+        media_content_type: audio/mpeg
+      metadata:
+        title: myNoise - Silk & Hopes - Himalayan Meditation.mp3
+        thumbnail:
+        media_class: music
+        children_media_class:
+        navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://media_source
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.ambient_sfx_are_playing
+  description: ''
+  icon: mdi:hiking
+silk_dreams_ma_player:
+  alias: Silk Dreams - MA Player
+  sequence:
+  - parallel:
+    - action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_type: track
+        media_id: Himalayan Meditation
+      target:
+        device_id:
+        - f415f5e4e8c27817e460b3ebfece9704
+        - 7d4ae0d50e5b92898ce6a04929870fbf
+    - action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: Hidden Monastary
+        media_type: track
+      target:
+        device_id:
+        - be0621303510a0587c7698c4238910a1
+        - 0e56a27fa16abe0c5ad8ba2af63895d2
+    - action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: Armenian Whispers
+        media_type: track
+      target:
+        device_id: a4d6e4b966c305b6136694535fcf85e6
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0
+    target:
+      device_id:
+      - 0e56a27fa16abe0c5ad8ba2af63895d2
+      - a4d6e4b966c305b6136694535fcf85e6
+      - be0621303510a0587c7698c4238910a1
+      - f415f5e4e8c27817e460b3ebfece9704
+      - 7d4ae0d50e5b92898ce6a04929870fbf
+    enabled: true
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - sequence:
+    - action: media_player.media_pause
+      metadata: {}
+      data: {}
+      target:
+        device_id:
+        - 7d4ae0d50e5b92898ce6a04929870fbf
+        - be0621303510a0587c7698c4238910a1
+        - f415f5e4e8c27817e460b3ebfece9704
+        - 913cc87f7ec5f33132009e17e0ff197e
+        - 0e56a27fa16abe0c5ad8ba2af63895d2
+    - action: media_player.media_seek
+      metadata: {}
+      data:
+        seek_position: 0
+      target:
+        device_id:
+        - f415f5e4e8c27817e460b3ebfece9704
+        - a4d6e4b966c305b6136694535fcf85e6
+        - 0e56a27fa16abe0c5ad8ba2af63895d2
+        - be0621303510a0587c7698c4238910a1
+        - 7d4ae0d50e5b92898ce6a04929870fbf
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 1
+        milliseconds: 0
+    - action: media_player.media_play
+      metadata: {}
+      data: {}
+      target:
+        device_id:
+        - 7d4ae0d50e5b92898ce6a04929870fbf
+        - be0621303510a0587c7698c4238910a1
+        - f415f5e4e8c27817e460b3ebfece9704
+        - 913cc87f7ec5f33132009e17e0ff197e
+        - 0e56a27fa16abe0c5ad8ba2af63895d2
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.5
+    enabled: true
+    target:
+      device_id:
+      - be0621303510a0587c7698c4238910a1
+      - 7d4ae0d50e5b92898ce6a04929870fbf
+      - 0e56a27fa16abe0c5ad8ba2af63895d2
+  - action: script.fade_volume
+    metadata: {}
+    data:
+      target_volume: 0.7
+      duration: 5
+      curve: logarithmic
+      target_player: media_player.living_room_homepods
+  - action: script.fade_volume
+    metadata: {}
+    data:
+      target_volume: 0.6
+      duration: 5
+      curve: logarithmic
+      target_player: media_player.bedroom_2
+  - parallel:
+    - action: media_player.media_previous_track
+      metadata: {}
+      data: {}
+      target:
+        device_id: be0621303510a0587c7698c4238910a1
+    - action: media_player.media_previous_track
+      metadata: {}
+      data: {}
+      target:
+        device_id: f415f5e4e8c27817e460b3ebfece9704
+    - action: media_player.media_previous_track
+      metadata: {}
+      data: {}
+      target:
+        device_id: 0e56a27fa16abe0c5ad8ba2af63895d2
+    - action: media_player.media_previous_track
+      metadata: {}
+      data: {}
+      target:
+        device_id: a4d6e4b966c305b6136694535fcf85e6
+    - action: media_player.media_previous_track
+      metadata: {}
+      data: {}
+      target:
+        device_id: 7d4ae0d50e5b92898ce6a04929870fbf
+    enabled: false
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.ambient_sfx_are_playing
+  mode: restart
+  description: ''
+  icon: mdi:hiking
+enya_get_out:
+  alias: Enya Get Out
+  sequence:
+  - action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: Only Time
+      media_type: track
+    target:
+      device_id: 877cfa5d5c1a66b4e902f295b4103f05
+  description: ''
+polite_gtfo:
+  alias: Polite GTFO
+  sequence:
+  - action: media_player.turn_on
+    metadata: {}
+    data: {}
+    target:
+      device_id:
+      - a4d6e4b966c305b6136694535fcf85e6
+      - 0e56a27fa16abe0c5ad8ba2af63895d2
+      - f415f5e4e8c27817e460b3ebfece9704
+      - d78263faa277a3d0169fa0c10d827ea6
+      - be0621303510a0587c7698c4238910a1
+  - action: music_assistant.play_announcement
+    metadata: {}
+    data:
+      url: http://192.168.1.2:8123/local/GTFO.mp3
+      announce_volume: 61
+      use_pre_announce: true
+  description: ''
+  icon: mdi:message-alert
+cat_air:
+  alias: Purify Aksel's Lair
+  sequence:
+  - action: timer.start
+    metadata: {}
+    data: {}
+    target:
+      entity_id: timer.litter_purifying_the_air
+  - action: fan.set_percentage
+    metadata: {}
+    data:
+      percentage: 100
+    target:
+      device_id: 8e1e04cbfdfdd058ecc5ca1d918c7b52
+  - delay:
+      hours: 0
+      minutes: 7
+      seconds: 0
+      milliseconds: 0
+  - action: fan.set_percentage
+    metadata: {}
+    data:
+      percentage: 66
+    target:
+      device_id: 8e1e04cbfdfdd058ecc5ca1d918c7b52
+  - action: notify.mobile_app_austens_iphone_16
+    metadata: {}
+    data:
+      message: Open the closet door
+      title: Air Purification Update
+    enabled: false
+  - delay:
+      hours: 0
+      minutes: 14
+      seconds: 0
+      milliseconds: 0
+  - action: fan.set_percentage
+    metadata: {}
+    data:
+      percentage: 33
+    target:
+      device_id: 8e1e04cbfdfdd058ecc5ca1d918c7b52
+  - delay:
+      hours: 0
+      minutes: 14
+      seconds: 0
+      milliseconds: 0
+  - action: fan.set_preset_mode
+    metadata: {}
+    data:
+      preset_mode: sleep
+    target:
+      device_id: 8e1e04cbfdfdd058ecc5ca1d918c7b52
+  - action: timer.finish
+    metadata: {}
+    data: {}
+    target:
+      entity_id: timer.litter_purifying_the_air
+  description: ''
+  icon: mdi:emoticon-poop-outline
+cozy_entertainment_room:
+  alias: Cozy (Entertainment Room)
+  sequence:
+  - parallel:
+    - action: scene.turn_on
+      continue_on_error: true
+      metadata: {}
+      target:
+        entity_id: scene.entertainment_room_cozy
+    - action: light.turn_on
+      continue_on_error: true
+      metadata: {}
+      data:
+        brightness_pct: 25
+        effect: Candle Light
+      target:
+        device_id: 35f73e795bbca79c8574ab402c338404
+    - action: light.turn_on
+      continue_on_error: true
+      metadata: {}
+      data:
+        brightness_pct: 20
+      target:
+        device_id: 9b848d3fcba5358e93406a6ba7c83a6d
+  - action: lifx.effect_flame
+    continue_on_error: true
+    metadata: {}
+    data:
+      speed: 6
+      power_on: true
+    target:
+      device_id: 9b848d3fcba5358e93406a6ba7c83a6d
+  description: ''
+  icon: mdi:candle
+nighttime_crickets:
+  alias: Nighttime Crickets
+  sequence:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: 'off'
+      sequence:
+      - action: media_player.turn_on
+        metadata: {}
+        data: {}
+        target:
+          device_id:
+          - be0621303510a0587c7698c4238910a1
+          - 7d4ae0d50e5b92898ce6a04929870fbf
+          - f415f5e4e8c27817e460b3ebfece9704
+          - 0e56a27fa16abe0c5ad8ba2af63895d2
+      - sequence:
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Evening Fire
+            media_type: track
+            enqueue: play
+          target:
+            device_id:
+            - f415f5e4e8c27817e460b3ebfece9704
+            - ed81ea2c761479d5b347b7a2869f5173
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Summer Thunder
+            media_type: track
+            enqueue: play
+          target:
+            device_id: be0621303510a0587c7698c4238910a1
+          enabled: true
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Crickets and Thunder
+            media_type: track
+            enqueue: play
+          target:
+            device_id:
+            - 7d4ae0d50e5b92898ce6a04929870fbf
+            - 0e56a27fa16abe0c5ad8ba2af63895d2
+          enabled: true
+      - sequence:
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Evening Fire
+            media_type: track
+            enqueue: replace_next
+          target:
+            device_id:
+            - f415f5e4e8c27817e460b3ebfece9704
+            - ed81ea2c761479d5b347b7a2869f5173
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Summer Thunder
+            media_type: track
+            enqueue: replace_next
+          target:
+            device_id: be0621303510a0587c7698c4238910a1
+          enabled: true
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Crickets and Thunder
+            media_type: track
+            enqueue: replace_next
+          target:
+            device_id:
+            - 7d4ae0d50e5b92898ce6a04929870fbf
+            - 0e56a27fa16abe0c5ad8ba2af63895d2
+          enabled: true
+      - action: media_player.media_next_track
+        metadata: {}
+        data: {}
+        target:
+          device_id:
+          - f415f5e4e8c27817e460b3ebfece9704
+          - 7d4ae0d50e5b92898ce6a04929870fbf
+          - be0621303510a0587c7698c4238910a1
+          - 0e56a27fa16abe0c5ad8ba2af63895d2
+          - ed81ea2c761479d5b347b7a2869f5173
+      - alias: Set Volumes
+        sequence:
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.3
+          target:
+            device_id: f415f5e4e8c27817e460b3ebfece9704
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.17
+          target:
+            device_id: be0621303510a0587c7698c4238910a1
+          enabled: true
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.12
+          target:
+            device_id:
+            - 7d4ae0d50e5b92898ce6a04929870fbf
+            - ed81ea2c761479d5b347b7a2869f5173
+          enabled: true
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.18
+          target:
+            device_id: 0e56a27fa16abe0c5ad8ba2af63895d2
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: 'on'
+      sequence:
+      - action: media_player.turn_on
+        metadata: {}
+        data: {}
+        target:
+          device_id:
+          - 7d4ae0d50e5b92898ce6a04929870fbf
+          - f415f5e4e8c27817e460b3ebfece9704
+          - 0e56a27fa16abe0c5ad8ba2af63895d2
+      - sequence:
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Evening Fire
+            media_type: track
+            enqueue: play
+          target:
+            device_id:
+            - f415f5e4e8c27817e460b3ebfece9704
+            - ed81ea2c761479d5b347b7a2869f5173
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Crickets and Thunder
+            media_type: track
+            enqueue: play
+          target:
+            device_id:
+            - 7d4ae0d50e5b92898ce6a04929870fbf
+            - 0e56a27fa16abe0c5ad8ba2af63895d2
+          enabled: true
+      - sequence:
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Evening Fire
+            media_type: track
+            enqueue: replace_next
+          target:
+            device_id:
+            - f415f5e4e8c27817e460b3ebfece9704
+            - ed81ea2c761479d5b347b7a2869f5173
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Crickets and Thunder
+            media_type: track
+            enqueue: replace_next
+          target:
+            device_id:
+            - 7d4ae0d50e5b92898ce6a04929870fbf
+            - 0e56a27fa16abe0c5ad8ba2af63895d2
+          enabled: true
+      - action: media_player.media_next_track
+        metadata: {}
+        data: {}
+        target:
+          device_id:
+          - f415f5e4e8c27817e460b3ebfece9704
+          - 7d4ae0d50e5b92898ce6a04929870fbf
+          - 0e56a27fa16abe0c5ad8ba2af63895d2
+          - ed81ea2c761479d5b347b7a2869f5173
+      - alias: Set Volumes
+        sequence:
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.3
+          target:
+            device_id: f415f5e4e8c27817e460b3ebfece9704
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.12
+          target:
+            device_id:
+            - 7d4ae0d50e5b92898ce6a04929870fbf
+            - ed81ea2c761479d5b347b7a2869f5173
+          enabled: true
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.18
+          target:
+            device_id: 0e56a27fa16abe0c5ad8ba2af63895d2
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.ambient_sfx_are_playing
+    enabled: false
+  description: ''
+  icon: mdi:weather-night-partly-cloudy
+brown_noise_for_sleep:
+  alias: Brown Noise for Sleep
+  description: ''
+  icon: mdi:sleep
+  sequence:
+  - action: media_player.volume_set
+    continue_on_error: true
+    metadata: {}
+    data:
+      volume_level: 0.48
+    target:
+      device_id: a4d6e4b966c305b6136694535fcf85e6
+  - action: media_player.volume_set
+    continue_on_error: true
+    metadata: {}
+    data:
+      volume_level: 0.55
+    target:
+      device_id: 913cc87f7ec5f33132009e17e0ff197e
+    enabled: false
+  - action: media_player.turn_on
+    continue_on_error: true
+    metadata: {}
+    data: {}
+    target:
+      device_id: a4d6e4b966c305b6136694535fcf85e6
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: 'off'
+      sequence:
+      - action: media_player.play_media
+        continue_on_error: true
+        target:
+          entity_id: media_player.bedroom
+        data:
+          media_content_id: media-source://media_source/local/smooth_brown_noise_8h.mp3
+          media_content_type: audio/mpeg
+        metadata:
+          title: smooth_brown_noise_8h.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+        enabled: false
+      - action: music_assistant.play_media
+        continue_on_error: true
+        metadata: {}
+        data:
+          media_id: Smoothed Brown Noise
+          media_type: track
+        target:
+          device_id: a4d6e4b966c305b6136694535fcf85e6
+        enabled: true
+      - action: media_player.volume_set
+        continue_on_error: true
+        metadata: {}
+        data:
+          volume_level: 0.55
+        target:
+          device_id: a4d6e4b966c305b6136694535fcf85e6
+      - action: media_player.volume_set
+        continue_on_error: true
+        metadata: {}
+        data:
+          volume_level: 0.55
+        target:
+          device_id: 913cc87f7ec5f33132009e17e0ff197e
+        enabled: false
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: 'on'
+      sequence:
+      - action: media_player.turn_on
+        continue_on_error: true
+        metadata: {}
+        data: {}
+        target:
+          device_id:
+          - a4d6e4b966c305b6136694535fcf85e6
+          - be0621303510a0587c7698c4238910a1
+        enabled: false
+      - action: media_player.volume_set
+        continue_on_error: true
+        metadata: {}
+        data:
+          volume_level: 0.56
+        target:
+          device_id: a4d6e4b966c305b6136694535fcf85e6
+      - action: media_player.volume_set
+        continue_on_error: true
+        metadata: {}
+        data:
+          volume_level: 0.55
+        target:
+          device_id: 913cc87f7ec5f33132009e17e0ff197e
+      - action: media_player.volume_set
+        continue_on_error: true
+        metadata: {}
+        data:
+          volume_level: 0.4
+        target:
+          device_id:
+          - be0621303510a0587c7698c4238910a1
+        enabled: false
+      - action: music_assistant.play_media
+        continue_on_error: true
+        metadata: {}
+        data:
+          media_id: Smoothed Brown Noise
+          media_type: track
+        target:
+          device_id:
+          - a4d6e4b966c305b6136694535fcf85e6
+          - be0621303510a0587c7698c4238910a1
+        enabled: false
+      - action: music_assistant.play_media
+        continue_on_error: true
+        metadata: {}
+        data:
+          media_id: Smoothed Brown Noise
+          media_type: track
+        target:
+          device_id:
+          - a4d6e4b966c305b6136694535fcf85e6
+        enabled: true
+      - action: media_player.play_media
+        continue_on_error: true
+        target:
+          entity_id: media_player.bedroom
+        data:
+          media_content_id: media-source://media_source/local/smooth_brown_noise_8h.mp3
+          media_content_type: audio/mpeg
+        metadata:
+          title: smooth_brown_noise_8h.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+        enabled: false
+      - action: media_player.play_media
+        continue_on_error: true
+        target:
+          entity_id: media_player.bedroom
+        data:
+          media_content_id: media-source://media_source/local/smooth_brown_noise_8h.mp3
+          media_content_type: audio/mpeg
+        metadata:
+          title: smooth_brown_noise_8h.mp3
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+        enabled: false
+      - action: media_player.volume_set
+        continue_on_error: true
+        metadata: {}
+        data:
+          volume_level: 0.4
+        target:
+          device_id:
+          - be0621303510a0587c7698c4238910a1
+        enabled: false
+      - action: media_player.volume_set
+        continue_on_error: true
+        metadata: {}
+        data:
+          volume_level: 0.55
+        target:
+          device_id: a4d6e4b966c305b6136694535fcf85e6
+      - action: media_player.volume_set
+        continue_on_error: true
+        metadata: {}
+        data:
+          volume_level: 0.55
+        target:
+          device_id: 913cc87f7ec5f33132009e17e0ff197e
+      - action: media_player.volume_set
+        continue_on_error: true
+        metadata: {}
+        data:
+          volume_level: 0.4
+        target:
+          device_id:
+          - 52cca22055c81b6c553ce3d52f061e53
+          - 5c626b0096e595cfbb05cbebccdeb217
+        enabled: false
+fireplace_crackle:
+  alias: Fireplace Crackle
+  sequence:
+  - action: media_player.volume_mute
+    metadata: {}
+    data:
+      is_volume_muted: true
+    target:
+      entity_id: media_player.office_speaker
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.01
+    target:
+      entity_id: media_player.office_speaker
+    enabled: true
+  - alias: Start the SFX
+    action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: The Fireplace 60
+      media_type: track
+      enqueue: play
+    target:
+      entity_id: media_player.office_speaker
+  - sequence:
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+  - sequence:
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+  - sequence:
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+  - sequence:
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+    - alias: Add 1h to Queue
+      action: music_assistant.play_media
+      metadata: {}
+      data:
+        media_id: The Fireplace 60
+        media_type: track
+        enqueue: add
+      target:
+        entity_id: media_player.office_speaker
+  - action: media_player.repeat_set
+    metadata: {}
+    data:
+      repeat: all
+    enabled: true
+    target:
+      entity_id: media_player.office_speaker
+  - action: media_player.volume_mute
+    metadata: {}
+    data:
+      is_volume_muted: false
+    target:
+      entity_id: media_player.office_speaker
+  - action: media_player.volume_set
+    metadata: {}
+    data:
+      volume_level: 0.2
+    target:
+      entity_id: media_player.office_speaker
+    enabled: true
+  - action: script.fade_volume
+    metadata: {}
+    data:
+      target_volume: 0.52
+      curve: logarithmic
+      target_player: media_player.office_speaker
+      duration: 2
+    enabled: false
+  description: ''
+  icon: mdi:fireplace
+turn_off_window_fan_if_on:
+  sequence:
+  - if:
+    - condition: device
+      device_id: 34ef189e7f65315dc16ef489e4646954
+      domain: fan
+      entity_id: c2ecb182e1f473ea73da60e09887ba32
+      type: is_on
+    then:
+    - type: turn_off
+      device_id: 34ef189e7f65315dc16ef489e4646954
+      entity_id: c2ecb182e1f473ea73da60e09887ba32
+      continue_on_error: true
+      domain: fan
+  alias: Turn Off Window Fan (If On)
+  description: ''
+nature_s_colors:
+  sequence:
+  - action: scene.turn_on
+    metadata: {}
+    data:
+      transition: 6
+    target:
+      entity_id:
+      - scene.hall_nature_s_colors_2
+      - scene.kitchen_nature_s_colors_3
+      - scene.living_room_nature_s_colors
+  alias: Nature’s Colors
+  description: ''
+  icon: ios:cloud-sun
+natural_light:
+  sequence:
+  - action: scene.turn_on
+    metadata: {}
+    data:
+      transition: 6
+    target:
+      entity_id:
+      - scene.hall_natural_light
+      - scene.kitchen_natural_light
+      - scene.living_room_natural_light
+  alias: Natural Light
+  description: ''
+  icon: ios:sun-max
+bambussy_camera_toggle:
+  sequence:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: camera.bambussy_camera
+          state: streaming
+        - condition: state
+          entity_id: camera.bambussy_camera
+          state: idle
+      sequence:
+      - action: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.bambussy_enable_camera
+      alias: If Bambussy Camera is Streaming or Idle, Turn Off
+    - conditions:
+      - condition: state
+        entity_id: camera.bambussy_camera
+        state: unavailable
+      sequence:
+      - action: switch.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.bambussy_enable_camera
+      alias: If Bambussy Camera is Unavailable, Turn On
+  alias: Bambussy Camera Toggle
+  description: ''
+  icon: ios:camera-on-rectangle
+update_default_theme:
+  sequence:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ variable == ''ios-light'' }}'
+        alias: If variable is `ios-light`
+      sequence:
+      - choose:
+        - conditions:
+          - condition: template
+            value_template: '{{ now().month == 6 }}'
+            alias: If it is June
+          sequence:
+          - alias: Set default theme to ios-light-mode-pride
+            action: frontend.set_theme
+            metadata: {}
+            data:
+              name: ios-light-mode-pride
+          alias: 'June: Set Pride theme (light)'
+        - conditions:
+          - alias: If it is any other month
+            condition: template
+            value_template: '{{ now().month != 6 }}'
+          sequence:
+          - action: frontend.set_theme
+            metadata: {}
+            data:
+              name: ios-light-mode-sequoia
+    - conditions:
+      - condition: template
+        value_template: '{{ variable == ''ios-dark'' }}'
+        alias: If variable is `ios-dark`
+      sequence:
+      - choose:
+        - conditions:
+          - condition: template
+            value_template: '{{ now().month == 6 }}'
+            alias: If it is June
+          sequence:
+          - alias: Set default theme to ios-dark-mode-pride
+            action: frontend.set_theme
+            metadata: {}
+            data:
+              name: ios-dark-mode-pride
+          alias: 'June: Set Pride theme (dark)'
+        - conditions:
+          - alias: If it is any other month
+            condition: template
+            value_template: '{{ now().month != 6 }}'
+          sequence:
+          - action: frontend.set_theme
+            metadata: {}
+            data:
+              name: ios-dark-mode-aurora
+    enabled: false
+  - action: input_select.select_option
+    metadata: {}
+    data:
+      option: '{{ variable }}'
+    target:
+      entity_id: input_select.current_theme
+    enabled: false
+  - action: frontend.set_theme
+    metadata: {}
+    data:
+      name: ios-adaptive-halloween
+  fields:
+    variable:
+      description: Expecting 'ios-dark' or 'ios-light' or 'mac-dark' or 'mac-light'
+        or 'other'
+      required: true
+  alias: '[Deprecated for Adaptive Theme] Update Default Theme'
+  description: 'Updates the default theme and tracks changes. REQUIRED: ''dark'' or
+    ''light'' input variable.'
+  icon: ios:paintbrush-pointed
+fade_the_volume_of_multiple_media_players:
+  alias: Fade the volume of multiple media players
+  mode: parallel
+  fields:
+    target_player:
+      name: Target media player
+      description: Target media player of volume fade.
+      required: true
+      example: media_player.lounge_sonos
+      selector:
+        entity:
+          domain: media_player
+          multiple: true
+    target_volume:
+      name: Target volume
+      description: Volume the media play will be at the end of the fade duration.
+      required: true
+      default: 0.5
+      example: '0.5'
+      selector:
+        number:
+          max: 1
+          min: 0
+          step: 0.01
+          mode: slider
+    duration:
+      name: Fade duration
+      description: Length of time in seconds the fade should take.
+      required: true
+      default: 5
+      example: '5'
+      selector:
+        number:
+          mode: box
+          min: 0
+          max: 100000
+          unit_of_measurement: s
+    curve:
+      name: Fade curve algorithm
+      description: Shape of the fade curve to apply.
+      required: true
+      default: logarithmic
+      example: logarithmic
+      selector:
+        select:
+          options:
+          - logarithmic
+          - bezier
+          - linear
+  variables:
+    steps_per_second: 10
+    total_steps: '{{ (steps_per_second * duration) | int(0) }}'
+    start_volume: '{{ state_attr(target_player, ''volume_level'') | float(0) }}'
+    start_diff: '{{ (target_volume - start_volume) | float(0) }}'
+  icon: ios:speaker-zzz
+  description: ''
+  sequence:
+  - variables:
+      players: '{{ target_player if target_player is iterable else [target_player]
+        }}'
+  - parallel:
+    - repeat:
+        for_each: '{{ players }}'
+        sequence:
+        - variables:
+            player: '{{ repeat.item }}'
+            steps_per_second: 10
+            total_steps: '{{ (steps_per_second * duration) | int(0) }}'
+            start_volume: '{{ state_attr(player, ''volume_level'') | float(0) }}'
+            start_diff: '{{ (target_volume - start_volume) | float(0) }}'
+        - repeat:
+            while:
+            - condition: template
+              value_template: '{{ repeat.index < total_steps }}'
+            - condition: template
+              value_template: '{{ ((state_attr(player, "volume_level") - target_volume)
+                | abs) > 0.001 }}'
+            sequence:
+            - data:
+                entity_id: '{{ player }}'
+                volume_level: "{% set t = repeat.index / total_steps %} {% if curve
+                  == 'logarithmic' %}\n  {{ (start_volume + (t / (1 + (1 - t))) *
+                  start_diff) | float(0) }}\n{% elif curve == 'bezier' %}\n  {{ (start_volume
+                  + (t * t * (3 - 2 * t)) * start_diff) | float(0) }}\n{% else %}\n
+                  \ {{ (start_volume + t * start_diff) | float(0) }}\n{% endif %}\n"
+              action: media_player.volume_set
+            - delay: '00:00:00.1'
+        - data:
+            entity_id: '{{ player }}'
+            volume_level: '{{ target_volume }}'
+          action: media_player.volume_set
+learn_fireplace_commands:
+  sequence:
+  - action: remote.learn_command
+    target:
+      entity_id: remote.universal_remote
+    data:
+      device: fireplace
+      command:
+      - turn on
+      - flame off
+      - flame on
+      - flame down
+      - flame up
+      - heat off
+      - heat on
+      - heater i off
+      - heater i on
+      - heater ii off
+      - heater ii on
+      - turn off
+      command_type: ir
+  alias: Learn Fireplace Commands
+  description: ''
+fade_out_crickets:
+  sequence:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.ambient_sfx_are_playing
+      state: 'on'
+    then:
+    - variables:
+        keywords:
+        - Crickets and Thunder
+        - Summer Thunder
+        - Evening Fire
+        players: "{% set players = states.media_player\n  | selectattr('state', 'eq',
+          'playing')\n  | selectattr('attributes.media_title', 'defined')\n  | selectattr('attributes.media_title',
+          'search', keywords | join('|'), ignorecase=True)\n  | map(attribute='entity_id')\n
+          \ | list %}\n{{ players if players else none }}\n"
+    - alias: Fade Out the Crickets
+      repeat:
+        for_each: '{{ players }}'
+        sequence:
+        - action: script.fade_volume
+          metadata: {}
+          data:
+            target_volume: 0
+            duration: 5
+            curve: logarithmic
+            target_player: '{{ repeat.item }}'
+    - target:
+        entity_id: '{{ players }}'
+      action: media_player.media_stop
+      data: {}
+      enabled: true
+    enabled: true
+  alias: Fade Out and Stop Crickets
+  description: ''
+  icon: local:speaker-minus
+fireplace_lights_only:
+  alias: Fireplace — Lights Only
+  sequence:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.fireplace_power
+  - delay: 00:00:02
+  - service: switch.turn_off
+    target:
+      entity_id:
+      - switch.fireplace_heater_i
+      - switch.fireplace_heater_ii
+  - delay: 00:00:01
+fireplace_low_heat:
+  alias: Fireplace — Low Heat
+  sequence:
+  - service: script.fireplace_lights_only
+  - delay: 00:00:01
+  - service: switch.turn_on
+    target:
+      entity_id: switch.fireplace_heater_i
+fireplace_high_heat:
+  alias: Fireplace — High Heat
+  sequence:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.fireplace_power
+  - delay: 00:00:02
+  - service: switch.turn_on
+    target:
+      entity_id:
+      - switch.fireplace_heater_i
+      - switch.fireplace_heater_ii
+fireplace_off:
+  alias: Fireplace — Off
+  sequence:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.fireplace_power
+bubbletron_interval_timer:
+  sequence:
+  - repeat:
+      while:
+      - condition: state
+        entity_id: input_boolean.bubbles
+        state: 'on'
+      sequence:
+      - action: switch.turn_on
+        metadata: {}
+        data: {}
+        target:
+          device_id: d138bdd0edfe7d8dae9ec1e2dbdd0b34
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 20
+          milliseconds: 0
+      - action: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          device_id: d138bdd0edfe7d8dae9ec1e2dbdd0b34
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 30
+          milliseconds: 0
+  alias: BubbleTRON Interval Timer
+  description: ''
+play_an_mp3_from_music_assistant:
+  fields:
+    track_name:
+      name: Track Name
+      description: What track should be played?
+      required: true
+      selector:
+        text:
+    players:
+      name: Music Assistant Players
+      description: Which MASS media players should this play on?
+      required: true
+      selector:
+        entity:
+          integration: music_assistant
+          domain: media_player
+          multiple: true
+  sequence:
+  - action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: '{{ track_name }}'
+      enqueue: play
+      media_type: track
+    target:
+      entity_id: '{{ players }}'
+  - action: music_assistant.play_media
+    metadata: {}
+    data:
+      media_id: '{{ track_name }}'
+      enqueue: replace_next
+      media_type: track
+    target:
+      entity_id: '{{ players }}'
+  - action: media_player.media_next_track
+    metadata: {}
+    data: {}
+    target:
+      entity_id: '{{ players }}'
+  alias: Play Something from Music Assistant
+  description: ''
+nighttime_rain:
+  sequence:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: 'off'
+      sequence:
+      - action: media_player.turn_on
+        metadata: {}
+        data: {}
+        target:
+          device_id:
+          - 7d4ae0d50e5b92898ce6a04929870fbf
+          - f415f5e4e8c27817e460b3ebfece9704
+          - 0e56a27fa16abe0c5ad8ba2af63895d2
+          - 7443285e98837a2c1cc5c45de7e993a1
+      - sequence:
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_type: track
+            enqueue: play
+            media_id: Light Rain on a Tent
+          target:
+            entity_id:
+            - media_player.kitchen_mini_ma
+            - media_player.living_room_2_2
+            - media_player.living_room_3
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Heavy Rain on a Tent
+            media_type: track
+            enqueue: play
+          enabled: true
+          target:
+            entity_id:
+            - media_player.entertainment_room
+            - media_player.entertainment_room_2
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Rushing Rainy Riverbank
+            media_type: track
+            enqueue: play
+          target:
+            entity_id: media_player.kitchen
+          enabled: true
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Rainy Riverbank
+            media_type: track
+            enqueue: play
+          enabled: true
+          target:
+            entity_id: media_player.bathroom_2
+      - sequence:
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_type: track
+            enqueue: replace_next
+            media_id: Light Rain on a Tent
+          target:
+            entity_id:
+            - media_player.kitchen_mini_ma
+            - media_player.living_room_2_2
+            - media_player.living_room_3
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Heavy Rain on a Tent
+            media_type: track
+            enqueue: replace_next
+          enabled: true
+          target:
+            entity_id:
+            - media_player.entertainment_room
+            - media_player.entertainment_room_2
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Rushing Rainy Riverbank
+            media_type: track
+            enqueue: replace_next
+          target:
+            entity_id: media_player.kitchen
+          enabled: true
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Rainy Riverbank
+            media_type: track
+            enqueue: replace_next
+          enabled: true
+          target:
+            entity_id: media_player.bathroom_2
+      - action: media_player.media_next_track
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - media_player.living_room_homepods
+          - media_player.entertainment_room
+          - media_player.entertainment_room_2
+          - media_player.kitchen
+          - media_player.bathroom_2
+      - alias: Set Volumes
+        sequence:
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.3
+          target:
+            entity_id:
+            - media_player.living_room_2_2
+            - media_player.living_room_3
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.26
+          enabled: true
+          target:
+            entity_id:
+            - media_player.entertainment_room
+            - media_player.entertainment_room_2
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.27
+          enabled: true
+          target:
+            entity_id:
+            - media_player.kitchen_mini_ma
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.23
+          enabled: true
+          target:
+            entity_id:
+            - media_player.kitchen
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.24
+          target:
+            entity_id: media_player.bathroom_2
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: 'on'
+      sequence:
+      - action: media_player.turn_on
+        metadata: {}
+        data: {}
+        target:
+          device_id:
+          - 7d4ae0d50e5b92898ce6a04929870fbf
+          - f415f5e4e8c27817e460b3ebfece9704
+          - 0e56a27fa16abe0c5ad8ba2af63895d2
+      - sequence:
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Evening Fire
+            media_type: track
+            enqueue: play
+          target:
+            device_id:
+            - f415f5e4e8c27817e460b3ebfece9704
+            - ed81ea2c761479d5b347b7a2869f5173
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Crickets and Thunder
+            media_type: track
+            enqueue: play
+          target:
+            device_id:
+            - 7d4ae0d50e5b92898ce6a04929870fbf
+            - 0e56a27fa16abe0c5ad8ba2af63895d2
+          enabled: true
+      - sequence:
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Evening Fire
+            media_type: track
+            enqueue: replace_next
+          target:
+            device_id:
+            - f415f5e4e8c27817e460b3ebfece9704
+            - ed81ea2c761479d5b347b7a2869f5173
+        - action: music_assistant.play_media
+          metadata: {}
+          data:
+            media_id: Crickets and Thunder
+            media_type: track
+            enqueue: replace_next
+          target:
+            device_id:
+            - 7d4ae0d50e5b92898ce6a04929870fbf
+            - 0e56a27fa16abe0c5ad8ba2af63895d2
+          enabled: true
+      - action: media_player.media_next_track
+        metadata: {}
+        data: {}
+        target:
+          device_id:
+          - f415f5e4e8c27817e460b3ebfece9704
+          - 7d4ae0d50e5b92898ce6a04929870fbf
+          - 0e56a27fa16abe0c5ad8ba2af63895d2
+          - ed81ea2c761479d5b347b7a2869f5173
+      - alias: Set Volumes
+        sequence:
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.3
+          target:
+            device_id: f415f5e4e8c27817e460b3ebfece9704
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.12
+          target:
+            device_id:
+            - 7d4ae0d50e5b92898ce6a04929870fbf
+            - ed81ea2c761479d5b347b7a2869f5173
+          enabled: true
+        - action: media_player.volume_set
+          metadata: {}
+          data:
+            volume_level: 0.18
+          target:
+            device_id: 0e56a27fa16abe0c5ad8ba2af63895d2
+  - action: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.ambient_sfx_are_playing
+    enabled: false
+  alias: Nighttime Rain
+  description: ''
+  icon: ios:cloud-moon-rain
+phantom_everywhere:
+  sequence:
+  - parallel:
+    - action: scene.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id:
+        - scene.bedroom_phantom
+    - action: scene.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id:
+        - scene.entertainment_room_phantom
+    - action: scene.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id:
+        - scene.hall_phantom
+        - scene.kitchen_phantom
+        - scene.living_room_phantom
+  alias: Phantom (Everywhere)
+  description: ''
+toil_trouble_everywhere:
+  sequence:
+  - parallel:
+    - action: scene.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id:
+        - scene.bedroom_toil_and_trouble
+    - action: scene.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id:
+        - scene.entertainment_room_toil_and_trouble
+    - action: scene.turn_on
+      metadata: {}
+      data: {}
+      target:
+        entity_id:
+        - scene.kitchen_toil_and_trouble
+        - scene.kitchen_spellbound
+        - scene.hall_hocus_pocus
+        - scene.living_room_hocus_pocus
+  alias: Toil & Trouble (Everywhere)
+  description: ''
