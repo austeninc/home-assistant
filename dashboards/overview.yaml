@@ -620,7 +620,7 @@ views:
                         entity: light.kitchen
                         state_not: 'on'
             entity: script.nature_s_colors
-            badge_color: var(--teal-color)
+            badge_color: teal
             color: |-
               {% if 'light' in states('input_select.current_theme') %}
                 #8E8E93
@@ -2161,8 +2161,7 @@ views:
             primary: Natural Light
             secondary: Living Room Lights
             icon: local:sun-max
-            badge_icon: ''
-            fill_container: true
+            badge_icon: local:sparkle
             multiline_secondary: false
             tap_action:
               action: toggle
@@ -2177,12 +2176,13 @@ views:
                     state: sunny
             entity: scene.living_room_natural_light
             icon_color: ''
+            features_position: bottom
+            badge_color: var(--yellow-color)
           - type: custom:mushroom-template-card
             primary: Nature's Colors
             secondary: Living Room Lights
             icon: local:cloud-moon
-            badge_icon: ''
-            fill_container: true
+            badge_icon: local:sparkle
             multiline_secondary: false
             tap_action:
               action: toggle
@@ -2197,12 +2197,13 @@ views:
                     state_not: sunny
             entity: scene.living_room_nature_s_colors
             icon_color: ''
+            features_position: bottom
+            badge_color: teal
           - type: custom:mushroom-template-card
             primary: Sunset Vibes
             secondary: Living Room Lights
             icon: local:sunset
-            badge_icon: ''
-            fill_container: true
+            badge_icon: local:sparkle
             multiline_secondary: false
             tap_action:
               action: toggle
@@ -2220,6 +2221,8 @@ views:
                   - condition: numeric_state
                     entity: sensor.next_sunset
                     above: 1380
+            features_position: bottom
+            badge_color: red
           - type: heading
             heading: Lights
             heading_style: title
@@ -3927,7 +3930,7 @@ views:
       badges_wrap: scroll
     cards: []
   - type: sections
-    max_columns: 2
+    max_columns: 4
     title: Settings
     path: settings
     icon: local:gear
@@ -3949,8 +3952,6 @@ views:
               - entity: input_boolean.guest_mode
                 state_color: true
             state_color: false
-      - type: grid
-        cards:
           - type: heading
             heading: Tools
             heading_style: title
@@ -4035,58 +4036,6 @@ views:
               reverse: false
               ignore_case: false
               method: state
-      - type: grid
-        cards:
-          - type: heading
-            heading: Automation Trackers
-            heading_style: title
-            icon: local:sparkles-square-filled-on-square
-            card_mod:
-              class: heading-ios
-          - type: heading
-            heading_style: subtitle
-            icon: local:person-wave-2
-            heading: Presence
-            card_mod:
-              class: sub-heading-ios
-          - type: entity
-            entity: binary_sensor.home_or_away
-            grid_options:
-              rows: 2
-              columns: full
-          - type: entities
-            entities:
-              - entity: person.austen_clement
-                secondary_info: last-changed
-              - entity: person.bryan_ignacio
-                secondary_info: last-updated
-              - entity: input_boolean.guest_mode
-              - entity: binary_sensor.guest_in_calendar
-          - type: heading
-            heading_style: subtitle
-            icon: local:cat-circle
-            heading: Litter
-            card_mod:
-              class: sub-heading-ios
-          - type: entities
-            entities:
-              - entity: counter.litter_use_tracker
-                secondary_info: entity-id
-              - entity: timer.litter_purifying_the_air
-                secondary_info: entity-id
-              - entity: automation.litter_clean_air_after_probable_poop
-                secondary_info: last-triggered
-                icon: mdi:emoticon-poop-outline
-              - entity: automation.litter_clean_air_after_30s_motion
-                secondary_info: last-triggered
-                icon: mdi:emoticon-poop-outline
-            state_color: false
-        visibility:
-          - condition: user
-            users:
-              - 61073c06208349eeb40253f5d01292f2
-      - type: grid
-        cards:
           - type: heading
             heading: Weather & Sun
             heading_style: title
@@ -4114,6 +4063,67 @@ views:
                   attribute: azimuth
                   icon: mdi:angle-acute
                   name: Sun azimuth
+      - type: grid
+        cards:
+          - type: heading
+            heading: Automation Trackers
+            heading_style: title
+            icon: local:sparkles-square-filled-on-square
+            card_mod:
+              class: heading-ios
+          - type: heading
+            heading_style: subtitle
+            icon: local:person-wave-2
+            heading: Presence
+            card_mod:
+              class: sub-heading-ios
+          - type: vertical-stack
+            cards:
+              - type: entity
+                entity: binary_sensor.home_or_away
+                grid_options:
+                  rows: 2
+                  columns: 12
+              - type: entities
+                entities:
+                  - entity: person.austen_clement
+                    secondary_info: last-changed
+                  - entity: person.bryan_ignacio
+                    secondary_info: last-updated
+                  - entity: input_boolean.guest_mode
+                  - entity: binary_sensor.guest_in_calendar
+          - type: entities
+            entities:
+              - entity: binary_sensor.athom_presence_sensor_d94195_mmwave_sensor
+              - entity: binary_sensor.athom_presence_sensor_d94195_pir_sensor
+              - entity: binary_sensor.athom_presence_sensor_d94195_occupancy
+              - entity: sensor.athom_presence_sensor_d94195_light_sensor
+          - type: heading
+            heading_style: subtitle
+            icon: local:cat-circle
+            heading: Litter
+            card_mod:
+              class: sub-heading-ios
+          - type: entities
+            entities:
+              - entity: counter.litter_use_tracker
+                secondary_info: entity-id
+              - entity: timer.litter_purifying_the_air
+                secondary_info: entity-id
+              - entity: automation.litter_clean_air_after_probable_poop
+                secondary_info: last-triggered
+                icon: mdi:emoticon-poop-outline
+              - entity: automation.litter_clean_air_after_30s_motion
+                secondary_info: last-triggered
+                icon: mdi:emoticon-poop-outline
+            state_color: false
+        visibility:
+          - condition: user
+            users:
+              - 61073c06208349eeb40253f5d01292f2
+        column_span: 2
+      - type: grid
+        cards: []
       - type: grid
         cards:
           - type: custom:navbar-card
@@ -4197,3 +4207,5 @@ views:
         name: Aksel
         needle: true
         show_name: true
+    cards: []
+    dense_section_placement: true
