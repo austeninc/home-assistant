@@ -382,39 +382,6 @@ views:
             icon_tap_action:
               action: navigate
               navigation_path: /lovelace/climate-control?anchor=fireplace
-          - type: custom:mushroom-template-card
-            secondary: >-
-
-              Tap the "Fireplace is On" badge at the top of this screen to jump
-              to the controls.
-            icon: local:fireplace
-            features_position: bottom
-            grid_options:
-              columns: 12
-              rows: 3
-            primary: 'Notice: Fireplace Control has moved!'
-            multiline_secondary: true
-            badge_color: var(--info-color)
-            tap_action:
-              action: none
-            icon_tap_action:
-              action: none
-            badge_icon: local:info-circle
-            vertical: true
-            visibility:
-              - condition: and
-                conditions:
-                  - condition: or
-                    conditions:
-                      - condition: state
-                        entity: sun.sun
-                        state: above_horizon
-                      - condition: state
-                        entity: weather.forecast_home
-                        state: sunny
-                  - condition: state
-                    entity: fan.fireplace
-                    state: 'on'
           - type: heading
             icon: local:wand-and-sparkles
             heading: Soundscapes
