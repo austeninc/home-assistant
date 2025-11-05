@@ -202,19 +202,6 @@ views:
                     conditions:
                       - condition: or
                         conditions:
-                          - condition: state
-                            entity: sun.sun
-                            state: above_horizon
-                          - condition: state
-                            entity: weather.forecast_home
-                            state: sunny
-                      - condition: state
-                        entity: fan.fireplace
-                        state: 'on'
-                  - condition: and
-                    conditions:
-                      - condition: or
-                        conditions:
                           - condition: numeric_state
                             entity: cover.bedroom_blinds_cover
                             below: 30
@@ -2956,7 +2943,7 @@ views:
         color: blue
         label: Active
   - type: sections
-    max_columns: 2
+    max_columns: 3
     title: Media
     path: media-ios
     icon: local:music-note-house
@@ -3193,6 +3180,113 @@ views:
                     state_not: 'off'
                   - entity: media_player.living_room_homepods_2
                     state_not: idle
+      - type: grid
+        cards:
+          - type: heading
+            icon: local:wand-and-sparkles
+            heading: Soundscapes
+            heading_style: title
+            card_mod:
+              class: heading-ios
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity: binary_sensor.ambient_sfx_are_playing
+                        state: 'on'
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity: input_boolean.rained_today
+                        state: 'on'
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: rainy
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: pouring
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: hail
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: lightning-rainy
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: lightning
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: snowy-rainy
+          - type: custom:mushroom-template-card
+            primary: Rainy Mood
+            entity: script.daytime_rain
+            badge_icon: local:sparkle
+            multiline_secondary: false
+            tap_action:
+              action: toggle
+            grid_options:
+              columns: 12
+              rows: 1
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: input_boolean.rained_today
+                    state: 'on'
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: rainy
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: pouring
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: hail
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: lightning-rainy
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: lightning
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: snowy-rainy
+            badge_color: blue
+            features_position: bottom
+            icon_tap_action:
+              action: toggle
+            icon: local:cloud-sun-rain
+            secondary: Soundscape for Rainy Days
+          - type: custom:mushroom-template-card
+            primary: Stop Ambient Sound FX
+            secondary: ''
+            icon: mdi:speaker-stop
+            entity: script.stop_ambient_sounds
+            badge_icon: local:sparkle
+            multiline_secondary: false
+            tap_action:
+              action: toggle
+            grid_options:
+              columns: 12
+              rows: 1
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.ambient_sfx_are_playing
+                    state: 'on'
+            badge_color: var(--red-color)
+            color: |-
+              {% if 'light' in states('input_select.current_theme') %}
+                #8E8E93
+              {% elif 'dark' in states('input_select.current_theme') %}
+
+              {% endif %}
+            features_position: bottom
+            icon_tap_action:
+              action: toggle
       - type: grid
         cards:
           - type: heading
