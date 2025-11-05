@@ -179,28 +179,6 @@ views:
       - type: grid
         cards:
           - type: heading
-            icon: local:pumpkin-05
-            heading_style: title
-            heading: Spooky Season
-            card_mod:
-              class: heading-ios
-          - type: custom:mushroom-template-card
-            secondary: Tap for Seasonal Experiences
-            icon: local:boogie_man
-            multiline_secondary: false
-            tap_action:
-              action: navigate
-              navigation_path: '#spooky-season'
-            grid_options:
-              columns: 12
-              rows: 1
-            entity: script.nature_s_colors
-            features_position: bottom
-            icon_tap_action:
-              action: none
-            primary: Haunted Delights
-            color: var(--indigo-color)
-          - type: heading
             icon: local:bolt
             heading: Quick Actions
             heading_style: title
@@ -1029,66 +1007,6 @@ views:
         column_span: 1
       - type: grid
         cards:
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: pop-up
-                name: Haunted Delights
-                icon: local:boogie_man
-                hash: '#spooky-season'
-                button_type: name
-                show_header: true
-                show_icon: true
-                scrolling_effect: false
-                show_name: true
-                bg_opacity: '0'
-                bg_color: var(--card-background-color)
-                modules:
-                  - home-assistant-default-for-ios-by-austen
-                hide_backdrop: true
-                button_action: {}
-              - type: heading
-                icon: local:haunted_house-02
-                heading_style: subtitle
-                heading: Ghoulish Lighting
-                card_mod:
-                  class: sub-heading-ios
-              - type: vertical-stack
-                cards:
-                  - type: custom:mushroom-template-card
-                    primary: Phantom
-                    secondary: An eerie glow filled the house...
-                    icon: local:ghost-02
-                    features_position: bottom
-                    entity: script.phantom_everywhere
-                    tap_action:
-                      action: toggle
-                    icon_tap_action:
-                      action: toggle
-                    color: rgba(0, 129, 152, 1.0)
-                  - type: custom:mushroom-template-card
-                    primary: Toil & Trouble
-                    secondary: Something wicked this way comes!
-                    icon: local:cauldron
-                    features_position: bottom
-                    entity: script.toil_trouble_everywhere
-                    tap_action:
-                      action: toggle
-                    icon_tap_action:
-                      action: toggle
-                    color: rgba(0, 137, 50, 1.0)
-              - type: heading
-                icon: local:ghost-04
-                heading_style: subtitle
-                heading: Ghostly Apparitions
-                card_mod:
-                  class: sub-heading-ios
-              - type: entities
-                entities:
-                  - entity: input_boolean.moaning_myrtle
-                state_color: false
-      - type: grid
-        cards:
           - type: custom:navbar-card
             template: 544_nav
     badges:
@@ -1096,10 +1014,10 @@ views:
         show_name: true
         show_state: true
         show_icon: true
-        entity: binary_sensor.front_door_door
+        entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_opening
         visibility:
           - condition: state
-            entity: binary_sensor.front_door_door
+            entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_opening
             state_not: 'off'
         name: Front Door
       - type: entity
@@ -1282,43 +1200,59 @@ views:
                 target:
                   entity_id: vacuum.cleo
           - type: heading
-            icon: local:pumpkin-05
-            heading_style: title
-            heading: Spooky Season
-            card_mod:
-              class: heading-ios
-          - type: custom:mushroom-template-card
-            primary: Phantom
-            secondary: An eerie glow fills the room...
-            icon: local:ghost-02
-            features_position: bottom
-            entity: automation.bedroom_phantom
-            tap_action:
-              action: toggle
-            icon_tap_action:
-              action: toggle
-            color: rgba(0, 129, 152, 1.0)
-            grid_options:
-              columns: full
-          - type: custom:mushroom-template-card
-            primary: Toil & Trouble
-            secondary: Something wicked this way comes!
-            icon: local:cauldron
-            features_position: bottom
-            entity: scene.bedroom_toil_and_trouble
-            tap_action:
-              action: toggle
-            icon_tap_action:
-              action: toggle
-            color: green
-            grid_options:
-              columns: full
-          - type: heading
             heading_style: title
             icon: local:paintpalette
             heading: Scenes
             card_mod:
               class: heading-ios
+          - type: custom:mushroom-template-card
+            primary: Nature's Colors
+            secondary: Bedroom | Sky, Inside
+            icon: local:cloud-moon
+            badge_icon: local:sparkle
+            multiline_secondary: false
+            tap_action:
+              action: toggle
+            grid_options:
+              columns: 12
+              rows: 1
+            visibility:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity: weather.forecast_home
+                    state_not: sunny
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity: binary_sensor.hue_nature_s_colors_hall
+                        state_not: 'on'
+                      - condition: state
+                        entity: binary_sensor.hue_nature_s_colors_kitchen
+                        state_not: 'on'
+                      - condition: state
+                        entity: binary_sensor.hue_nature_s_colors_living_room
+                        state_not: 'on'
+                      - condition: state
+                        entity: light.living_room
+                        state_not: 'on'
+                      - condition: state
+                        entity: light.hall
+                        state_not: 'on'
+                      - condition: state
+                        entity: light.kitchen
+                        state_not: 'on'
+            entity: scene.bedroom_nature_s_colors_5
+            badge_color: teal
+            color: |-
+              {% if 'light' in states('input_select.current_theme') %}
+                #8E8E93
+              {% elif 'dark' in states('input_select.current_theme') %}
+
+              {% endif %}
+            features_position: bottom
+            icon_tap_action:
+              action: toggle
           - type: custom:mushroom-template-card
             primary: Natural Light
             secondary: Bedroom Lights | Sky, Inside
@@ -1336,21 +1270,30 @@ views:
               columns: 12
               rows: 1
             visibility:
-              - condition: or
+              - condition: and
                 conditions:
                   - condition: state
                     entity: weather.forecast_home
                     state: sunny
-                  - condition: state
-                    entity: weather.forecast_home
-                    state: clear-night
                   - condition: or
                     conditions:
                       - condition: state
-                        entity: binary_sensor.hue_natural_light_bedroom
+                        entity: binary_sensor.hue_natural_light_hall
                         state_not: 'on'
                       - condition: state
-                        entity: light.bedroom
+                        entity: binary_sensor.hue_natural_light_kitchen
+                        state_not: 'on'
+                      - condition: state
+                        entity: binary_sensor.hue_natural_light_living_room
+                        state_not: 'on'
+                      - condition: state
+                        entity: light.living_room
+                        state_not: 'on'
+                      - condition: state
+                        entity: light.hall
+                        state_not: 'on'
+                      - condition: state
+                        entity: light.kitchen
                         state_not: 'on'
             entity: scene.bedroom_natural_light
             badge_color: var(--yellow-color)
@@ -4100,10 +4043,58 @@ views:
               - entity: sensor.athom_presence_sensor_d94195_light_sensor
           - type: heading
             heading_style: subtitle
+            icon: local:robotic-vacuum
+            heading: Vacuum
+            card_mod:
+              class: sub-heading-ios
+          - type: custom:mushroom-vacuum-card
+            entity: vacuum.cleo
+            commands:
+              - start_pause
+              - stop
+              - locate
+              - clean_spot
+              - return_home
+            grid_options:
+              columns: full
+            fill_container: false
+            icon_animation: true
+            layout: horizontal
+          - type: entities
+            entities:
+              - entity: timer.vacuum_timer
+                secondary_info: last-changed
+              - entity: counter.vacuum_hallway_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_aksel_s_lair_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_kitchen_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_dining_room_counter
+                secondary_info: last-changed
+            state_color: false
+          - type: entities
+            entities:
+              - entity: counter.vacuum_living_room_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_bedroom_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_bathroom_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_studio_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_entertainment_room_counter
+                secondary_info: last-changed
+            state_color: false
+          - type: heading
+            heading_style: subtitle
             icon: local:cat-circle
             heading: Litter
             card_mod:
               class: sub-heading-ios
+            grid_options:
+              columns: 24
+              rows: auto
           - type: entities
             entities:
               - entity: counter.litter_use_tracker
