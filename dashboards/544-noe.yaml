@@ -182,14 +182,11 @@ views:
             icon: local:bolt
             heading: Quick Actions
             heading_style: title
+            card_mod:
+              class: heading-ios
             visibility:
               - condition: or
                 conditions:
-                  - condition: or
-                    conditions:
-                      - condition: state
-                        entity: binary_sensor.ambient_sfx_are_playing
-                        state: 'on'
                   - condition: and
                     conditions:
                       - condition: or
@@ -203,32 +200,6 @@ views:
                       - condition: state
                         entity: fan.fireplace
                         state: 'off'
-                  - condition: and
-                    conditions:
-                      - condition: or
-                        conditions:
-                          - condition: state
-                            entity: sun.sun
-                            state: above_horizon
-                          - condition: state
-                            entity: weather.forecast_home
-                            state: sunny
-                      - condition: state
-                        entity: fan.fireplace
-                        state: 'on'
-                  - condition: and
-                    conditions:
-                      - condition: or
-                        conditions:
-                          - condition: numeric_state
-                            entity: cover.bedroom_blinds_cover
-                            below: 30
-                          - condition: numeric_state
-                            entity: cover.blinds_cover
-                            below: 30
-                      - condition: state
-                        entity: sun.sun
-                        state: above_horizon
                   - condition: and
                     conditions:
                       - condition: state
@@ -248,36 +219,14 @@ views:
                       - condition: state
                         entity: vacuum.cleo
                         state: unknown
-            card_mod:
-              class: heading-ios
-          - type: custom:mushroom-template-card
-            primary: Stop Ambient Sound FX
-            secondary: ''
-            icon: mdi:speaker-stop
-            entity: script.stop_ambient_sounds
-            badge_icon: local:sparkle
-            multiline_secondary: false
-            tap_action:
-              action: toggle
-            grid_options:
-              columns: 12
-              rows: 1
-            visibility:
-              - condition: or
-                conditions:
-                  - condition: state
-                    entity: binary_sensor.ambient_sfx_are_playing
-                    state: 'on'
-            badge_color: var(--red-color)
-            color: |-
-              {% if 'light' in states('input_select.current_theme') %}
-                #8E8E93
-              {% elif 'dark' in states('input_select.current_theme') %}
-
-              {% endif %}
-            features_position: bottom
-            icon_tap_action:
-              action: toggle
+                  - condition: and
+                    conditions:
+                      - condition: state
+                        entity: sun.sun
+                        state: above_horizon
+                      - condition: numeric_state
+                        entity: sensor.blinds_minimum_current_position
+                        below: 30
           - type: custom:mushroom-template-card
             primary: Open Blinds
             secondary: Bedroom & Studio
@@ -415,39 +364,111 @@ views:
             icon_tap_action:
               action: navigate
               navigation_path: /544-noe/climate-control?anchor=fireplace
-          - type: custom:mushroom-template-card
-            secondary: >-
-
-              Tap the "Fireplace is On" badge at the top of this screen to jump
-              to the controls.
-            icon: local:fireplace
-            features_position: bottom
-            grid_options:
-              columns: 12
-              rows: 3
-            primary: 'Notice: Fireplace Control has moved!'
-            multiline_secondary: true
-            badge_color: var(--info-color)
-            tap_action:
-              action: none
-            icon_tap_action:
-              action: none
-            badge_icon: local:info-circle
-            vertical: true
+          - type: heading
+            icon: local:wand-and-sparkles
+            heading: Soundscapes
+            heading_style: title
+            card_mod:
+              class: heading-ios
             visibility:
-              - condition: and
+              - condition: or
                 conditions:
                   - condition: or
                     conditions:
                       - condition: state
-                        entity: sun.sun
-                        state: above_horizon
+                        entity: binary_sensor.ambient_sfx_are_playing
+                        state: 'on'
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity: input_boolean.rained_today
+                        state: 'on'
                       - condition: state
                         entity: weather.forecast_home
-                        state: sunny
+                        state: rainy
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: pouring
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: hail
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: lightning-rainy
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: lightning
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: snowy-rainy
+          - type: custom:mushroom-template-card
+            primary: Rainy Mood
+            entity: script.daytime_rain
+            badge_icon: local:sparkle
+            multiline_secondary: false
+            tap_action:
+              action: toggle
+            grid_options:
+              columns: 12
+              rows: 1
+            visibility:
+              - condition: or
+                conditions:
                   - condition: state
-                    entity: fan.fireplace
+                    entity: input_boolean.rained_today
                     state: 'on'
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: rainy
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: pouring
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: hail
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: lightning-rainy
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: lightning
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: snowy-rainy
+            badge_color: blue
+            features_position: bottom
+            icon_tap_action:
+              action: toggle
+            icon: local:cloud-sun-rain
+            secondary: Soundscape for Rainy Days
+          - type: custom:mushroom-template-card
+            primary: Stop Ambient Sound FX
+            secondary: ''
+            icon: mdi:speaker-stop
+            entity: script.stop_ambient_sounds
+            badge_icon: local:sparkle
+            multiline_secondary: false
+            tap_action:
+              action: toggle
+            grid_options:
+              columns: 12
+              rows: 1
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.ambient_sfx_are_playing
+                    state: 'on'
+            badge_color: var(--red-color)
+            color: |-
+              {% if 'light' in states('input_select.current_theme') %}
+                #8E8E93
+              {% elif 'dark' in states('input_select.current_theme') %}
+
+              {% endif %}
+            features_position: bottom
+            icon_tap_action:
+              action: toggle
           - type: heading
             icon: local:wand-and-rays-inverse
             heading: Lighting
@@ -598,7 +619,7 @@ views:
                         entity: light.kitchen
                         state_not: 'on'
             entity: script.nature_s_colors
-            badge_color: var(--teal-color)
+            badge_color: teal
             color: |-
               {% if 'light' in states('input_select.current_theme') %}
                 #8E8E93
@@ -608,28 +629,6 @@ views:
             features_position: bottom
             icon_tap_action:
               action: toggle
-          - type: heading
-            icon: local:pumpkin-05
-            heading_style: title
-            heading: Spooky Season
-            card_mod:
-              class: heading-ios
-          - type: custom:mushroom-template-card
-            secondary: Tap for Seasonal Experiences
-            icon: local:boogie_man
-            multiline_secondary: false
-            tap_action:
-              action: navigate
-              navigation_path: '#spooky-season'
-            grid_options:
-              columns: 12
-              rows: 1
-            entity: script.nature_s_colors
-            features_position: bottom
-            icon_tap_action:
-              action: none
-            primary: Haunted Delights
-            color: var(--indigo-color)
       - type: grid
         cards:
           - type: heading
@@ -1029,66 +1028,6 @@ views:
         column_span: 1
       - type: grid
         cards:
-          - type: vertical-stack
-            cards:
-              - type: custom:bubble-card
-                card_type: pop-up
-                name: Haunted Delights
-                icon: local:boogie_man
-                hash: '#spooky-season'
-                button_type: name
-                show_header: true
-                show_icon: true
-                scrolling_effect: false
-                show_name: true
-                bg_opacity: '0'
-                bg_color: var(--card-background-color)
-                modules:
-                  - home-assistant-default-for-ios-by-austen
-                hide_backdrop: true
-                button_action: {}
-              - type: heading
-                icon: local:haunted_house-02
-                heading_style: subtitle
-                heading: Ghoulish Lighting
-                card_mod:
-                  class: sub-heading-ios
-              - type: vertical-stack
-                cards:
-                  - type: custom:mushroom-template-card
-                    primary: Phantom
-                    secondary: An eerie glow filled the house...
-                    icon: local:ghost-02
-                    features_position: bottom
-                    entity: script.phantom_everywhere
-                    tap_action:
-                      action: toggle
-                    icon_tap_action:
-                      action: toggle
-                    color: rgba(0, 129, 152, 1.0)
-                  - type: custom:mushroom-template-card
-                    primary: Toil & Trouble
-                    secondary: Something wicked this way comes!
-                    icon: local:cauldron
-                    features_position: bottom
-                    entity: script.toil_trouble_everywhere
-                    tap_action:
-                      action: toggle
-                    icon_tap_action:
-                      action: toggle
-                    color: rgba(0, 137, 50, 1.0)
-              - type: heading
-                icon: local:ghost-04
-                heading_style: subtitle
-                heading: Ghostly Apparitions
-                card_mod:
-                  class: sub-heading-ios
-              - type: entities
-                entities:
-                  - entity: input_boolean.moaning_myrtle
-                state_color: false
-      - type: grid
-        cards:
           - type: custom:navbar-card
             template: 544_nav
     badges:
@@ -1195,23 +1134,7 @@ views:
         show_icon: true
         entity: weather.forecast_home
       - type: custom:mushroom-template-badge
-        content: Guest Mode Active
-        color: >-
-          {% if states('input_select.current_theme') == 'ios-light' %}
-            #FF2D55
-          {% elif states('input_select.current_theme') == 'ios-dark' %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-light' %}
-            #FF2D55
-          {% elif states('input_select.current_theme') == 'macos-light-vibrant'
-          %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-dark' %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-dark-vibrant'
-          %}
-            #FF375F
-          {% endif %}
+        content: Guest Mode
         entity: input_boolean.guest_mode
         icon: local:person-fill-badge-plus
         tap_action:
@@ -1221,6 +1144,8 @@ views:
           - condition: state
             entity: input_boolean.guest_mode
             state: 'on'
+        color: blue
+        label: Active
     type: sections
     max_columns: 3
     cards: []
@@ -1409,38 +1334,6 @@ views:
           - type: entities
             entities:
               - entity: light.bedroom
-          - type: heading
-            icon: local:pumpkin-05
-            heading_style: title
-            heading: Spooky Season
-            card_mod:
-              class: heading-ios
-          - type: custom:mushroom-template-card
-            primary: Phantom
-            secondary: An eerie glow fills the room...
-            icon: local:ghost-02
-            features_position: bottom
-            entity: automation.bedroom_phantom
-            tap_action:
-              action: toggle
-            icon_tap_action:
-              action: toggle
-            color: rgba(0, 129, 152, 1.0)
-            grid_options:
-              columns: full
-          - type: custom:mushroom-template-card
-            primary: Toil & Trouble
-            secondary: Something wicked this way comes!
-            icon: local:cauldron
-            features_position: bottom
-            entity: scene.bedroom_toil_and_trouble
-            tap_action:
-              action: toggle
-            icon_tap_action:
-              action: toggle
-            color: green
-            grid_options:
-              columns: full
       - type: grid
         cards:
           - type: heading
@@ -1576,6 +1469,19 @@ views:
         tap_action:
           action: navigate
           navigation_path: /544-noe/bedroom?anchor=climate
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /544-noe/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
     header:
       card:
         type: markdown
@@ -1744,20 +1650,100 @@ views:
       - type: grid
         cards:
           - type: heading
+            icon: local:playstation-logo
+            heading_style: title
+            heading: Now Playing
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: media_player.playstation_5
+                    state: 'on'
+                  - condition: state
+                    entity: media_player.playstation_5
+                    state: playing
+                  - condition: state
+                    entity: media_player.playstation_5
+                    state: paused
+                  - condition: state
+                    entity: media_player.playstation_5_bryan
+                    state: paused
+                  - condition: state
+                    entity: media_player.playstation_5_bryan
+                    state: playing
+                  - condition: state
+                    entity: media_player.playstation_5_bryan
+                    state: 'on'
+          - type: custom:mushroom-media-player-card
+            entity: media_player.ps5
+            fill_container: false
+            use_media_info: true
+            collapsible_controls: false
+            show_volume_level: false
+            name: PlayStation 5
+            grid_options:
+              columns: full
+              rows: 2
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: media_player.playstation_5
+                    state: 'on'
+                  - condition: state
+                    entity: media_player.playstation_5
+                    state: playing
+                  - condition: state
+                    entity: media_player.playstation_5
+                    state: paused
+                  - condition: state
+                    entity: media_player.playstation_5_bryan
+                    state: paused
+                  - condition: state
+                    entity: media_player.playstation_5_bryan
+                    state: playing
+                  - condition: state
+                    entity: media_player.playstation_5_bryan
+                    state: 'on'
+          - type: heading
             icon: local:music-note-list
             heading_style: title
-            heading: Control
+            heading: Now Playing
             visibility:
               - condition: and
                 conditions:
                   - condition: state
-                    entity: media_player.entertainment_room_homepods
+                    entity: media_player.entertainment_room_homepods_2
                     state_not: idle
                   - condition: state
-                    entity: media_player.entertainment_room_homepods
+                    entity: media_player.entertainment_room_homepods_2
                     state_not: 'off'
             card_mod:
               class: heading-ios
+          - type: custom:mini-media-player
+            entity: media_player.entertainment_room_homepods_2
+            volume_stateless: false
+            toggle_power: true
+            group: false
+            artwork: cover
+            source: full
+            sound_mode: full
+            info: scroll
+            visibility:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity: media_player.entertainment_room_homepods_2
+                    state_not: idle
+                  - condition: state
+                    entity: media_player.entertainment_room_homepods_2
+                    state_not: 'off'
           - type: custom:mini-media-player
             entity: media_player.entertainment_room_homepods
             volume_stateless: false
@@ -1941,6 +1927,19 @@ views:
         tap_action:
           action: navigate
           navigation_path: /544-noe/entertainment-room?anchor=climate
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /544-noe/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
     dense_section_placement: true
     header:
       card:
@@ -1970,6 +1969,24 @@ views:
             icon: local:lightbulb-circle
             card_mod:
               class: heading-ios
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Kitchen*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: kitchen
+              icon: local:cup-and-saucer
       - type: grid
         cards:
           - type: heading
@@ -1977,14 +1994,24 @@ views:
             heading_style: title
             heading: Control
             visibility:
-              - condition: and
+              - condition: or
                 conditions:
-                  - condition: state
-                    entity: media_player.kitchen_homepod
-                    state_not: idle
-                  - condition: state
-                    entity: media_player.kitchen_homepod
-                    state_not: 'off'
+                  - condition: and
+                    conditions:
+                      - condition: state
+                        entity: media_player.kitchen_homepod_mini
+                        state_not: idle
+                      - condition: state
+                        entity: media_player.kitchen_homepod_mini
+                        state_not: 'off'
+                  - condition: and
+                    conditions:
+                      - condition: state
+                        entity: media_player.kitchen_homepod
+                        state_not: idle
+                      - condition: state
+                        entity: media_player.kitchen_homepod
+                        state_not: 'off'
             card_mod:
               class: heading-ios
           - type: custom:mini-media-player
@@ -2004,6 +2031,24 @@ views:
                     state_not: idle
                   - condition: state
                     entity: media_player.kitchen_homepod
+                    state_not: 'off'
+          - type: custom:mini-media-player
+            entity: media_player.kitchen_homepod_mini
+            volume_stateless: false
+            toggle_power: true
+            group: false
+            artwork: cover
+            source: full
+            sound_mode: full
+            info: scroll
+            visibility:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity: media_player.kitchen_homepod_mini
+                    state_not: idle
+                  - condition: state
+                    entity: media_player.kitchen_homepod_mini
                     state_not: 'off'
           - type: heading
             heading: Play Something
@@ -2039,60 +2084,6 @@ views:
         cards:
           - type: custom:navbar-card
             template: room_sub_nav
-      - type: grid
-        cards:
-          - type: heading
-            heading: Dockstream
-            heading_style: title
-            card_mod:
-              class: heading-ios
-          - type: tile
-            entity: sensor.dockstream_current_weight
-          - type: tile
-            entity: sensor.dockstream_remaining_cleaning_days
-          - type: tile
-            entity: sensor.dockstream_remaining_filter_day
-          - type: tile
-            entity: sensor.dockstream_remaining_water
-          - type: tile
-            entity: sensor.dockstream_water_interval
-          - type: tile
-            entity: sensor.dockstream_water_time_duration
-          - type: tile
-            entity: binary_sensor.dockstream_wi_fi
-          - type: tile
-            entity: sensor.dockstream_wi_fi_signal_strength
-      - type: grid
-        cards:
-          - type: heading
-            heading: Granary
-            heading_style: title
-            card_mod:
-              class: heading-ios
-          - type: tile
-            entity: sensor.granary_battery_level
-          - type: tile
-            entity: sensor.granary_buttons_lock
-          - type: tile
-            entity: sensor.granary_desiccant_remaining_days
-          - type: tile
-            entity: binary_sensor.granary_food_dispenser
-          - type: tile
-            entity: binary_sensor.granary_food_status
-          - type: tile
-            entity: sensor.granary_last_feed_time
-          - type: tile
-            entity: binary_sensor.granary_sleep_mode
-          - type: tile
-            entity: sensor.granary_today_s_feeding_plan
-          - type: tile
-            entity: sensor.granary_today_s_feeding_quantity
-          - type: tile
-            entity: sensor.granary_today_s_feeding_times
-          - type: tile
-            entity: binary_sensor.granary_wi_fi
-          - type: tile
-            entity: sensor.granary_wi_fi_signal_strength
     header:
       card:
         type: markdown
@@ -2101,6 +2092,20 @@ views:
         card_mod:
           class: heading-ios
     cards: []
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /544-noe/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
   - type: sections
     max_columns: 3
     title: Living Room
@@ -2120,8 +2125,7 @@ views:
             primary: Natural Light
             secondary: Living Room Lights
             icon: local:sun-max
-            badge_icon: ''
-            fill_container: true
+            badge_icon: local:sparkle
             multiline_secondary: false
             tap_action:
               action: toggle
@@ -2136,12 +2140,13 @@ views:
                     state: sunny
             entity: scene.living_room_natural_light
             icon_color: ''
+            features_position: bottom
+            badge_color: var(--yellow-color)
           - type: custom:mushroom-template-card
             primary: Nature's Colors
             secondary: Living Room Lights
             icon: local:cloud-moon
-            badge_icon: ''
-            fill_container: true
+            badge_icon: local:sparkle
             multiline_secondary: false
             tap_action:
               action: toggle
@@ -2156,12 +2161,13 @@ views:
                     state_not: sunny
             entity: scene.living_room_nature_s_colors
             icon_color: ''
+            features_position: bottom
+            badge_color: teal
           - type: custom:mushroom-template-card
             primary: Sunset Vibes
             secondary: Living Room Lights
             icon: local:sunset
-            badge_icon: ''
-            fill_container: true
+            badge_icon: local:sparkle
             multiline_secondary: false
             tap_action:
               action: toggle
@@ -2179,6 +2185,8 @@ views:
                   - condition: numeric_state
                     entity: sensor.next_sunset
                     above: 1380
+            features_position: bottom
+            badge_color: red
           - type: heading
             heading: Lights
             heading_style: title
@@ -2261,6 +2269,19 @@ views:
             icon: local:thermometer-variable
             card_mod:
               class: heading-ios
+          - type: custom:anchor-card
+            anchor_id: fireplace
+            negative_margin: 13
+            timeout: 50
+            offset: 0
+            transition: 0
+            card_mod:
+              style: |
+                ha-card {
+                  background-color: rgba(0, 0, 0, 0); !important;
+                  -webkit-backdrop-filter: blur(0px); !important;
+                  backdrop-filter: blur(0px) !important;
+                  }
           - type: vertical-stack
             cards:
               - features:
@@ -2313,6 +2334,62 @@ views:
         card_mod:
           class: heading-ios
     cards: []
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Fireplace is On
+        icon: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            local:flame-fill
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            local:flame
+          {% endif %}
+        color: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            orange
+          {% endif %}
+        entity: fan.fireplace
+        label: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            High Heat
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            Low Heat
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            Lights Only
+          {% endif %}
+        visibility:
+          - condition: and
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sun.sun
+                    state: above_horizon
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: sunny
+              - condition: state
+                entity: fan.fireplace
+                state: 'on'
+        tap_action:
+          action: navigate
+          navigation_path: /544-noe/living-room?anchor=fireplace
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /544-noe/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
   - type: sections
     max_columns: 3
     title: Studio
@@ -2334,6 +2411,44 @@ views:
             icon: local:lightbulb-circle
             card_mod:
               class: heading-ios
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Studio*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: studio
+              icon: local:paintpalette
+          - type: custom:auto-entities
+            card_param: scenes
+            filter:
+              include:
+                - options: {}
+                  domain: scene
+                  integration: 01J5RBERYD5RC61F1712F4FZE0
+                  name: '*Hall*'
+              exclude:
+                - options: {}
+                  name: >-
+                    /(Baby's breath)|(Amber
+                    bloom)|(Pensive)|(Blossom)|(Nighttime)|(Nightlight)|(Dreamy
+                    dusk)|(Energize)|(Concentrate)|(Relax)|(Read)|(Rest)/
+            card:
+              type: custom:hue-like-light-card
+              area: hall
+              icon: local:figure-walk
+              offShadow: false
+              onShadow: false
       - type: grid
         cards:
           - type: heading
@@ -2477,6 +2592,20 @@ views:
         card_mod:
           class: heading-ios
     cards: []
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /544-noe/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
   - type: sections
     max_columns: 2
     icon: local:lightbulb-circle
@@ -2794,8 +2923,22 @@ views:
       layout: responsive
       badges_position: bottom
       badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /544-noe/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
   - type: sections
-    max_columns: 2
+    max_columns: 3
     title: Media
     path: media-ios
     icon: local:music-note-house
@@ -2804,7 +2947,7 @@ views:
         cards:
           - type: heading
             icon: local:music-note-list
-            heading: Control
+            heading: Now Playing
             heading_style: title
             card_mod:
               class: heading-ios
@@ -3035,6 +3178,113 @@ views:
       - type: grid
         cards:
           - type: heading
+            icon: local:wand-and-sparkles
+            heading: Soundscapes
+            heading_style: title
+            card_mod:
+              class: heading-ios
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity: binary_sensor.ambient_sfx_are_playing
+                        state: 'on'
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity: input_boolean.rained_today
+                        state: 'on'
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: rainy
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: pouring
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: hail
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: lightning-rainy
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: lightning
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: snowy-rainy
+          - type: custom:mushroom-template-card
+            primary: Rainy Mood
+            entity: script.daytime_rain
+            badge_icon: local:sparkle
+            multiline_secondary: false
+            tap_action:
+              action: toggle
+            grid_options:
+              columns: 12
+              rows: 1
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: input_boolean.rained_today
+                    state: 'on'
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: rainy
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: pouring
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: hail
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: lightning-rainy
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: lightning
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: snowy-rainy
+            badge_color: blue
+            features_position: bottom
+            icon_tap_action:
+              action: toggle
+            icon: local:cloud-sun-rain
+            secondary: Soundscape for Rainy Days
+          - type: custom:mushroom-template-card
+            primary: Stop Ambient Sound FX
+            secondary: ''
+            icon: mdi:speaker-stop
+            entity: script.stop_ambient_sounds
+            badge_icon: local:sparkle
+            multiline_secondary: false
+            tap_action:
+              action: toggle
+            grid_options:
+              columns: 12
+              rows: 1
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.ambient_sfx_are_playing
+                    state: 'on'
+            badge_color: var(--red-color)
+            color: |-
+              {% if 'light' in states('input_select.current_theme') %}
+                #8E8E93
+              {% elif 'dark' in states('input_select.current_theme') %}
+
+              {% endif %}
+            features_position: bottom
+            icon_tap_action:
+              action: toggle
+      - type: grid
+        cards:
+          - type: heading
             heading: Play Something
             heading_style: title
             icon: local:music-quarternote-3
@@ -3079,6 +3329,20 @@ views:
       layout: responsive
       badges_position: bottom
       badges_wrap: wrap
+    badges:
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /544-noe/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
   - type: sections
     max_columns: 3
     path: climate-control
@@ -3093,121 +3357,6 @@ views:
             icon: local:thermometer-medium
             card_mod:
               class: heading-ios
-          - type: thermostat
-            entity: climate.hall
-            name: Thermostat
-            show_current_as_primary: false
-            features:
-              - type: climate-fan-modes
-                style: dropdown
-          - type: vertical-stack
-            cards:
-              - type: thermostat
-                entity: climate.bedroom_air_conditioner
-                name: Bedroom Air Conditioner
-                show_current_as_primary: false
-                features:
-                  - type: climate-hvac-modes
-                visibility:
-                  - condition: and
-                    conditions:
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state: 'off'
-                      - condition: and
-                        conditions:
-                          - condition: state
-                            entity: switch.bedroom_air_conditioner_power
-                            state_not: unavailable
-                          - condition: state
-                            entity: switch.bedroom_air_conditioner_power
-                            state_not: unavailable
-              - type: thermostat
-                entity: climate.bedroom_air_conditioner
-                name: Bedroom Air Conditioner
-                show_current_as_primary: false
-                features:
-                  - type: climate-hvac-modes
-                  - type: climate-fan-modes
-                    style: dropdown
-                  - type: climate-swing-modes
-                    style: dropdown
-                visibility:
-                  - condition: and
-                    conditions:
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state_not: 'off'
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state_not: unavailable
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state_not: unknown
-              - type: custom:mushroom-template-card
-                secondary: >-
-                  Bedroom AC status is {{
-                  states('switch.bedroom_air_conditioner_power') }}
-
-                  Check that it's connected to power.
-                icon: local:air-conditioner-vertical-fill
-                features_position: bottom
-                grid_options:
-                  columns: 12
-                  rows: 2
-                primary: Notice
-                multiline_secondary: true
-                badge_icon: local:wifi-slash
-                badge_color: >-
-                  {% if states('input_select.current_theme') == 'ios-light' %}
-                    #FF9500
-                  {% elif states('input_select.current_theme') == 'ios-dark' %}
-                    #FF9F0A
-                  {% elif states('input_select.current_theme') == 'macos-light'
-                  %}
-                    #FF9500
-                  {% elif states('input_select.current_theme') ==
-                  'macos-light-vibrant' %}
-                    #FF9F0A
-                  {% elif states('input_select.current_theme') == 'macos-dark'
-                  %}
-                    #FF9F0A
-                  {% elif states('input_select.current_theme') ==
-                  'macos-dark-vibrant' %}
-                    #FF9F0A
-                  {% endif %}
-                vertical: true
-                color: >-
-                  {% if states('input_select.current_theme') == 'ios-light' %}
-                    #8E8E93
-                  {% elif states('input_select.current_theme') == 'ios-dark' %}
-                    #8E8E93
-                  {% elif states('input_select.current_theme') == 'macos-light'
-                  %}
-                    #8E8E93
-                  {% elif states('input_select.current_theme') ==
-                  'macos-light-vibrant' %}
-                    #8E8E93
-                  {% elif states('input_select.current_theme') == 'macos-dark'
-                  %}
-                    #8E8E93
-                  {% elif states('input_select.current_theme') ==
-                  'macos-dark-vibrant' %}
-                    #8E8E93
-                  {% endif %}
-                tap_action:
-                  action: none
-                icon_tap_action:
-                  action: none
-                visibility:
-                  - condition: or
-                    conditions:
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state: unavailable
-                      - condition: state
-                        entity: switch.bedroom_air_conditioner_power
-                        state: unknown
           - type: vertical-stack
             cards:
               - features:
@@ -3302,6 +3451,139 @@ views:
                     entity: fan.fireplace
                     state: 'on'
                 color: orange
+          - type: custom:mushroom-template-card
+            secondary: >-
+              Google has discontinued the 1st-generation Nest Learning
+              Thermostat.
+
+              Remote control is permanently disabled.
+            icon: mdi:thermostat
+            features_position: bottom
+            grid_options:
+              columns: 12
+              rows: 3
+            primary: Notice
+            multiline_secondary: true
+            badge_color: var(--error-color)
+            tap_action:
+              action: none
+            icon_tap_action:
+              action: none
+            badge_icon: local:xmark-circle
+            vertical: true
+          - type: vertical-stack
+            cards:
+              - type: thermostat
+                entity: climate.bedroom_air_conditioner
+                name: Bedroom Air Conditioner
+                show_current_as_primary: false
+                features:
+                  - type: climate-hvac-modes
+                visibility:
+                  - condition: and
+                    conditions:
+                      - condition: state
+                        entity: switch.bedroom_air_conditioner_power
+                        state: 'off'
+                      - condition: and
+                        conditions:
+                          - condition: state
+                            entity: switch.bedroom_air_conditioner_power
+                            state_not: unavailable
+                          - condition: state
+                            entity: switch.bedroom_air_conditioner_power
+                            state_not: unavailable
+              - type: thermostat
+                entity: climate.bedroom_air_conditioner
+                name: Bedroom Air Conditioner
+                show_current_as_primary: false
+                features:
+                  - type: climate-hvac-modes
+                  - type: climate-fan-modes
+                    style: dropdown
+                  - type: climate-swing-modes
+                    style: dropdown
+                visibility:
+                  - condition: and
+                    conditions:
+                      - condition: state
+                        entity: switch.bedroom_air_conditioner_power
+                        state_not: 'off'
+                      - condition: state
+                        entity: switch.bedroom_air_conditioner_power
+                        state_not: unavailable
+                      - condition: state
+                        entity: switch.bedroom_air_conditioner_power
+                        state_not: unknown
+              - type: custom:mushroom-template-card
+                secondary: >-
+                  Bedroom AC status is {{
+                  states('switch.bedroom_air_conditioner_power') }}.
+
+                  Check that it's connected to power.
+                icon: local:air-conditioner-vertical-fill
+                features_position: bottom
+                grid_options:
+                  columns: 12
+                  rows: 2
+                primary: Notice
+                multiline_secondary: true
+                badge_icon: local:wifi-slash
+                badge_color: >-
+                  {% if states('input_select.current_theme') == 'ios-light' %}
+                    #FF9500
+                  {% elif states('input_select.current_theme') == 'ios-dark' %}
+                    #FF9F0A
+                  {% elif states('input_select.current_theme') == 'macos-light'
+                  %}
+                    #FF9500
+                  {% elif states('input_select.current_theme') ==
+                  'macos-light-vibrant' %}
+                    #FF9F0A
+                  {% elif states('input_select.current_theme') == 'macos-dark'
+                  %}
+                    #FF9F0A
+                  {% elif states('input_select.current_theme') ==
+                  'macos-dark-vibrant' %}
+                    #FF9F0A
+                  {% endif %}
+                vertical: true
+                color: >-
+                  {% if states('input_select.current_theme') == 'ios-light' %}
+                    #8E8E93
+                  {% elif states('input_select.current_theme') == 'ios-dark' %}
+                    #8E8E93
+                  {% elif states('input_select.current_theme') == 'macos-light'
+                  %}
+                    #8E8E93
+                  {% elif states('input_select.current_theme') ==
+                  'macos-light-vibrant' %}
+                    #8E8E93
+                  {% elif states('input_select.current_theme') == 'macos-dark'
+                  %}
+                    #8E8E93
+                  {% elif states('input_select.current_theme') ==
+                  'macos-dark-vibrant' %}
+                    #8E8E93
+                  {% endif %}
+                tap_action:
+                  action: none
+                icon_tap_action:
+                  action: none
+                visibility:
+                  - condition: and
+                    conditions:
+                      - condition: numeric_state
+                        entity: sensor.home_temperature
+                        above: 71
+                      - condition: or
+                        conditions:
+                          - condition: state
+                            entity: switch.bedroom_air_conditioner_power
+                            state: unavailable
+                          - condition: state
+                            entity: switch.bedroom_air_conditioner_power
+                            state: unknown
         column_span: 1
       - type: grid
         cards:
@@ -3652,6 +3934,61 @@ views:
         entity: sensor.home_temperature
         name: Inside Avg
         icon: local:thermometer-medium
+      - type: custom:mushroom-template-badge
+        content: Fireplace is On
+        icon: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            local:flame-fill
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            local:flame
+          {% endif %}
+        color: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            orange
+          {% endif %}
+        entity: fan.fireplace
+        label: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            High Heat
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            Low Heat
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            Lights Only
+          {% endif %}
+        visibility:
+          - condition: and
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sun.sun
+                    state: above_horizon
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: sunny
+              - condition: state
+                entity: fan.fireplace
+                state: 'on'
+        tap_action:
+          action: navigate
+          navigation_path: /544-noe/climate-control?anchor=fireplace
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
+        entity: input_boolean.guest_mode
+        icon: local:person-fill-badge-plus
+        tap_action:
+          action: navigate
+          navigation_path: /544-noe/settings
+        visibility:
+          - condition: state
+            entity: input_boolean.guest_mode
+            state: 'on'
+        color: blue
+        label: Active
     header:
       card:
         type: markdown
@@ -3664,7 +4001,7 @@ views:
       badges_wrap: scroll
     cards: []
   - type: sections
-    max_columns: 2
+    max_columns: 4
     title: Settings
     path: settings
     icon: local:gear
@@ -3686,8 +4023,6 @@ views:
               - entity: input_boolean.guest_mode
                 state_color: true
             state_color: false
-      - type: grid
-        cards:
           - type: heading
             heading: Tools
             heading_style: title
@@ -3772,77 +4107,6 @@ views:
               reverse: false
               ignore_case: false
               method: state
-      - type: grid
-        cards:
-          - type: heading
-            heading: Automation Trackers
-            heading_style: title
-            icon: local:sparkles-square-filled-on-square
-            card_mod:
-              class: heading-ios
-          - type: heading
-            heading_style: subtitle
-            icon: local:cat-circle
-            heading: Litter
-            card_mod:
-              class: sub-heading-ios
-          - type: entities
-            entities:
-              - entity: counter.litter_use_tracker
-                secondary_info: entity-id
-              - entity: timer.litter_purifying_the_air
-                secondary_info: entity-id
-              - entity: automation.litter_clean_air_after_probable_poop
-                secondary_info: last-triggered
-                icon: mdi:emoticon-poop-outline
-              - entity: automation.litter_clean_air_after_30s_motion
-                secondary_info: last-triggered
-                icon: mdi:emoticon-poop-outline
-            state_color: false
-          - type: heading
-            heading_style: subtitle
-            icon: local:person-wave-2
-            heading: Presence
-            card_mod:
-              class: sub-heading-ios
-          - type: entities
-            entities:
-              - entity: person.austen_clement
-                secondary_info: last-changed
-              - entity: person.bryan_ignacio
-                secondary_info: last-updated
-          - type: custom:vertical-stack-in-card
-            cards:
-              - type: custom:mushroom-entity-card
-                entity: person.austen_clement
-                icon_type: entity-picture
-                primary_info: state
-                secondary_info: last-changed
-              - type: custom:mushroom-entity-card
-                entity: person.bryan_ignacio
-                icon_type: entity-picture
-                primary_info: state
-                secondary_info: last-changed
-              - type: horizontal-stack
-                cards:
-                  - type: custom:mushroom-entity-card
-                    entity: person.austen_clement
-                    icon_type: entity-picture
-                    primary_info: state
-                    secondary_info: last-changed
-                    fill_container: true
-                  - type: custom:mushroom-entity-card
-                    entity: person.bryan_ignacio
-                    icon_type: entity-picture
-                    primary_info: state
-                    secondary_info: last-changed
-                    fill_container: true
-        visibility:
-          - condition: user
-            users:
-              - 61073c06208349eeb40253f5d01292f2
-      - type: grid
-        cards:
           - type: heading
             heading: Weather & Sun
             heading_style: title
@@ -3872,6 +4136,115 @@ views:
                   name: Sun azimuth
       - type: grid
         cards:
+          - type: heading
+            heading: Automation Trackers
+            heading_style: title
+            icon: local:sparkles-square-filled-on-square
+            card_mod:
+              class: heading-ios
+          - type: heading
+            heading_style: subtitle
+            icon: local:person-wave-2
+            heading: Presence
+            card_mod:
+              class: sub-heading-ios
+          - type: vertical-stack
+            cards:
+              - type: entity
+                entity: binary_sensor.home_or_away
+                grid_options:
+                  rows: 2
+                  columns: 12
+              - type: entities
+                entities:
+                  - entity: person.austen_clement
+                    secondary_info: last-changed
+                  - entity: person.bryan_ignacio
+                    secondary_info: last-updated
+                  - entity: input_boolean.guest_mode
+                  - entity: binary_sensor.guest_in_calendar
+          - type: entities
+            entities:
+              - entity: binary_sensor.athom_presence_sensor_d94195_mmwave_sensor
+              - entity: binary_sensor.athom_presence_sensor_d94195_pir_sensor
+              - entity: binary_sensor.athom_presence_sensor_d94195_occupancy
+              - entity: sensor.athom_presence_sensor_d94195_light_sensor
+          - type: heading
+            heading_style: subtitle
+            icon: local:robotic-vacuum
+            heading: Vacuum
+            card_mod:
+              class: sub-heading-ios
+          - type: custom:mushroom-vacuum-card
+            entity: vacuum.cleo
+            commands:
+              - start_pause
+              - stop
+              - locate
+              - clean_spot
+              - return_home
+            grid_options:
+              columns: full
+            fill_container: false
+            icon_animation: true
+            layout: horizontal
+          - type: entities
+            entities:
+              - entity: timer.vacuum_timer
+                secondary_info: last-changed
+              - entity: counter.vacuum_hallway_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_aksel_s_lair_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_kitchen_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_dining_room_counter
+                secondary_info: last-changed
+            state_color: false
+          - type: entities
+            entities:
+              - entity: counter.vacuum_living_room_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_bedroom_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_bathroom_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_studio_counter
+                secondary_info: last-changed
+              - entity: counter.vacuum_entertainment_room_counter
+                secondary_info: last-changed
+            state_color: false
+          - type: heading
+            heading_style: subtitle
+            icon: local:cat-circle
+            heading: Litter
+            card_mod:
+              class: sub-heading-ios
+            grid_options:
+              columns: 24
+              rows: auto
+          - type: entities
+            entities:
+              - entity: counter.litter_use_tracker
+                secondary_info: entity-id
+              - entity: timer.litter_purifying_the_air
+                secondary_info: entity-id
+              - entity: automation.litter_clean_air_after_probable_poop
+                secondary_info: last-triggered
+                icon: mdi:emoticon-poop-outline
+              - entity: automation.litter_clean_air_after_30s_motion
+                secondary_info: last-triggered
+                icon: mdi:emoticon-poop-outline
+            state_color: false
+        visibility:
+          - condition: user
+            users:
+              - 61073c06208349eeb40253f5d01292f2
+        column_span: 2
+      - type: grid
+        cards: []
+      - type: grid
+        cards:
           - type: custom:navbar-card
             template: 544_nav
     header:
@@ -3886,23 +4259,49 @@ views:
       badges_wrap: wrap
     badges:
       - type: custom:mushroom-template-badge
-        content: Guest Mode Active
-        color: >-
-          {% if states('input_select.current_theme') == 'ios-light' %}
-            #FF2D55
-          {% elif states('input_select.current_theme') == 'ios-dark' %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-light' %}
-            #FF2D55
-          {% elif states('input_select.current_theme') == 'macos-light-vibrant'
-          %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-dark' %}
-            #FF375F
-          {% elif states('input_select.current_theme') == 'macos-dark-vibrant'
-          %}
-            #FF375F
+        content: Fireplace is On
+        icon: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            local:flame-fill
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            local:flame
           {% endif %}
+        color: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            red
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            orange
+          {% endif %}
+        entity: fan.fireplace
+        label: |-
+          {% if states('binary_sensor.fireplace_both_heaters_on') == 'on' %}
+            High Heat
+          {% elif states('binary_sensor.fireplace_any_heater_on') == 'on' %}
+            Low Heat
+          {% elif states('binary_sensor.fireplace_power_on') == 'on' %}
+            Lights Only
+          {% endif %}
+        visibility:
+          - condition: and
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sun.sun
+                    state: above_horizon
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: sunny
+              - condition: state
+                entity: fan.fireplace
+                state: 'on'
+        tap_action:
+          action: navigate
+          navigation_path: /544-noe/living-room?anchor=fireplace
+      - type: custom:mushroom-template-badge
+        content: Guest Mode
         entity: input_boolean.guest_mode
         icon: local:person-fill-badge-plus
         tap_action:
@@ -3912,6 +4311,8 @@ views:
           - condition: state
             entity: input_boolean.guest_mode
             state: 'on'
+        color: blue
+        label: Active
       - type: entity
         show_name: true
         show_state: true
@@ -3925,8 +4326,5 @@ views:
         name: Aksel
         needle: true
         show_name: true
-      - type: entity
-        show_name: false
-        show_state: true
-        show_icon: true
-        entity: counter.litter_use_tracker
+    cards: []
+    dense_section_placement: true
