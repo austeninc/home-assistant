@@ -18,7 +18,7 @@
 <max_players>32</max_players>
 <ports>0:0</ports>
 <binding>?</binding>
-<device>
+<!-- <device>
 <udn>822316671c67e8acfbc8c0ce3bfdb986</udn>
 <name>Desk+</name>
 <mac>cc:cc:70:8d:2e:37</mac>
@@ -29,13 +29,13 @@
 <name>Fireplace speaker+</name>
 <mac>cc:cc:7c:f9:c7:dc</mac>
 <enabled>1</enabled>
-</device>
-<device>
+</device> -->
+<!-- <device>
 <udn>6759A981-4302-45B0-93C9-1E36185ECC2E</udn>
 <name>Nest Speakers+</name>
 <mac>cc:cc:c2:61:53:ed</mac>
 <enabled>1</enabled>
-</device>
+</device> -->
 <device>
 <udn>719264bdbbdfa0ad41a90ff56d617159</udn>
 <name>Nest Mini+</name>
