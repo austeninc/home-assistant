@@ -24,30 +24,30 @@
 <mac>cc:cc:d3:4e:71:03</mac>
 <enabled>1</enabled>
 </device>
-<device>
+<!-- <device>
 <udn>822316671c67e8acfbc8c0ce3bfdb986</udn>
 <name>Desk+</name>
 <mac>cc:cc:70:8d:2e:37</mac>
 <enabled>1</enabled>
-</device>
-<device>
+</device> -->
+<!-- <device>
 <udn>8ab7881dbdcf0529b7ffba4708d28ac4</udn>
 <name>Fireplace speaker+</name>
 <mac>cc:cc:7c:f9:c7:dc</mac>
 <enabled>1</enabled>
-</device>
-<device>
+</device> -->
+<!-- <device>
 <udn>3bee5d9260053e17b87b7a50c7c64276</udn>
 <name>Desk+</name>
 <mac>cc:cc:a9:e0:76:67</mac>
 <enabled>0</enabled>
-</device>
-<device>
+</device> -->
+<!-- <device>
 <udn>6759A981-4302-45B0-93C9-1E36185ECC2E</udn>
 <name>Nest Speakers+</name>
 <mac>cc:cc:c2:61:53:ed</mac>
 <enabled>1</enabled>
-</device>
+</device> -->
 <device>
 <udn>65ce422bd3e277a644c1cec04540c0ec</udn>
 <name>Kitchen Display+</name>
