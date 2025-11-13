@@ -1,0 +1,650 @@
+  - platform: universal
+    name: Living Room HomePods
+    unique_id: custom_547a44a789f126d4718fdc5df
+    children:
+      - media_player.living_room
+      - media_player.living_room_2
+      - media_player.living_room_homepods
+    state_template: >
+      {% if is_state('media_player.living_room', 'playing') or
+            is_state('media_player.living_room_2', 'playing') or
+            is_state('media_player.living_room_homepods', 'playing') %}
+        playing
+      {% elif is_state('media_player.living_room', 'paused') or
+              is_state('media_player.living_room_2', 'paused') or
+              is_state('media_player.living_room_homepods', 'paused') %}
+        paused
+      {% else %}
+        idle
+      {% endif %}
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        target:
+          entity_id: 
+            - media_player.living_room
+            - media_player.living_room_2
+            - media_player.living_room_homepods
+      turn_off:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.living_room
+            - media_player.living_room_2
+            - media_player.living_room_homepods
+      play:
+        service: media_player.media_play
+        target:
+          entity_id: 
+            - media_player.living_room
+            - media_player.living_room_2
+            - media_player.living_room_homepods
+      pause:
+        service: media_player.media_pause
+        target:
+          entity_id: 
+            - media_player.living_room
+            - media_player.living_room_2
+            - media_player.living_room_homepods
+      stop:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.living_room
+            - media_player.living_room_2
+            - media_player.living_room_homepods
+      volume_up:
+        service: media_player.volume_up
+        target:
+          entity_id: 
+            - media_player.living_room
+            - media_player.living_room_2
+            - media_player.living_room_homepods
+      volume_down:
+        service: media_player.volume_down
+        target:
+          entity_id: 
+            - media_player.living_room
+            - media_player.living_room_2
+            - media_player.living_room_homepods
+      mute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: true
+        target:
+          entity_id: 
+            - media_player.living_room
+            - media_player.living_room_2
+            - media_player.living_room_homepods
+      unmute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: false
+        target:
+          entity_id: 
+            - media_player.living_room
+            - media_player.living_room_2
+            - media_player.living_room_homepods
+  - platform: universal
+    name: Entertainment Room HomePods
+    unique_id: custom_b123d09c56bd49c59aec1a41a
+    children:
+      - media_player.entertainment_room_2_2
+      - media_player.entertainment_room_3
+      - media_player.entertainment_room_homepods
+    state_template: >
+      {% if is_state('media_player.entertainment_room_2_2', 'playing') or
+            is_state('media_player.entertainment_room_3', 'playing') or
+            is_state('media_player.entertainment_room_homepods', 'playing') %}
+        playing
+      {% elif is_state('media_player.entertainment_room_2_2', 'paused') or
+              is_state('media_player.entertainment_room_3', 'paused') or
+              is_state('media_player.entertainment_room_homepods', 'paused') %}
+        paused
+      {% else %}
+        idle
+      {% endif %}
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        target:
+          entity_id: 
+            - media_player.entertainment_room_2_2
+            - media_player.entertainment_room_3
+            - media_player.entertainment_room_homepods
+      turn_off:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.entertainment_room_2_2
+            - media_player.entertainment_room_3
+            - media_player.entertainment_room_homepods
+      play:
+        service: media_player.media_play
+        target:
+          entity_id: 
+            - media_player.entertainment_room_2_2
+            - media_player.entertainment_room_3
+            - media_player.entertainment_room_homepods
+      pause:
+        service: media_player.media_pause
+        target:
+          entity_id: 
+            - media_player.entertainment_room_2_2
+            - media_player.entertainment_room_3
+            - media_player.entertainment_room_homepods
+      stop:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.entertainment_room_2_2
+            - media_player.entertainment_room_3
+            - media_player.entertainment_room_homepods
+      volume_up:
+        service: media_player.volume_up
+        target:
+          entity_id: 
+            - media_player.entertainment_room_2_2
+            - media_player.entertainment_room_3
+            - media_player.entertainment_room_homepods
+      volume_down:
+        service: media_player.volume_down
+        target:
+          entity_id: 
+            - media_player.entertainment_room_2_2
+            - media_player.entertainment_room_3
+            - media_player.entertainment_room_homepods
+      mute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: true
+        target:
+          entity_id: 
+            - media_player.entertainment_room_2_2
+            - media_player.entertainment_room_3
+            - media_player.entertainment_room_homepods
+      unmute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: false
+        target:
+          entity_id: 
+            - media_player.entertainment_room_2_2
+            - media_player.entertainment_room_3
+            - media_player.entertainment_room_homepods
+  - platform: universal
+    name: Bathroom HomePod
+    unique_id: custom_046b940168fe245f8c34cd9bc
+    children:
+      - media_player.bathroom
+      - media_player.bathroom_2
+    state_template: >
+      {% if is_state('media_player.bathroom', 'playing') or
+            is_state('media_player.bathroom_2', 'playing') %}
+        playing
+      {% elif is_state('media_player.bathroom', 'paused') or
+              is_state('media_player.bathroom_2', 'paused') %}
+        paused
+      {% else %}
+        idle
+      {% endif %}
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        target:
+          entity_id: 
+            - media_player.bathroom
+            - media_player.bathroom_2
+      turn_off:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.bathroom
+            - media_player.bathroom_2
+      play:
+        service: media_player.media_play
+        target:
+          entity_id: 
+            - media_player.bathroom
+            - media_player.bathroom_2
+      pause:
+        service: media_player.media_pause
+        target:
+          entity_id: 
+            - media_player.bathroom
+            - media_player.bathroom_2
+      stop:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.bathroom
+            - media_player.bathroom_2
+      volume_up:
+        service: media_player.volume_up
+        target:
+          entity_id: 
+            - media_player.bathroom
+            - media_player.bathroom_2
+      volume_down:
+        service: media_player.volume_down
+        target:
+          entity_id: 
+            - media_player.bathroom
+            - media_player.bathroom_2
+      mute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: true
+        target:
+          entity_id: 
+            - media_player.bathroom
+            - media_player.bathroom_2
+      unmute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: false
+        target:
+          entity_id: 
+            - media_player.bathroom
+            - media_player.bathroom_2
+  - platform: universal
+    name: Bedroom HomePod
+    unique_id: custom_874934b17b91108aa61fdb4fa
+    children:
+      - media_player.bedroom
+      - media_player.bedroom_2
+    state_template: >
+      {% if is_state('media_player.bedroom', 'playing') or
+            is_state('media_player.bedroom_2', 'playing') %}
+        playing
+      {% elif is_state('media_player.bedroom', 'paused') or
+              is_state('media_player.bedroom_2', 'paused') %}
+        paused
+      {% else %}
+        idle
+      {% endif %}
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        target:
+          entity_id: 
+            - media_player.bedroom
+            - media_player.bedroom_2
+      turn_off:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.bedroom
+            - media_player.bedroom_2
+      play:
+        service: media_player.media_play
+        target:
+          entity_id: 
+            - media_player.bedroom
+            - media_player.bedroom_2
+      pause:
+        service: media_player.media_pause
+        target:
+          entity_id: 
+            - media_player.bedroom
+            - media_player.bedroom_2
+      stop:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.bedroom
+            - media_player.bedroom_2
+      volume_up:
+        service: media_player.volume_up
+        target:
+          entity_id: 
+            - media_player.bedroom
+            - media_player.bedroom_2
+      volume_down:
+        service: media_player.volume_down
+        target:
+          entity_id: 
+            - media_player.bedroom
+            - media_player.bedroom_2
+      mute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: true
+        target:
+          entity_id: 
+            - media_player.bedroom
+            - media_player.bedroom_2
+      unmute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: false
+        target:
+          entity_id: 
+            - media_player.bedroom
+            - media_player.bedroom_2
+  - platform: universal
+    name: Kitchen HomePod
+    unique_id: custom_498af4a33af639cb0ed574777
+    children:
+      - media_player.kitchen
+      - media_player.kitchen_2
+    state_template: >
+      {% if is_state('media_player.kitchen', 'playing') or
+            is_state('media_player.kitchen_2', 'playing') %}
+        playing
+      {% elif is_state('media_player.kitchen', 'paused') or
+              is_state('media_player.kitchen_2', 'paused') %}
+        paused
+      {% else %}
+        idle
+      {% endif %}
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        target:
+          entity_id: 
+            - media_player.kitchen
+            - media_player.kitchen_2
+      turn_off:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.kitchen
+            - media_player.kitchen_2
+      play:
+        service: media_player.media_play
+        target:
+          entity_id: 
+            - media_player.kitchen
+            - media_player.kitchen_2
+      pause:
+        service: media_player.media_pause
+        target:
+          entity_id: 
+            - media_player.kitchen
+            - media_player.kitchen_2
+      stop:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.kitchen
+            - media_player.kitchen_2
+      volume_up:
+        service: media_player.volume_up
+        target:
+          entity_id: 
+            - media_player.kitchen
+            - media_player.kitchen_2
+      volume_down:
+        service: media_player.volume_down
+        target:
+          entity_id: 
+            - media_player.kitchen
+            - media_player.kitchen_2
+      mute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: true
+        target:
+          entity_id: 
+            - media_player.kitchen
+            - media_player.kitchen_2
+      unmute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: false
+        target:
+          entity_id: 
+            - media_player.kitchen
+            - media_player.kitchen_2
+  - platform: universal
+    name: Desk Speakers
+    unique_id: custom_d32af4fc78eb803f42806bbd4
+    children:
+      - media_player.wiim_pro_aabc_2
+      - media_player.desk_3
+      - media_player.desk
+      - media_player.desk_4
+    state_template: >
+      {% if is_state('media_player.wiim_pro_aabc_2', 'playing') or
+            is_state('media_player.desk_3', 'playing') or
+            is_state('media_player.desk_4', 'playing') or
+            is_state('media_player.desk', 'playing') %}
+        playing
+      {% elif is_state('media_player.wiim_pro_aabc_2', 'paused') or
+            is_state('media_player.desk_3', 'paused') or
+            is_state('media_player.desk_4', 'paused') %}
+        paused
+      {% else %}
+        idle
+      {% endif %}
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        target:
+          entity_id: 
+            - media_player.wiim_pro_aabc_2
+            - media_player.desk_3
+            - media_player.desk_4
+      turn_off:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.wiim_pro_aabc_2
+            - media_player.desk_3
+            - media_player.desk_4
+      play:
+        service: media_player.media_play
+        target:
+          entity_id: 
+            - media_player.wiim_pro_aabc_2
+            - media_player.desk_3
+            - media_player.desk_4
+      pause:
+        service: media_player.media_pause
+        target:
+          entity_id: 
+            - media_player.wiim_pro_aabc_2
+            - media_player.desk_3
+            - media_player.desk_4
+      stop:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.wiim_pro_aabc_2
+            - media_player.desk_3
+            - media_player.desk_4
+      volume_up:
+        service: media_player.volume_up
+        target:
+          entity_id: 
+            - media_player.wiim_pro_aabc_2
+            - media_player.desk_3
+            - media_player.desk_4
+      volume_down:
+        service: media_player.volume_down
+        target:
+          entity_id: 
+            - media_player.wiim_pro_aabc_2
+            - media_player.desk_3
+            - media_player.desk_4
+      mute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: true
+        target:
+          entity_id: 
+            - media_player.wiim_pro_aabc_2
+            - media_player.desk_3
+            - media_player.desk_4
+      unmute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: false
+        target:
+          entity_id: 
+            - media_player.wiim_pro_aabc_2
+            - media_player.desk_3
+            - media_player.desk_4
+  - platform: universal
+    name: Kitchen HomePod Mini
+    unique_id: custom_4e2e8109450743aca57ac8d0d
+    children:
+      - media_player.kitchen_mini_ma
+      - media_player.kitchen_mini_ap
+    state_template: >
+      {% if is_state('media_player.kitchen_mini_ma', 'playing') or
+            is_state('media_player.kitchen_mini_ap', 'playing') %}
+        playing
+      {% elif is_state('media_player.kitchen_mini_ma', 'paused') or
+              is_state('media_player.kitchen_mini_ap', 'paused') %}
+        paused
+      {% else %}
+        idle
+      {% endif %}
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        target:
+          entity_id: 
+            - media_player.kitchen_mini_ma
+            - media_player.kitchen_mini_ap
+      turn_off:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.kitchen_mini_ma
+            - media_player.kitchen_mini_ap
+      play:
+        service: media_player.media_play
+        target:
+          entity_id: 
+            - media_player.kitchen_mini_ma
+            - media_player.kitchen_mini_ap
+      pause:
+        service: media_player.media_pause
+        target:
+          entity_id: 
+            - media_player.kitchen_mini_ma
+            - media_player.kitchen_mini_ap
+      stop:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.kitchen_mini_ma
+            - media_player.kitchen_mini_ap
+      volume_up:
+        service: media_player.volume_up
+        target:
+          entity_id: 
+            - media_player.kitchen_mini_ma
+            - media_player.kitchen_mini_ap
+      volume_down:
+        service: media_player.volume_down
+        target:
+          entity_id: 
+            - media_player.kitchen_mini_ma
+            - media_player.kitchen_mini_ap
+      mute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: true
+        target:
+          entity_id: 
+            - media_player.kitchen_mini_ma
+            - media_player.kitchen_mini_ap
+      unmute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: false
+        target:
+          entity_id: 
+            - media_player.kitchen_mini_ma
+            - media_player.kitchen_mini_ap
+  - platform: universal
+    name: Kitchen HomePods
+    unique_id: custom_90bc64fbea04212130ec51391
+    children:
+      - media_player.kitchen_homepod
+      - media_player.kitchen_homepod_mini
+      - media_player.kitchen_homepods_group_ma
+    state_template: >
+      {% if is_state('media_player.kitchen_homepods_group_ma', 'playing')
+            or (is_state('media_player.kitchen_homepod', 'playing')
+                and is_state('media_player.kitchen_homepod_mini', 'playing')) %}
+        playing
+      {% elif is_state('media_player.kitchen_homepods_group_ma', 'paused')
+            or (is_state('media_player.kitchen_homepod', 'paused')
+                and is_state('media_player.kitchen_homepod_mini', 'paused')) %}
+        paused
+      {% else %}
+        idle
+      {% endif %}
+    commands:
+      turn_on:
+        service: media_player.turn_on
+        target:
+          entity_id: 
+            - media_player.kitchen_homepod
+            - media_player.kitchen_homepod_mini
+            - - media_player.kitchen_homepods_group_ma
+      turn_off:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.kitchen_homepod
+            - media_player.kitchen_homepod_mini
+            - media_player.kitchen_homepods_group_ma
+      play:
+        service: media_player.media_play
+        target:
+          entity_id: 
+            - media_player.kitchen_homepod
+            - media_player.kitchen_homepod_mini
+            - media_player.kitchen_homepods_group_ma
+      pause:
+        service: media_player.media_pause
+        target:
+          entity_id: 
+            - media_player.kitchen_homepod
+            - media_player.kitchen_homepod_mini
+            - media_player.kitchen_homepods_group_ma
+      stop:
+        service: media_player.media_stop
+        target:
+          entity_id: 
+            - media_player.kitchen_homepod
+            - media_player.kitchen_homepod_mini
+            - media_player.kitchen_homepods_group_ma
+      volume_up:
+        service: media_player.volume_up
+        target:
+          entity_id: 
+            - media_player.kitchen_homepod
+            - media_player.kitchen_homepod_mini
+            - media_player.kitchen_homepods_group_ma
+      volume_down:
+        service: media_player.volume_down
+        target:
+          entity_id: 
+            - media_player.kitchen_homepod
+            - media_player.kitchen_homepod_mini
+            - media_player.kitchen_homepods_group_ma
+      mute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: true
+        target:
+          entity_id: 
+            - media_player.kitchen_homepod
+            - media_player.kitchen_homepod_mini
+            - media_player.kitchen_homepods_group_ma
+      unmute:
+        service: media_player.volume_mute
+        data:
+          is_volume_muted: false
+        target:
+          entity_id: 
+            - media_player.kitchen_homepod
+            - media_player.kitchen_homepod_mini
+            - media_player.kitchen_homepods_group_ma
