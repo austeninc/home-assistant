@@ -648,3 +648,20 @@
             - media_player.kitchen_homepod
             - media_player.kitchen_homepod_mini
             - media_player.kitchen_homepods_group_ma
+# PS5 #########################
+  - platform: universal
+    name: PS5
+    unique_id: custom_97fec47919d386df6286d6769
+    children:
+      - media_player.playstation_5
+      - media_player.playstation_5_bryan
+    state_template: >
+      {% if is_state('media_player.playstation_5', 'playing') or
+            is_state('media_player.playstation_5_bryan', 'playing') %}
+        playing
+      {% elif is_state('media_player.playstation_5', 'paused') or
+              is_state('media_player.playstation_5_bryan', 'paused') %}
+        paused
+      {% else %}
+        off
+      {% endif %}
