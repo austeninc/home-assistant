@@ -402,6 +402,34 @@ views:
                         entity: weather.forecast_home
                         state: snowy-rainy
           - type: custom:mushroom-template-card
+            primary: Stop Ambient Sound FX
+            secondary: ''
+            icon: mdi:speaker-stop
+            entity: script.stop_ambient_sounds
+            badge_icon: local:sparkle
+            multiline_secondary: false
+            tap_action:
+              action: toggle
+            grid_options:
+              columns: 12
+              rows: 1
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: binary_sensor.ambient_sfx_are_playing
+                    state: 'on'
+            badge_color: var(--red-color)
+            color: |-
+              {% if 'light' in states('input_select.current_theme') %}
+                #8E8E93
+              {% elif 'dark' in states('input_select.current_theme') %}
+
+              {% endif %}
+            features_position: bottom
+            icon_tap_action:
+              action: toggle
+          - type: custom:mushroom-template-card
             primary: Rainy Mood
             entity: script.daytime_rain
             badge_icon: local:sparkle
@@ -441,34 +469,13 @@ views:
               action: toggle
             icon: local:cloud-sun-rain
             secondary: Soundscape for Rainy Days
-          - type: custom:mushroom-template-card
-            primary: Stop Ambient Sound FX
-            secondary: ''
-            icon: mdi:speaker-stop
-            entity: script.stop_ambient_sounds
-            badge_icon: local:sparkle
-            multiline_secondary: false
-            tap_action:
-              action: toggle
-            grid_options:
-              columns: 12
-              rows: 1
-            visibility:
-              - condition: or
-                conditions:
-                  - condition: state
-                    entity: binary_sensor.ambient_sfx_are_playing
-                    state: 'on'
-            badge_color: var(--red-color)
-            color: |-
-              {% if 'light' in states('input_select.current_theme') %}
-                #8E8E93
-              {% elif 'dark' in states('input_select.current_theme') %}
-
-              {% endif %}
-            features_position: bottom
-            icon_tap_action:
-              action: toggle
+            card_mod:
+              style: |
+                ha-card::before {
+                  background-image: url(/local/images/raindrops_window.gif);
+                  background-position: 18% 35%;
+                  background-size: 140%
+                }
           - type: heading
             icon: local:wand-and-rays-inverse
             heading: Lighting
@@ -2403,8 +2410,114 @@ views:
             heading_style: title
             icon: local:paintpalette
             heading: Scenes
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: and
+                    conditions:
+                      - condition: state
+                        entity: weather.forecast_home
+                        state: sunny
+                      - condition: or
+                        conditions:
+                          - condition: state
+                            entity: light.studio
+                            state_not: 'on'
+                          - condition: state
+                            entity: binary_sensor.hue_studio_natural_light
+                            state: 'off'
+                  - condition: and
+                    conditions:
+                      - condition: state
+                        entity: weather.forecast_home
+                        state_not: sunny
+                      - condition: or
+                        conditions:
+                          - condition: state
+                            entity: binary_sensor.hue_studio_nature_s_colors
+                            state_not: 'on'
+                          - condition: state
+                            entity: light.studio
+                            state_not: 'on'
             card_mod:
               class: heading-ios
+          - type: custom:mushroom-template-card
+            primary: Natural Light
+            secondary: Studio | Sky, Inside
+            icon: |-
+              {% if is_state('sun.sun', 'above_horizon') %}
+                local:sun-max
+              {% else %}
+                local:moon-stars
+              {% endif %}
+            badge_icon: local:sparkle
+            multiline_secondary: false
+            tap_action:
+              action: toggle
+            grid_options:
+              columns: full
+              rows: 1
+            visibility:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity: weather.forecast_home
+                    state: sunny
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity: light.studio
+                        state_not: 'on'
+                      - condition: state
+                        entity: binary_sensor.hue_studio_natural_light
+                        state: 'off'
+            entity: scene.studio_natural_light_3
+            badge_color: var(--yellow-color)
+            color: |-
+              {% if 'light' in states('input_select.current_theme') %}
+                #8E8E93
+              {% elif 'dark' in states('input_select.current_theme') %}
+
+              {% endif %}
+            features_position: bottom
+            icon_tap_action:
+              action: toggle
+          - type: custom:mushroom-template-card
+            primary: Nature's Colors
+            secondary: Studio | Sky, Inside
+            icon: local:cloud-moon
+            badge_icon: local:sparkle
+            multiline_secondary: false
+            tap_action:
+              action: toggle
+            grid_options:
+              columns: 12
+              rows: 1
+            visibility:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity: weather.forecast_home
+                    state_not: sunny
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity: binary_sensor.hue_studio_nature_s_colors
+                        state_not: 'on'
+                      - condition: state
+                        entity: light.studio
+                        state_not: 'on'
+            entity: scene.studio_nature_s_colors_4
+            badge_color: teal
+            color: |-
+              {% if 'light' in states('input_select.current_theme') %}
+                #8E8E93
+              {% elif 'dark' in states('input_select.current_theme') %}
+
+              {% endif %}
+            features_position: bottom
+            icon_tap_action:
+              action: toggle
           - type: heading
             heading: Lights
             heading_style: title
@@ -3254,6 +3367,13 @@ views:
               action: toggle
             icon: local:cloud-sun-rain
             secondary: Soundscape for Rainy Days
+            card_mod:
+              style: |
+                ha-card::before {
+                  background-image: url(/local/images/raindrops_window.gif);
+                  background-position: 18% 35%;
+                  background-size: 140%
+                }
           - type: custom:mushroom-template-card
             primary: Stop Ambient Sound FX
             secondary: ''
@@ -4123,7 +4243,7 @@ views:
                 attribute: elevation
                 name: Sun elevation
                 prefix: '~'
-                suffix: Units
+                suffix: Degrees
               - type: conditional
                 conditions:
                   - entity: sun.sun
@@ -4191,7 +4311,7 @@ views:
           - type: entities
             entities:
               - entity: timer.vacuum_timer
-                secondary_info: last-changed
+                secondary_info: last-updated
               - entity: counter.vacuum_hallway_counter
                 secondary_info: last-changed
               - entity: counter.vacuum_aksel_s_lair_counter
