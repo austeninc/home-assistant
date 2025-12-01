@@ -1,0 +1,596 @@
+fields:
+  room_target:
+    selector:
+      area:
+        multiple: true
+    default: []
+    name: Rooms to Target
+    required: true
+  transition_time:
+    selector:
+      number:
+        min: 0
+        max: 1800
+        step: 1
+    default: 2
+sequence:
+  - choose:
+      - conditions:
+          - condition: time
+            after: "07:00:00"
+            before: "10:00:00"
+        sequence:
+          - parallel:
+              - alias: Studio
+                if:
+                  - condition: template
+                    value_template: "{{ 'studio' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id: scene.studio_baby_s_breath
+              - alias: Bedroom
+                if:
+                  - condition: template
+                    value_template: "{{ 'bedroom' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.bedroom_baby_s_breath
+              - alias: Entertainment Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'entertainment_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.entertainment_room_baby_s_breath
+              - alias: Hall
+                if:
+                  - condition: template
+                    value_template: "{{ 'hall' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.hall_baby_s_breath
+              - alias: Kitchen
+                if:
+                  - condition: template
+                    value_template: "{{ 'kitchen' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.kitchen_baby_s_breath
+              - alias: Living Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'living_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.living_room_baby_s_breath
+      - conditions:
+          - condition: time
+            after: "10:00:00"
+          - condition: sun
+            before: sunset
+            before_offset: "-00:30:00"
+        sequence:
+          - parallel:
+              - alias: Studio
+                if:
+                  - condition: template
+                    value_template: "{{ 'studio' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.studio_blossom
+              - alias: Bedroom
+                if:
+                  - condition: template
+                    value_template: "{{ 'bedroom' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.bedroom_blossom
+              - alias: Entertainment Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'entertainment_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.entertainment_room_blossom
+              - alias: Hall
+                if:
+                  - condition: template
+                    value_template: "{{ 'hall' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.hall_blossom
+              - alias: Kitchen
+                if:
+                  - condition: template
+                    value_template: "{{ 'kitchen' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.kitchen_blossom
+              - alias: Living Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'living_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.living_room_blossom
+      - conditions:
+          - condition: time
+            before: "20:00:00"
+          - condition: sun
+            after: sunset
+            after_offset: "-00:30:00"
+        sequence:
+          - parallel:
+              - alias: Studio
+                if:
+                  - condition: template
+                    value_template: "{{ 'studio' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.studio_amber_bloom
+              - alias: Bedroom
+                if:
+                  - condition: template
+                    value_template: "{{ 'bedroom' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.bedroom_amber_bloom
+              - alias: Entertainment Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'entertainment_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.entertainment_room_amber_bloom
+              - alias: Hall
+                if:
+                  - condition: template
+                    value_template: "{{ 'hall' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.hall_amber_bloom
+              - alias: Kitchen
+                if:
+                  - condition: template
+                    value_template: "{{ 'kitchen' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.kitchen_amber_bloom
+              - alias: Living Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'living_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.living_room_amber_bloom
+      - conditions:
+          - condition: time
+            after: "20:00:00"
+            before: "22:00:00"
+        sequence:
+          - parallel:
+              - alias: Studio
+                if:
+                  - condition: template
+                    value_template: "{{ 'studio' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.studio_pensive
+              - alias: Bedroom
+                if:
+                  - condition: template
+                    value_template: "{{ 'bedroom' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.bedroom_pensive
+              - alias: Entertainment Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'entertainment_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.entertainment_room_pensive
+              - alias: Hall
+                if:
+                  - condition: template
+                    value_template: "{{ 'hall' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.hall_pensive
+              - alias: Kitchen
+                if:
+                  - condition: template
+                    value_template: "{{ 'kitchen' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.kitchen_pensive
+              - alias: Living Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'living_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.living_room_pensive
+      - conditions:
+          - condition: time
+            after: "22:00:00"
+            before: "00:00:00"
+        sequence:
+          - parallel:
+              - alias: Studio
+                if:
+                  - condition: template
+                    value_template: "{{ 'studio' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.studio_dreamy_dusk
+              - alias: Bedroom
+                if:
+                  - condition: template
+                    value_template: "{{ 'bedroom' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.bedroom_dreamy_dusk
+              - alias: Entertainment Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'entertainment_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.entertainment_room_dreamy_dusk
+              - alias: Hall
+                if:
+                  - condition: template
+                    value_template: "{{ 'hall' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.hall_dreamy_dusk
+              - alias: Kitchen
+                if:
+                  - condition: template
+                    value_template: "{{ 'kitchen' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.kitchen_dreamy_dusk
+              - alias: Living Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'living_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.living_room_dreamy_dusk
+      - conditions:
+          - condition: time
+            after: "00:00:00"
+            before: "07:00:00"
+        sequence:
+          - parallel:
+              - alias: Studio
+                if:
+                  - condition: template
+                    value_template: "{{ 'studio' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.studio_nighttime
+              - alias: Bedroom
+                if:
+                  - condition: template
+                    value_template: "{{ 'bedroom' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.bedroom_nighttime
+              - alias: Entertainment Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'entertainment_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.entertainment_room_nighttime
+              - alias: Hall
+                if:
+                  - condition: template
+                    value_template: "{{ 'hall' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.hall_nighttime
+              - alias: Kitchen
+                if:
+                  - condition: template
+                    value_template: "{{ 'kitchen' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.kitchen_nighttime
+              - alias: Living Room
+                if:
+                  - condition: template
+                    value_template: "{{ 'living_room' in room_target }}"
+                then:
+                  - action: hue.activate_scene
+                    metadata: {}
+                    data:
+                      transition: |
+                        {{ transition_time }}
+                    target:
+                      entity_id:
+                        - scene.living_room_nighttime
+  - delay: |
+      {{ transition_time }}
+  - parallel:
+      - alias: Studio
+        if:
+          - condition: template
+            value_template: "{{ 'studio' in room_target }}"
+        then:
+          - action: hue.activate_scene
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - scene.studio_nature_s_colors_4
+      - alias: Bedroom
+        if:
+          - condition: template
+            value_template: "{{ 'bedroom' in room_target }}"
+        then:
+          - action: hue.activate_scene
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - scene.bedroom_nature_s_colors_5
+      - alias: Entertainment Room
+        if:
+          - condition: template
+            value_template: "{{ 'entertainment_room' in room_target }}"
+        then:
+          - action: hue.activate_scene
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - scene.entertainment_room_nature_s_colors_6
+      - alias: Hall
+        if:
+          - condition: template
+            value_template: "{{ 'hall' in room_target }}"
+        then:
+          - action: hue.activate_scene
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - scene.hall_nature_s_colors_2
+      - alias: Kitchen
+        if:
+          - condition: template
+            value_template: "{{ 'kitchen' in room_target }}"
+        then:
+          - action: hue.activate_scene
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - scene.kitchen_nature_s_colors_3
+      - alias: Living Room
+        if:
+          - condition: template
+            value_template: "{{ 'living_room' in room_target }}"
+        then:
+          - action: hue.activate_scene
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - scene.living_room_nature_s_colors
+alias: Nature's Colors (Variable)
+description: ""
+icon: local:cloud-sun
