@@ -26,7 +26,7 @@ sequence:
                   - condition: template
                     value_template: "{{ 'studio' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
@@ -38,66 +38,61 @@ sequence:
                   - condition: template
                     value_template: "{{ 'bedroom' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.bedroom_energize
+                      entity_id: scene.bedroom_energize
               - alias: Entertainment Room
                 if:
                   - condition: template
                     value_template: "{{ 'entertainment_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.lounge_energize
+                      entity_id: scene.lounge_energize
               - alias: Hall
                 if:
                   - condition: template
                     value_template: "{{ 'hall' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.hall_energize
+                      entity_id: scene.hall_energize
               - alias: Kitchen
                 if:
                   - condition: template
                     value_template: "{{ 'kitchen' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.kitchen_energize
+                      entity_id: scene.kitchen_energize
               - alias: Living Room
                 if:
                   - condition: template
                     value_template: "{{ 'living_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.living_room_energize
+                      entity_id: scene.living_room_energize
       - conditions:
           - condition: time
             after: "10:00:00"
@@ -111,79 +106,73 @@ sequence:
                   - condition: template
                     value_template: "{{ 'studio' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.studio_concentrate
+                      entity_id: scene.studio_concentrate
               - alias: Bedroom
                 if:
                   - condition: template
                     value_template: "{{ 'bedroom' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.bedroom_concentrate
+                      entity_id: scene.bedroom_concentrate
               - alias: Entertainment Room
                 if:
                   - condition: template
                     value_template: "{{ 'entertainment_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.lounge_concentrate
+                      entity_id: scene.lounge_concentrate
               - alias: Hall
                 if:
                   - condition: template
                     value_template: "{{ 'hall' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.hall_concentrate
+                      entity_id: scene.hall_concentrate
               - alias: Kitchen
                 if:
                   - condition: template
                     value_template: "{{ 'kitchen' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.kitchen_concentrate
+                      entity_id: scene.kitchen_concentrate
               - alias: Living Room
                 if:
                   - condition: template
                     value_template: "{{ 'living_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.living_room_concentrate
+                      entity_id: scene.living_room_concentrate
       - conditions:
           - condition: time
             before: "20:00:00"
@@ -197,79 +186,73 @@ sequence:
                   - condition: template
                     value_template: "{{ 'studio' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.studio_read
+                      entity_id: scene.studio_read
               - alias: Bedroom
                 if:
                   - condition: template
                     value_template: "{{ 'bedroom' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.bedroom_read
+                      entity_id: scene.bedroom_read
               - alias: Entertainment Room
                 if:
                   - condition: template
                     value_template: "{{ 'entertainment_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.lounge_read
+                      entity_id: scene.lounge_read
               - alias: Hall
                 if:
                   - condition: template
                     value_template: "{{ 'hall' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.hall_read
+                      entity_id: scene.hall_read
               - alias: Kitchen
                 if:
                   - condition: template
                     value_template: "{{ 'kitchen' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.kitchen_read
+                      entity_id: scene.kitchen_read
               - alias: Living Room
                 if:
                   - condition: template
                     value_template: "{{ 'living_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.living_room_read
+                      entity_id: scene.living_room_read
       - conditions:
           - condition: time
             after: "20:00:00"
@@ -281,79 +264,73 @@ sequence:
                   - condition: template
                     value_template: "{{ 'studio' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.studio_relax
+                      entity_id: scene.studio_relax
               - alias: Bedroom
                 if:
                   - condition: template
                     value_template: "{{ 'bedroom' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.bedroom_relax
+                      entity_id: scene.bedroom_relax
               - alias: Entertainment Room
                 if:
                   - condition: template
                     value_template: "{{ 'entertainment_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.lounge_relax
+                      entity_id: scene.lounge_relax
               - alias: Hall
                 if:
                   - condition: template
                     value_template: "{{ 'hall' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.hall_relax
+                      entity_id: scene.hall_relax
               - alias: Kitchen
                 if:
                   - condition: template
                     value_template: "{{ 'kitchen' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.kitchen_relax
+                      entity_id: scene.kitchen_relax
               - alias: Living Room
                 if:
                   - condition: template
                     value_template: "{{ 'living_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.living_room_relax
+                      entity_id: scene.living_room_relax
       - conditions:
           - condition: time
             after: "22:00:00"
@@ -365,79 +342,73 @@ sequence:
                   - condition: template
                     value_template: "{{ 'studio' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.studio_rest
+                      entity_id: scene.studio_rest
               - alias: Bedroom
                 if:
                   - condition: template
                     value_template: "{{ 'bedroom' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.bedroom_rest
+                      entity_id: scene.bedroom_rest
               - alias: Entertainment Room
                 if:
                   - condition: template
                     value_template: "{{ 'entertainment_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.lounge_rest
+                      entity_id: scene.lounge_rest
               - alias: Hall
                 if:
                   - condition: template
                     value_template: "{{ 'hall' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.hall_rest
+                      entity_id: scene.hall_rest
               - alias: Kitchen
                 if:
                   - condition: template
                     value_template: "{{ 'kitchen' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.kitchen_rest
+                      entity_id: scene.kitchen_rest
               - alias: Living Room
                 if:
                   - condition: template
                     value_template: "{{ 'living_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.living_room_rest
+                      entity_id: scene.living_room_rest
       - conditions:
           - condition: time
             after: "00:00:00"
@@ -449,72 +420,67 @@ sequence:
                   - condition: template
                     value_template: "{{ 'studio' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.studio_nightlight
+                      entity_id: scene.studio_nightlight
               - alias: Bedroom
                 if:
                   - condition: template
                     value_template: "{{ 'bedroom' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.bedroom_nightlight
+                      entity_id: scene.bedroom_nightlight
               - alias: Entertainment Room
                 if:
                   - condition: template
                     value_template: "{{ 'entertainment_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.lounge_nightlight
+                      entity_id: scene.lounge_nightlight
               - alias: Hall
                 if:
                   - condition: template
                     value_template: "{{ 'hall' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.hall_nightlight
+                      entity_id: scene.hall_nightlight
               - alias: Kitchen
                 if:
                   - condition: template
                     value_template: "{{ 'kitchen' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
                         {{ transition_time }}
                     target:
-                      entity_id:
-                        - scene.kitchen_nightlight
+                      entity_id: scene.kitchen_nightlight
               - alias: Living Room
                 if:
                   - condition: template
                     value_template: "{{ 'living_room' in room_target }}"
                 then:
-                  - action: hue.activate_scene
+                  - action: scene.turn_on
                     metadata: {}
                     data:
                       transition: |
