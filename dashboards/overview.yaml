@@ -1111,14 +1111,6 @@ views:
         visibility:
           - condition: and
             conditions:
-              - condition: or
-                conditions:
-                  - condition: state
-                    entity: sun.sun
-                    state: above_horizon
-                  - condition: state
-                    entity: weather.forecast_home
-                    state: sunny
               - condition: state
                 entity: fan.fireplace
                 state: 'on'
@@ -1140,6 +1132,14 @@ views:
         show_state: true
         show_icon: true
         entity: weather.forecast_home
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.tannenbaum_water_level
+        icon: mdi:pine-tree-variant
+        color: green
+        name: Water
       - type: custom:mushroom-template-badge
         content: Guest Mode
         entity: input_boolean.guest_mode
@@ -2203,6 +2203,14 @@ views:
           - type: entities
             entities:
               - entity: light.living_room
+          - type: tile
+            grid_options:
+              columns: 12
+              rows: 1
+            entity: light.tree_bottom
+            name: Christmas Tree
+            vertical: false
+            features_position: bottom
       - type: grid
         cards:
           - type: heading
@@ -2384,6 +2392,16 @@ views:
         tap_action:
           action: navigate
           navigation_path: /lovelace/living-room?anchor=fireplace
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.tannenbaum_water_level
+        icon: mdi:pine-tree-variant
+        color: green
+        tap_action:
+          action: none
+        name: Water
       - type: custom:mushroom-template-badge
         content: Guest Mode
         entity: input_boolean.guest_mode
@@ -2542,6 +2560,13 @@ views:
               type: custom:hue-like-light-card
               area: studio
               icon: local:paintpalette
+          - type: custom:mushroom-light-card
+            entity: light.garland
+            icon: local:light-ribbon
+            grid_options:
+              columns: 12
+              rows: 1
+            show_brightness_control: true
           - type: custom:auto-entities
             card_param: scenes
             filter:
